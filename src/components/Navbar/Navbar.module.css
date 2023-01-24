@@ -1,0 +1,35 @@
+.navbar{
+    height: 10rem;
+    padding: 1rem 2rem;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10rem;
+}
+
+.navbarLeft{
+    display: flex;
+    align-items: center;
+    height: 100%;
+    gap: 1rem; 
+}
+
+.brandLogo{
+    height: 100%;
+}
+
+.brandTitle{
+    font-size: 4rem;
+    font-weight: 800;
+    color: #0B54FA;
+}
+
+.navbarCenter{
+    flex: 1;
+}
+
+.navbarRight{
+    display: flex;
+    gap: 2.5rem;
+}
