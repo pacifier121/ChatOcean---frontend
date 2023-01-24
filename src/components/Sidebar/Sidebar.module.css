@@ -1,0 +1,9 @@
+.sidebar{
+    height: calc(100vh - 10rem); 
+    min-width: 30rem;
+    max-width: 30rem;
+    background-color: #eee;
+    position: sticky;
+    top: 10rem;
+    overflow-y: auto;
+}

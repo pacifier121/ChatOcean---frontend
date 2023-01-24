@@ -6,6 +6,8 @@
     align-items: center;
     justify-content: space-between;
     gap: 10rem;
+    position: sticky;
+    top: 0;
 }
 
 .navbarLeft{
