@@ -1,0 +1,33 @@
+.story-card{
+    flex-basis: 16rem;
+    flex-grow: 0;
+    flex-shrink: 0;
+    height: 24rem;
+    background-color: blue;
+    border-radius: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 1.5rem;
+}
+
+.story-card-user{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.story-card-img{
+    width: 5rem;
+    height: 5rem;
+    border: 2px solid white;
+    border-radius: 100%;
+}
+
+.story-card-text{
+    color: white;
+    font-weight: 1000;
+    font-size: 1.3rem;
+}

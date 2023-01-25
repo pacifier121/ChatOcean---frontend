@@ -1,0 +1,19 @@
+.feed{
+    width: 100%;
+    background-color: #eee ; 
+    height: calc(100vh - 10rem);
+    display: flex;
+}
+
+.centerSection{
+    padding: 2rem;
+    flex-grow: 1;
+    width: 50rem;
+}
+
+.rightSection{
+    flex-basis: 40rem;
+    flex-grow: 0;
+    flex-shrink: 0;
+    background-color: red;
+}
