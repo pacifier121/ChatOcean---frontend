@@ -6,7 +6,7 @@ import YouTubeIcon from '@mui/icons-material/YouTube';
 
 const MorePages = () => {
   return (
-      <div className={cls["more-pages"]}>
+      <div className={cls["more-pages"] + " card-shadow"}>
         <span className={cls["more-pages-title"]}>More Pages</span>
         <div className={cls["pageCategory"]}>
             <EmailIcon sx={{fontSize:"30px"}} />

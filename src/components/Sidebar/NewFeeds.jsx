@@ -7,7 +7,7 @@ import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 
 const NewFeeds = () => {
   return (
-      <div className={cls["newfeeds"]}>
+      <div className={cls["newfeeds"] + " card-shadow"}>
         <span className={cls["newfeeds-title"]}>New Feeds</span>
         <div className={cls["feedCategory"]}>
             <TvIcon sx={{fontSize:"30px"}} />

@@ -4,7 +4,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 
 const AccountSettings = () => {
   return (
-      <div className={cls["account-settings"]}>
+      <div className={cls["account-settings"] + " card-shadow"}>
         <span className={cls["account-settings-title"]}>Account</span>
         <div className={cls["setting"]}>
             <SettingsIcon sx={{fontSize:"30px"}} />
