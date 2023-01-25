@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import BasicInfo from "../UI/BasicInfo";
 import logo from "../Navbar/logo.png";
 import cls from "./FriendRequests.module.css";
+import Divider from "../UI/Divider";
 
 const FriendRequest = () => {
     return (
@@ -23,7 +24,7 @@ const FriendRequests = () => {
         <span className={cls["requests-top-text"]}>Friend Request</span>
         <a href="#" className={cls["requests-top-link"]}> See All </a>
       </div>
-      <hr className={cls["requests-hr"]} />
+      <Divider />
       <div className={cls["requests-container"]}>
         <FriendRequest />
         <FriendRequest />

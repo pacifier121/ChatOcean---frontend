@@ -3,10 +3,11 @@
     background-color: #eee ; 
     min-height: calc(100vh - 10rem);
     display: flex;
+    padding: 2rem;
+    gap: 2rem;
 }
 
 .centerSection{
-    padding: 2rem;
     flex: 5;
 }
 
