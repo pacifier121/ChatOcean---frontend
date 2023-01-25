@@ -85,4 +85,10 @@
   border-radius: 100%;
   background-color: #eee;
   padding: 1rem;
+  width: 4rem;
+  height: 4rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 800;
 }
