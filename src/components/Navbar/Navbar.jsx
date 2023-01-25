@@ -9,7 +9,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 const Navbar = () => {
   return (
-    <div className={cls["navbar"]}>
+    <nav className={cls["navbar"]}>
         <div className={cls["navbarLeft"]}>
             <img src={logo} alt="" className={cls["brandLogo"]} />
             <span className={cls["brandTitle"]}>ChatOcean</span>
@@ -23,7 +23,7 @@ const Navbar = () => {
              <SettingsIcon sx={{fontSize: "32px", color: "#0B54FA"}} />             
              <AccountCircleIcon sx={{fontSize: "32px", color: "#0B54FA"}} />
         </div>
-    </div>
+    </nav>
   )
 }
 

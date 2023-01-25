@@ -1,19 +1,15 @@
 .feed{
-    width: 100%;
+    width: calc(100% - 35rem);
     background-color: #eee ; 
-    height: calc(100vh - 10rem);
+    min-height: calc(100vh - 10rem);
     display: flex;
 }
 
 .centerSection{
     padding: 2rem;
-    flex-grow: 2;
-    flex-shrink: 2;
+    flex: 5;
 }
 
 .rightSection{
-    flex-basis: 40rem;
-    flex-grow: 0;
-    flex-shrink: 0;
-    background-color: red;
+    flex: 2;
 }

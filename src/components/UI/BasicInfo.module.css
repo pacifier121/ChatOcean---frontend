@@ -1,0 +1,30 @@
+.container{
+    height: 5rem;
+    display: flex;
+    gap: 2rem;
+    width: fit-content;
+}
+
+.user-info{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.user-img{
+    width: 5rem;
+    height: 5rem;
+}
+
+.name{
+    font-weight: 800;
+    font-size: 1.5rem;
+}
+
+.info{
+    font-size: 1.2rem;
+    color: #888;
+    font-weight: 600;
+}
+
