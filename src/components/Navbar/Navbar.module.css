@@ -36,3 +36,46 @@
     display: flex;
     gap: 2.5rem;
 }
+
+/* For larger devices */
+@media (max-width: 1200px){
+    .navbar{
+        gap: 3rem;
+    } 
+}
+
+/* For medium-large devices */
+@media (max-width: 900px){
+    .brandTitle{
+        display: none;
+    }
+}
+
+/* For md devices */
+@media (max-width: 700px){
+    .navbar{
+        gap: 1rem;
+        padding: 1rem 0.5rem;
+    }
+    .navbarRight{
+        gap: 1rem;
+    }
+}
+
+/* For sm device */
+@media (max-width: 450px) {
+    .brandLogo{
+        display: none;
+    }
+    .navbar{
+        height: 7.5rem;
+        background: url('./logo.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-size: 20rem;
+        background-position: -5rem -5rem;
+    }
+    .navbarCenter{
+        opacity: 0.8; 
+    }
+}

@@ -25,9 +25,11 @@ const Feed = () => {
       <div className={cls["feed"]}>
         <div className={cls['centerSection']}>
             <Stories />    
-            <CreatePost />
-            <Post />
-            <Post />
+            <div className={cls["postsSection"]}>
+                <CreatePost />
+                <Post />
+                <Post />
+            </div>
         </div>
         <div className={cls['rightSection']}>
             <FriendRequests />

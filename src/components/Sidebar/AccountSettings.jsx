@@ -4,11 +4,11 @@ import SettingsIcon from '@mui/icons-material/Settings';
 
 const AccountSettings = () => {
   return (
-      <div className={cls["account-settings"] + " card-shadow"}>
-        <span className={cls["account-settings-title"]}>Account</span>
-        <div className={cls["setting"]}>
+      <div className={"card-shadow category-card"}>
+        <span className={"title"}>More Pages</span>
+        <div className={"category"}>
             <SettingsIcon sx={{fontSize:"30px"}} />
-            <span className={cls["settingText"]}>Settings</span>
+            <span className={"category-text"}>Settings</span>
         </div>
       </div>
   )

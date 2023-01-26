@@ -7,27 +7,27 @@ import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 
 const NewFeeds = () => {
   return (
-      <div className={cls["newfeeds"] + " card-shadow"}>
-        <span className={cls["newfeeds-title"]}>New Feeds</span>
-        <div className={cls["feedCategory"]}>
+      <div className={"card-shadow category-card"}>
+        <span className={"title"}>New Feeds</span>
+        <div className={"category"}>
             <TvIcon sx={{fontSize:"30px"}} />
-            <span className={cls["feedCategoryText"]}>NewsFeed</span>
+            <span className={"category-text"}>NewsFeed</span>
         </div>
-        <div className={cls["feedCategory"]}>
+        <div className={"category"}>
             <WorkspacePremiumIcon sx={{fontSize:"30px"}} /> 
-            <span className={cls["feedCategoryText"]}>NewsFeed</span>
+            <span className={"category-text"}>NewsFeed</span>
         </div>
-        <div className={cls["feedCategory"]}>
+        <div className={"category"}>
             <LanguageIcon sx={{fontSize:"30px"}} />
-            <span className={cls["feedCategoryText"]}>Explore Stories </span>
+            <span className={"category-text"}>Explore Stories </span>
         </div>
-        <div className={cls["feedCategory"]}>
+        <div className={"category"}>
             <BoltIcon sx={{fontSize:"30px"}} />
-            <span className={cls["feedCategoryText"]}>Popular Groups </span>
+            <span className={"category-text"}>Popular Groups </span>
         </div>
-        <div className={cls["feedCategory"]}>
+        <div className={"category"}>
             <PersonOutlineIcon sx={{fontSize:"30px"}} />
-            <span className={cls["feedCategoryText"]}>Author Profile</span>
+            <span className={"category-text"}>Author Profile</span>
         </div>
       </div>
   )

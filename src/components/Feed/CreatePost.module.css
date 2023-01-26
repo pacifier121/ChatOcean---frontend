@@ -1,12 +1,12 @@
 .create-post {
   background-color: green;
   padding: 3rem;
-  min-height: 25rem;
   border-radius: 2rem;
   background-color: white;
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  margin-bottom: 2rem;
 }
 
 .create-post-title{
@@ -91,4 +91,42 @@
   justify-content: center;
   align-items: center;
   font-weight: 800;
+}
+
+@media (max-width: 700px){
+   .create-post{
+      padding: 2rem;
+      position: relative;
+   }
+   .create-post-descbox{
+      width: 70%;
+   }
+   .create-post-options{
+      position: absolute;
+      gap: 1rem;
+      right: 0;
+      top: 2rem;
+      width: fit-content;
+      display: flex;
+      flex-direction: column;
+      padding-right: 2rem;
+   }
+   .more-option{
+      order: 1;
+   }
+   .option{
+      order: 2;
+   }
+}
+
+@media (max-width: 600px){
+    .create-post-descbox{
+      width: 80%;
+    }
+    .create-post-options{
+      align-items: center;
+    }
+    .option-text{
+      display: none;
+    }
 }

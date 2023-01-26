@@ -24,3 +24,17 @@
 .feedCategoryText{
     color: #444;
 }
+
+/* For xlg devices */
+@media (max-width: 1400px){
+    .newfeeds{
+        flex-direction: row;
+    }
+    .newfeeds-title{
+        display: none;
+    }
+    .feedCategory{
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+}

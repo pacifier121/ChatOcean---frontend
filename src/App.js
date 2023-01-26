@@ -10,13 +10,17 @@ import Register from "./pages/Register";
 function App() {
   return (
     <>
-      <Register />
-      {/* <Navbar />
+      {/* <Register /> */}
+      <Navbar />
       <div className={cls["mainSection"]}>
-        <Sidebar />
-        <Home />
-        <Profile />
-      </div> */}
+        <div className={cls["leftSection"]}>
+          <Sidebar />
+        </div>
+        <div className={cls["rightSection"]}>
+          <Home />
+          {/* <Profile /> */}
+        </div>
+      </div>
     </>
   );
 }

@@ -6,7 +6,7 @@ const SearchBar = () => {
   return (
       <div className={cls["searchbar"]}>
           <Search sx={{ fontSize: "20px", color: "#ccc" }} /> 
-          <span>Search for people, posts...</span>
+          <span>Search here...</span>
       </div>
   )
 }
