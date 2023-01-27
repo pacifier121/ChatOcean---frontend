@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import BasicInfo from "../UI/BasicInfo";
 import logo from "../Navbar/logo.png";
 import cls from "./FriendRequests.module.css";
-import Divider from "../UI/Divider";
+import SectionCard from "../UI/SectionCard";
 
 const FriendRequest = () => {
     return (
@@ -19,18 +19,11 @@ const FriendRequest = () => {
 
 const FriendRequests = () => {
   return (
-    <div className={cls["requests-wrapper"] + " " + cls["card-shadow"]}>
-      <div className={cls["requests-top"]}>
-        <span className={cls["requests-top-text"]}>Friend Request</span>
-        <a href="#" className={cls["requests-top-link"]}> See All </a>
-      </div>
-      <Divider />
-      <div className={cls["requests-container"]}>
+      <SectionCard title={"Friend Requests"} expandLinkText={"See All"} >
         <FriendRequest />
         <FriendRequest />
         <FriendRequest />
-      </div>
-    </div>
+      </SectionCard>
   );
 };
 

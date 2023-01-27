@@ -3,6 +3,7 @@ import logo from "../Navbar/logo.png"
 import BasicInfo from '../UI/BasicInfo'
 import cls from "./SuggestedFriends.module.css"
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import SectionCard from '../UI/SectionCard';
 
 const SuggestedRequest = () => {
     return (
@@ -17,18 +18,11 @@ const SuggestedRequest = () => {
 
 const SuggestedFriends = () => {
   return (
-    <div className={cls["requests-wrapper"] + " " + cls["card-shadow"]}>
-      <div className={cls["requests-top"]}>
-        <span className={cls["requests-top-text"]}>Suggested Friends</span>
-        <a href="#" className={cls["requests-top-link"]}> See All </a>
-      </div>
-      <hr className={cls["requests-hr"]} />
-      <div className={cls["requests-container"]}>
-        <SuggestedRequest />
-        <SuggestedRequest />
-        <SuggestedRequest />
-      </div>
-    </div>
+    <SectionCard title={"Suggested Friends"} expandLinkText={"See All"}>
+      <SuggestedRequest />
+      <SuggestedRequest />
+      <SuggestedRequest />
+    </SectionCard>
   )
 }
 

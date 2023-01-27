@@ -1,5 +1,6 @@
 .mainSection{
     display: flex;
+    min-height: calc(100vh - 10rem);
 }
 
 .leftSection{
@@ -13,5 +14,18 @@
 @media (max-width: 1400px){
     .mainSection{
         flex-direction: column;
+        background-color: red;
+    }
+    .leftSection{
+        flex: 0;
+    }
+    .rightSection{
+        flex: 1 1 20rem;
+    }
+}
+
+@media (max-width: 450px){
+    .mainSection{
+        min-height: calc(100vh - 7.5rem);
     }
 }

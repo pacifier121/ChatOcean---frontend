@@ -1,13 +1,5 @@
 .chat-sidebar{
-    margin: 1rem;
+    margin: 0 1rem;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-}
-
-.online-friends,
-.offline-friends{
-    background-color: white;
-    padding: 1rem;
-    border-radius: 1rem;
 }

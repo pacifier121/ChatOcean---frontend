@@ -3,6 +3,7 @@
     height: 100%;
     background-color: #eee;
     padding: 1rem;
+    padding-bottom: 0;
     display: flex;
 }
 
@@ -12,4 +13,13 @@
 
 .sidebar{
     flex: 2;
+}
+
+@media (max-width: 1000px){
+    .sidebar{
+        display: none;
+    }
+    .chat-container{
+        height: 100%;
+    }
 }
