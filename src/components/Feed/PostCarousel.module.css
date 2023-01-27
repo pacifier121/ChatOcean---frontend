@@ -1,6 +1,7 @@
 .carousel{
     background-color: black;    
     position: relative;
+    cursor: default;
 }
 
 .slide{
@@ -32,11 +33,13 @@
 .back{
     left: 0;
     background: linear-gradient(90deg, rgba(0,0,0,0.2), rgba(0,0,0,0.05) 80%, rgba(0,0,0,0));
+    z-index: 2;
 }
 
 .next{
     right: 0;
     background: linear-gradient(270deg, rgba(0,0,0,0.2), rgba(0,0,0,0.05) 80%, rgba(0,0,0,0));
+    z-index: 2;
 }
 
 .indicator{
@@ -49,6 +52,7 @@
     display: inline-block;
     margin: 0 1rem;
     cursor: pointer;
+    z-index: 2;
 }
 
 .carousel:hover .indicator{

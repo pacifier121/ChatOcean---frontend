@@ -9,21 +9,34 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ShareIcon from '@mui/icons-material/Share';
 import ChatIcon from '@mui/icons-material/Chat';
+import { useNavigate } from 'react-router-dom';
+import ArticleIcon from '@mui/icons-material/Article';
+import { Link } from 'react-router-dom';
+
+const removeLinkStyles = { textDecoration: 'none', color: 'inherit'};
 
 const Post = () => {
+  const navigate = useNavigate();
+
+
   return (
         <div className={cls["post"] + " card-shadow"}>
             <div className={cls["post-top"]}>
-                <div className={cls["post-top-left"]}>
+                <Link to="/profile/abcd" replace style={removeLinkStyles}  className={cls["post-top-left"]}>
                     <img src={logo} alt="" className={cls["user-img"]} />
                     <div className={cls["user-info"]}>
                         <span className={cls["user-info-username"]}>Pacifire Ocean</span> 
                         <span className={cls["user-info-time"]}>1 hr ago</span> 
                     </div>
-                </div>
-                <div className={cls['more-option']}>
-                    <MoreHoriz sx={{fontSize: "25px"}} />
-                </div>
+                </Link>
+               <div className={cls["post-top-right"]}>
+                   <Link style={removeLinkStyles} to="/post/abcd" replace className={cls["more-option"]}>
+                        <ArticleIcon sx={{fontSize: "25px"}} /> 
+                    </Link> 
+                    <div className={cls['more-option']}>
+                        <MoreHoriz sx={{fontSize: "25px"}} />
+                    </div>
+                </div> 
             </div>
             <div className={cls["post-center"]}>
                 <PostCarousel /> 

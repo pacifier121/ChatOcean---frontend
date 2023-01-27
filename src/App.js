@@ -8,34 +8,20 @@ import ChatPage from "./pages/ChatPage";
 import Notifications from "./pages/Notifications";
 import Navbar from "./components/Navbar/Navbar";
 import Sidebar from "./components/Sidebar/Sidebar";
+import PostPage from "./pages/PostPage";
 import { Routes, Route } from "react-router-dom";
 
 function App() {
   return (
     <Routes>
-      <Route path="/" element={
-        <Layout>
-          <Feed type="user-home" />
-        </Layout> } />
+      <Route path="/" element={ <Layout> <Feed type="user-home" /> </Layout> } />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
-      <Route path="/profile" element={
-        <Layout>
-          <Profile />
-        </Layout> } />
-      <Route path="/stories" element={
-        <Layout>
-          <Stories />
-        </Layout> } />
-      <Route path="/chat" element={
-        <Layout>
-          <ChatPage />
-        </Layout> } />
-      <Route path="/notifications" element={
-        <Layout>
-          <Notifications />
-        </Layout> } />
-    </Routes>
+      <Route path="/stories" element={ <Layout> <Stories /> </Layout> } />
+      <Route path="/chat" element={ <Layout> <ChatPage /> </Layout> } />
+      <Route path="/profile/:username" element={ <Layout> <Profile /> </Layout> } />
+      <Route path="/post/:postId" element={ <Layout> <PostPage /> </Layout> } />
+      <Route path="/notifications" element={ <Layout> <Notifications /> </Layout> } /> </Routes>
   );
 }
 
