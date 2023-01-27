@@ -21,10 +21,18 @@ const Navbar = () => {
             <SearchBar />
         </div>
         <div className={cls['navbarRight']}>
-             <HomeIcon onClick={() => navigate("/")} sx={{fontSize: "32px", color: "#0B54FA"}} />             
-             <NotificationsNoneIcon sx={{fontSize: "32px", color: "#0B54FA"}} /> 
-             <ChatBubbleOutlineIcon onClick={() => navigate("/chat")} sx={{fontSize: "32px", color: "#0B54FA"}} />
-             <AccountCircleIcon onClick={() => navigate("/profile")} sx={{fontSize: "32px", color: "#0B54FA"}} />
+           <div className={cls["btn-icon"]}>
+               <HomeIcon onClick={() => navigate("/")} sx={{fontSize: "100%"}} />             
+            </div> 
+           <div className={cls["btn-icon"]}>
+               <NotificationsNoneIcon onClick={() => navigate("/notifications")} sx={{fontSize: "100%"}} /> 
+            </div> 
+           <div className={cls["btn-icon"]}>
+               <ChatBubbleOutlineIcon onClick={() => navigate("/chat")} sx={{fontSize: "100%"}} />
+            </div> 
+           <div className={cls["btn-icon"]}>
+               <AccountCircleIcon onClick={() => navigate("/profile")} sx={{fontSize: "100%"}} />
+            </div> 
         </div>
     </nav>
   )

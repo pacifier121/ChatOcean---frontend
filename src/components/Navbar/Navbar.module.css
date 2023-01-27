@@ -37,6 +37,11 @@
     gap: 2.5rem;
 }
 
+.btn-icon{
+    font-size: 3.2rem;
+    color: #0B54FA;
+}
+
 /* For larger devices */
 @media (max-width: 1200px){
     .navbar{

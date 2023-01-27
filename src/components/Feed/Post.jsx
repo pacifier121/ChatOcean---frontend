@@ -33,16 +33,24 @@ const Post = () => {
             </div>
             <div className={cls["post-bottom"]}>
                 <div className={cls["post-bottom-likes"]}>
-                    <ThumbUpOffAltIcon className={cls["button-icon"]} /> 
-                    <FavoriteBorderIcon className={cls["button-icon"]} />
-                    <span className={cls["post-likes-text"]}>2.8K Likes</span>
+                   <div className={cls["button-icon"]}>
+                        <ThumbUpOffAltIcon sx={{fontSize: "100%"}} /> 
+                    </div> 
+                   <div className={cls["button-icon"]}>
+                        <FavoriteBorderIcon sx={{fontSize: "100%"}} />
+                    </div> 
+                    <span className={cls["post-likes-text"]}>2.8K</span>
                 </div>
                 <div className={cls["post-bottom-comments"]}>
-                    <ChatIcon className={cls["button-icon"]} />
+                   <div className={cls["button-icon"]}>
+                        <ChatIcon sx={{fontSize: "100%"}} />
+                    </div> 
                     <span className={cls["post-comments-text"]}>22 Comments</span>
                 </div>
                 <div className={cls["post-bottom-share"]}>
-                    <ShareIcon className={cls["button-icon"]} /> 
+                   <div className={cls["button-icon"]}>
+                        <ShareIcon sx={{fontSize: "100%"}} /> 
+                    </div> 
                     <span className={cls["post-share-text"]}>Share</span>
                 </div>
             </div>

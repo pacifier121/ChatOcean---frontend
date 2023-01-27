@@ -5,6 +5,7 @@ import Layout from "./pages/Layout";
 import Profile from "./pages/Profile";
 import Stories from "./pages/Stories";
 import ChatPage from "./pages/ChatPage";
+import Notifications from "./pages/Notifications";
 import Navbar from "./components/Navbar/Navbar";
 import Sidebar from "./components/Sidebar/Sidebar";
 import { Routes, Route } from "react-router-dom";
@@ -29,6 +30,10 @@ function App() {
       <Route path="/chat" element={
         <Layout>
           <ChatPage />
+        </Layout> } />
+      <Route path="/notifications" element={
+        <Layout>
+          <Notifications />
         </Layout> } />
     </Routes>
   );
