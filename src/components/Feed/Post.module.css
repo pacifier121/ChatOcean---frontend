@@ -10,13 +10,17 @@
     padding: 0 1rem;
     height: 5rem;
     display: flex;
-    position: relative;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .post-top-left{
     height: 100%;
     display: flex;
     gap: 2rem;
+    flex: 0;
+    max-width: 50%;
 }
 
 .user-info{
@@ -24,6 +28,7 @@
     flex-direction: column;
     justify-content: center;
     gap: 0.5rem;
+    white-space: nowrap;
 }
 
 .user-info-username{
@@ -38,8 +43,6 @@
 }
 
 .more-option{
-  position: absolute;
-  right: 1rem;
   border-radius: 100%;
   background-color: #eee;
   padding: 1rem;
@@ -80,4 +83,45 @@
 
 .post-bottom-share{
     margin-left: auto;
+}
+
+.button-icon{
+    font-size: 2rem;
+}
+
+@media (max-width: 700px){
+   .post{
+        padding: 0.5rem;
+        padding-bottom: 1rem;
+   } 
+   .post-top{
+        padding: 0 0.5rem;
+   }
+   .post-center{
+        padding: 0.5rem;
+   }
+   .post-center-caption{
+       margin: 0.5rem 0;
+       font-size: 1.2rem;
+   }
+}
+
+@media (max-width: 450px) {
+    .post{
+        padding: 0;
+        padding-bottom: 1rem;
+        border-radius: 0.5rem;
+    } 
+    .post-center{
+        padding: 0;
+    }
+    .post-center-caption{
+        margin: 0.5rem 1rem;
+    }
+    .post-bottom{
+        font-size: 1.3rem;
+    }
+    .button-icon{
+        font-size: 1.6rem;
+    }
 }

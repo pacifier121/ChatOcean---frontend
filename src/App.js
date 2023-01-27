@@ -5,6 +5,7 @@ import Stories from "./pages/Stories";
 import Profile from "./pages/Profile";
 import Login from "./pages/Login";
 import cls from "./App.module.css";
+import ChatPage from "./pages/ChatPage";
 import Register from "./pages/Register";
 
 function App() {
@@ -17,8 +18,10 @@ function App() {
           <Sidebar />
         </div>
         <div className={cls["rightSection"]}>
-          <Home />
+          {/* <Home /> */}
           {/* <Profile /> */}
+          {/* <Stories /> */}
+          <ChatPage />
         </div>
       </div>
     </>

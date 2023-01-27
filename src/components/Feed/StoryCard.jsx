@@ -18,7 +18,9 @@ const StoryCard = ({ type, className }) => {
    const addStoryCard = (
       <div className={cardClasses}>
         <div className={cls["story-card-user"]}>
-            <Add sx={{color: "blue", backgroundColor: "white", fontSize: "50px", borderRadius: "100%"}} />
+            <div className={cls["add-story-btn"]}>
+              <Add sx={{ fontSize: "100%" }} />
+            </div>
             <span className={cls["story-card-text"]}>Add Story</span>
         </div>
       </div>

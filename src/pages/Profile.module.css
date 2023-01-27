@@ -19,3 +19,31 @@
 .rightSection{
     flex: 2;
 }
+
+@media (max-width: 1200px){
+    .rightSection{
+        display: none;
+    }
+    .bottomSection{
+        display: block;
+        padding: 2rem 15%;
+    }
+}
+
+@media (max-width: 900px){
+    .bottomSection{
+        padding: 2rem 0;
+    }
+}
+
+@media (max-width: 700px) {
+    .profile{
+        padding: 2rem;
+    }
+}
+
+@media (max-width: 450px) {
+    .profile{
+        padding: 0.5rem;
+    }
+}

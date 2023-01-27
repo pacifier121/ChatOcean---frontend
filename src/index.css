@@ -85,6 +85,6 @@ code {
 
 @media (max-width: 450px) {
     .category-card{
-      margin: 1rem;
+        margin: 1rem;
     }  
 }
