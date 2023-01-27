@@ -1,30 +1,36 @@
-import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Feed from "./components/Feed/Feed";
+import Layout from "./pages/Layout";
+import Profile from "./pages/Profile";
+import Stories from "./pages/Stories";
+import ChatPage from "./pages/ChatPage";
 import Navbar from "./components/Navbar/Navbar";
 import Sidebar from "./components/Sidebar/Sidebar";
-import Stories from "./pages/Stories";
-import Profile from "./pages/Profile";
-import Login from "./pages/Login";
-import cls from "./App.module.css";
-import ChatPage from "./pages/ChatPage";
-import Register from "./pages/Register";
+import { Routes, Route } from "react-router-dom";
 
 function App() {
   return (
-    <>
-      {/* <Register /> */}
-      <Navbar />
-      <div className={cls["mainSection"]}>
-        <div className={cls["leftSection"]}>
-          <Sidebar />
-        </div>
-        <div className={cls["rightSection"]}>
-          {/* <Home /> */}
-          {/* <Profile /> */}
-          {/* <Stories /> */}
+    <Routes>
+      <Route path="/" element={
+        <Layout>
+          <Feed type="user-home" />
+        </Layout> } />
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+      <Route path="/profile" element={
+        <Layout>
+          <Profile />
+        </Layout> } />
+      <Route path="/stories" element={
+        <Layout>
+          <Stories />
+        </Layout> } />
+      <Route path="/chat" element={
+        <Layout>
           <ChatPage />
-        </div>
-      </div>
-    </>
+        </Layout> } />
+    </Routes>
   );
 }
 

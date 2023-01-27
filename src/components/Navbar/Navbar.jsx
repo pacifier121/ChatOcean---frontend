@@ -4,10 +4,13 @@ import logo from "./logo.png";
 import SearchBar from "./SearchBar";
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
-import SettingsIcon from '@mui/icons-material/Settings';
+import HomeIcon from '@mui/icons-material/Home';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { useNavigate } from 'react-router-dom';
 
-const Navbar = () => {
+const Navbar = () => { 
+  const navigate = useNavigate();
+
   return (
     <nav className={cls["navbar"]}>
         <div className={cls["navbarLeft"]}>
@@ -18,10 +21,10 @@ const Navbar = () => {
             <SearchBar />
         </div>
         <div className={cls['navbarRight']}>
+             <HomeIcon onClick={() => navigate("/")} sx={{fontSize: "32px", color: "#0B54FA"}} />             
              <NotificationsNoneIcon sx={{fontSize: "32px", color: "#0B54FA"}} /> 
-             <ChatBubbleOutlineIcon sx={{fontSize: "32px", color: "#0B54FA"}} />
-             <SettingsIcon sx={{fontSize: "32px", color: "#0B54FA"}} />             
-             <AccountCircleIcon sx={{fontSize: "32px", color: "#0B54FA"}} />
+             <ChatBubbleOutlineIcon onClick={() => navigate("/chat")} sx={{fontSize: "32px", color: "#0B54FA"}} />
+             <AccountCircleIcon onClick={() => navigate("/profile")} sx={{fontSize: "32px", color: "#0B54FA"}} />
         </div>
     </nav>
   )
