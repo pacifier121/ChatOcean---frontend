@@ -28,7 +28,7 @@ const Feed = () => {
             <div className={cls["postsSection"]}>
                 <CreatePost />
                 <Post />
-                <Post />
+                <Post type="video" />
             </div>
         </div>
         <div className={cls['rightSection']}>

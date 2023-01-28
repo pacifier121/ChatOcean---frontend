@@ -29,3 +29,11 @@
     font-weight: 600;
 }
 
+/* Dark theme */
+.dark .name{
+    color: white;
+}
+
+.dark .info{
+    color: #ddd;
+}

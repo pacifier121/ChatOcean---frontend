@@ -6,11 +6,11 @@ import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import HomeIcon from '@mui/icons-material/Home';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+
+const removeLinkStyles = { textDecoration: 'none', color: 'inherit', fontSize: "100%"};
 
 const Navbar = () => { 
-  const navigate = useNavigate();
-
   return (
     <nav className={cls["navbar"]}>
         <div className={cls["navbarLeft"]}>
@@ -21,18 +21,18 @@ const Navbar = () => {
             <SearchBar />
         </div>
         <div className={cls['navbarRight']}>
-           <div className={cls["btn-icon"]}>
-               <HomeIcon onClick={() => navigate("/")} sx={{fontSize: "100%"}} />             
-            </div> 
-           <div className={cls["btn-icon"]}>
-               <NotificationsNoneIcon onClick={() => navigate("/notifications")} sx={{fontSize: "100%"}} /> 
-            </div> 
-           <div className={cls["btn-icon"]}>
-               <ChatBubbleOutlineIcon onClick={() => navigate("/chat")} sx={{fontSize: "100%"}} />
-            </div> 
-           <div className={cls["btn-icon"]}>
-               <AccountCircleIcon onClick={() => navigate("/profile")} sx={{fontSize: "100%"}} />
-            </div> 
+           <Link to="/" className={cls["btn-icon"]}>
+               <HomeIcon sx={removeLinkStyles} />             
+            </Link> 
+           <Link to="/notifications" className={cls["btn-icon"]}>
+               <NotificationsNoneIcon sx={removeLinkStyles} /> 
+            </Link> 
+           <Link to="/chat" className={cls["btn-icon"]}>
+               <ChatBubbleOutlineIcon sx={removeLinkStyles} />
+            </Link> 
+           <Link to="/profile/abcd" className={cls["btn-icon"]}>
+               <AccountCircleIcon sx={removeLinkStyles} />
+            </Link> 
         </div>
     </nav>
   )

@@ -12,10 +12,11 @@ import ChatIcon from '@mui/icons-material/Chat';
 import { useNavigate } from 'react-router-dom';
 import ArticleIcon from '@mui/icons-material/Article';
 import { Link } from 'react-router-dom';
+import Video from '../Videos/Video';
 
 const removeLinkStyles = { textDecoration: 'none', color: 'inherit'};
 
-const Post = () => {
+const Post = ({ type }) => {
   const navigate = useNavigate();
 
 
@@ -30,7 +31,7 @@ const Post = () => {
                     </div>
                 </Link>
                <div className={cls["post-top-right"]}>
-                   <Link style={removeLinkStyles} to="/post/abcd" replace className={cls["more-option"]}>
+                   <Link style={removeLinkStyles} to={"/post/" + (type === 'video' ? "abcde" : "abcd")} replace className={cls["more-option"]}>
                         <ArticleIcon sx={{fontSize: "25px"}} /> 
                     </Link> 
                     <div className={cls['more-option']}>
@@ -39,7 +40,7 @@ const Post = () => {
                 </div> 
             </div>
             <div className={cls["post-center"]}>
-                <PostCarousel /> 
+                {type === 'video' ? <Video /> : <PostCarousel /> }
                 <p className={cls["post-center-caption"]}>
                     This is the caption
                 </p>

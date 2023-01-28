@@ -1,9 +1,12 @@
 import React from 'react'
 import cls from "./BasicInfo.module.css";
 
-const BasicInfo = ({img, name, info}) => {
+
+const BasicInfo = ({ img, name, info, theme, className}) => {
+  const classes =  cls["container"] + " " + cls[theme] + " " + className;
+
   return (
-    <div className={cls["container"]} >
+    <div className={classes} >
         <img src={img} alt="" className={cls["user-img"]} />
         <div className={cls["user-info"]}>
             <span className={cls["name"]}>{name}</span> 
@@ -12,5 +15,6 @@ const BasicInfo = ({img, name, info}) => {
     </div>
   )
 }
+
 
 export default BasicInfo

@@ -2,6 +2,7 @@ import React from 'react'
 import cls from "./Profile.module.css";
 import ProfileHeader from '../components/Profile/ProfileHeader';
 import Post from '../components/Feed/Post';
+import Video from "../components/Videos/Video";
 import FriendRequests from '../components/Feed/FriendRequests';
 
 const Profile = () => {
@@ -11,6 +12,7 @@ const Profile = () => {
         <div className={cls["bottomSection"]}>
             <div className={cls['centerSection']}>
                 <Post />
+                {/* <Video /> */}
             </div>
             <div className={cls['rightSection']}>
                 <FriendRequests />    

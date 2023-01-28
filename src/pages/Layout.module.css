@@ -1,14 +1,18 @@
 .mainSection{
     display: flex;
-    min-height: calc(100vh - 10rem);
 }
 
 .leftSection{
     flex: 2;
+    align-self: flex-start;
 }
 
 .rightSection{
     flex: 10;
+}
+
+.disable-scroll{
+    overflow-y: hidden !important; 
 }
 
 @media (max-width: 1400px){
@@ -20,6 +24,9 @@
     }
     .rightSection{
         flex: 1 1 20rem;
+    }
+    .disable-scroll{
+        flex: 0 !important;
     }
 }
 

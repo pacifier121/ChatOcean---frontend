@@ -17,8 +17,8 @@
     top: 0;
     bottom: 0;
     width: 6rem;
-    margin: auto 0rem;
-    z-index: 100;
+    margin: auto;
+    z-index: 10;
     background-color: transparent;
 }
 

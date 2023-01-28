@@ -7,8 +7,10 @@ import Divider from '../UI/Divider';
 import cls from "./ProfileHeader.module.css";
 
 const ProfileHeader = () => {
+   const classes =  cls["profile-header"] + " card-shadow";
+
   return (
-        <div className={cls["profile-header"]}>
+        <div className={classes}>
             <div className={cls["cover"]}>
                 <img src={bg} alt="" className={cls["cover-img"]} />
             </div>
@@ -30,10 +32,10 @@ const ProfileHeader = () => {
             </div>
             <Divider />
         <nav className={cls["profile-nav"]}>
-            <div className={cls["nav-section"] + " " + cls["active"]}>
+            <div className={cls["nav-section"]}>
                 <span>Posts</span>
             </div>
-            <div className={cls["nav-section"]}>
+            <div className={cls["nav-section"] + " " + cls["active"]}>
                 <span>Video</span>
             </div>
             <div className={cls["nav-section"]}>
