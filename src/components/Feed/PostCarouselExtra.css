@@ -1,0 +1,16 @@
+.mypostcarousel{ }
+
+.mypostcarousel .carousel-root>.carousel-slider{
+}
+
+.mypostcarousel .slider-wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.mypostcarousel .slide{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}

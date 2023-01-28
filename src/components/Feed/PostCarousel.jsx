@@ -1,26 +1,12 @@
 import React from 'react'
 import { Carousel } from 'react-responsive-carousel'
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import n1 from "./images/nature1.jpg";
-import n2 from "./images/nature2.jpeg";
-import n3 from "./images/nature3.jpg";
-import n4 from "./images/nature4.jpg";
 import cls from "./PostCarousel.module.css";
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import "./PostCarouselExtra.css";
 
-const Slide = ({ item }) => {
-    return (
-        <div className={cls["slide"]}>
-            <img className={cls["slideImg"]} src={item.props.children.props.src} />
-        </div>
-    )
-};
-
-const PostCarousel = () => {
-    const onChange = () => {};
-    const onClickItem = () => {};
-    const onClickThumb = () => {};
+const PostCarousel = ({ children }) => {
     const itemsCount = 4;
     
     const arrowPrev = (clickHandler, hasPrev, labelPrev) => hasPrev && (
@@ -43,22 +29,11 @@ const PostCarousel = () => {
     
 
   return (
-        <Carousel className={cls["carousel"]} showThumbs={false} showArrows={itemsCount === 1 ? false: true} showStatus={false} showIndicators={itemsCount === 1 ? false: true}
-                renderItem={item => <Slide item={item} />} renderArrowPrev={arrowPrev} renderArrowNext={arrowNext} 
+        <Carousel className={cls["carousel"] + " mypostcarousel"} showThumbs={false} showArrows={itemsCount === 1 ? false: true} showStatus={false} showIndicators={itemsCount === 1 ? false: true}
+                renderItem={item => item} renderArrowPrev={arrowPrev} renderArrowNext={arrowNext} 
                 renderIndicator={indicator}
                 >
-        <div>
-            <img src={n1} />
-        </div>
-        <div>
-            <img src={n2} />
-        </div>
-        <div>
-            <img src={n3} />
-        </div>
-        <div>
-            <img src={n4} />
-        </div>
+                {children}
       </Carousel>
   )
 }

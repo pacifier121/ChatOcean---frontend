@@ -11,8 +11,7 @@ const Profile = () => {
         <ProfileHeader />
         <div className={cls["bottomSection"]}>
             <div className={cls['centerSection']}>
-                <Post />
-                {/* <Video /> */}
+                <Post type="video" />
             </div>
             <div className={cls['rightSection']}>
                 <FriendRequests />    
