@@ -15,6 +15,7 @@ const CreatePost = () => {
                 <CreateIcon sx={{ fontSize: "25px" }} />
             </div>
             <span className={cls["create-post-title-text"]} >Create Post</span>
+            <span className={cls["submit-btn"]}>Create</span>
         </div>
         <div className={cls['create-post-descbox']}>
             <textarea placeholder={`What's on your mind ${'pacifire'}?`} className={cls['create-post-input']} />

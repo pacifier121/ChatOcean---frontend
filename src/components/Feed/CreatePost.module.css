@@ -35,6 +35,21 @@
   font-weight: 800;
 }
 
+.submit-btn{
+  background: linear-gradient(45deg, rgb(1, 117, 1) , rgb(2, 197, 2));
+  color: white;
+  font-weight: 600;
+  margin-left: auto;
+  font-size: 1.5rem;
+  user-select: none;
+  padding: 1rem 2rem;
+  cursor: pointer;
+  border-radius: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .create-post-descbox{
   height: 10rem;
   width: 100%;

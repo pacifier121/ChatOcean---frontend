@@ -4,9 +4,10 @@ import Video from "../Videos/Video";
 import Photo from "../Photos/Photo";
 import logo from "../Navbar/logo.png";
 import UserStoryCarousel from "./UserStoryCarousel";
-import n1 from  "../Feed/images/nature1.jpg";
-import n2 from  "../Feed/images/nature2.jpeg";
-import n4 from  "../Feed/images/nature4.jpg";
+import n1 from  "../../pages/images/nature1.jpg";
+import n2 from  "../../pages/images/nature2.jpeg";
+import n4 from  "../../pages/images/nature4.jpg";
+import v1 from "../../pages/videos/nature_video.mp4";
 import BasicInfo from "../UI/BasicInfo";
 import HomeIcon from '@mui/icons-material/Home';
 import { Link } from "react-router-dom"
@@ -24,7 +25,7 @@ const Story = ({ type }) => {
           <Link onClick={() => console.log("helo")} className={cls['home-link']} to="/" style={removeLinkStyles}><HomeIcon sx={{fontSize: '100%'}} /></Link>
             <UserStoryCarousel className={cls["story"]}>
               <Photo src={n1} className={cls["story-photo"]} />
-              <Video showControls={false} className={cls["story-video"]} />
+              <Video showControls={false} src={v1} className={cls["story-video"]} />
               <Photo src={n4} className={cls["story-photo"]} />
             </UserStoryCarousel>
       </>
