@@ -137,6 +137,7 @@
     font-size: 2rem; 
     border-radius: 0.5rem;
     cursor: pointer;
+    white-space: nowrap;
 }
 
 .other-options{
@@ -160,6 +161,23 @@
     padding: 1rem 2rem;
     border: none;
     cursor: pointer;
+}
+
+.submit-wrapper{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+}
+
+.error{
+    background-color: pink;
+    color: red;
+    font-size: 1.2rem;
+    border: 1px solid red;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
 }
 
 @media (max-width: 1020px){

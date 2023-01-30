@@ -143,6 +143,26 @@
 
 .google{
     background-color: #049929 !important; 
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.submit-wrapper{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+}
+
+.error{
+    background-color: pink;
+    color: red;
+    font-size: 1.2rem;
+    border: 1px solid red;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
 }
 
 @media (max-width: 1020px){

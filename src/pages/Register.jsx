@@ -1,12 +1,40 @@
-import React from 'react'
 import cls from "./Register.module.css";
 import {PF} from "./../constants/constants";
 import GoogleIcon from '@mui/icons-material/Google';
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
+import { useRef, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useEffect } from "react";
+import { validateRegisterForm } from "../validations/registerValidation";
 
 const Register = () => {
-  const submitHandler = (e) => {
+  const usernameRef = useRef();
+  const emailRef = useRef();
+  const passwordRef = useRef();
+  const confirmPasswordRef = useRef(); 
+  const [error, setError] = useState('');
+  const location = useLocation();
+  const navigate = useNavigate();
+  
+  useEffect(() => {
+    const msg = new URLSearchParams(location.search).get("msg");
+    if (msg === 'notfound') setError("User not found! Please register here");
+  }, []);
+
+
+  const submitHandler = async (e) => {
     e.preventDefault();
+    
+    const { err, user } = validateRegisterForm(emailRef.current.value, usernameRef.current.value, passwordRef.current.value, confirmPasswordRef.current.value);
+    if (err) return setError(err);
+    
+    try {
+      await axios.post('http://localhost:8000/register', user);
+      navigate('/login');
+    } catch (err) {
+      console.log(err); 
+    }
   } 
     
   const googleAuthHandler = () => {
@@ -28,21 +56,24 @@ const Register = () => {
                   <div className={cls["normal-register-wrapper"]}>
                     <div className={cls["form-control"]}>
                         <label htmlFor="email">Email</label>
-                        <input id="email" type="email" />
+                        <input ref={emailRef} required id="email" type="email" />
                     </div>                    
                     <div className={cls["form-control"]}>
                         <label htmlFor="username">Username</label>
-                        <input id="username" type="text" />
+                        <input ref={usernameRef} required id="username" type="text" />
                     </div>                    
                     <div className={cls["form-control"]}>
                         <label htmlFor="password">Password</label>
-                        <input id="password" type="password" />
+                        <input ref={passwordRef} required id="password" type="password" />
                     </div>                    
                     <div className={cls["form-control"]}>
                         <label htmlFor="confirm-password">Confirm Password</label>
-                        <input id="confirm-password" type="password" />
+                        <input ref={confirmPasswordRef} required id="confirm-password" type="password" />
                     </div>                    
-                    <button type="submit" >Sign Up</button>
+                    <div className={cls["submit-wrapper"]}>
+                      <button className={cls["submit-btn"]} type="submit" >Sign Up</button>
+                      { error && <span className={cls["error"]}>{error}</span> }
+                    </div>
                   </div>
                    <div className={cls["form-divider"]} ></div>
                    <div className={cls["oauth-register-wrapper"]}>

@@ -2,12 +2,38 @@ import React from "react";
 import cls from "./Login.module.css";
 import { PF } from "./../constants/constants";
 import GoogleIcon from '@mui/icons-material/Google';
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { authActions, tryLogin } from "../store/auth";
+import { useRef, useState } from "react";
+import axios from "axios";
 
 const Login = () => {
-  const submitHandler = (e) => {
+  const dispatch = useDispatch(); 
+  const navigate = useNavigate();
+  const emailRef = useRef();
+  const passwordRef = useRef();
+  const [error, setError] = useState('');
+
+  const submitHandler = async (e) => {
     e.preventDefault();
+    
+    const userData = {
+      email: emailRef.current.value,
+      password: passwordRef.current.value
+    }
+    
+    const { data } = await axios.post('http://localhost:8000/login', userData);
+    console.log(data)
+    if (data.msg){
+      return setError(data.msg);   
+    }
+    dispatch(authActions.login(data));
   };
+
+  const googleAuthHandler = () => {
+      window.open('http://localhost:8000/auth/google', '_self');
+  }
 
   return (
     <div className={cls["outer-container"]}>
@@ -24,18 +50,21 @@ const Login = () => {
             <div className={cls["normal-login-wrapper"]}>
               <div className={cls["form-control"]}>
                 <label htmlFor="email">Email</label>
-                <input id="email" type="email" />
+                <input required ref={emailRef} id="email" type="email" />
               </div>
               <div className={cls["form-control"]}>
                 <label htmlFor="password">Password</label>
-                <input id="password" type="password" />
+                <input required ref={passwordRef} id="password" type="password" />
               </div>
-              <button type="submit">Log In</button>
+                <div className={cls["submit-wrapper"]}>
+                  <button className={cls["submit-btn"]} type="submit" >Log In</button>
+                  { error && <span className={cls["error"]}>{error}</span> }
+                </div>
             </div>
            <div className={cls["form-divider"]} ></div>
            <div className={cls["oauth-login-wrapper"]}>
               <span>Log In with </span>
-              <button className={cls["google"]}>
+              <button onClick={googleAuthHandler} className={cls["google"]}>
                 <GoogleIcon /> Google                
               </button> 
             </div> 
