@@ -20,9 +20,9 @@ const Story = ({ type }) => {
           <BasicInfo className={cls['profile-info']} theme="dark" img={PF+'logo.png'} name={"Pacifire Ocean"} info={"1 hr ago"} />
           <Link onClick={() => console.log("helo")} className={cls['home-link']} to="/" style={removeLinkStyles}><HomeIcon sx={{fontSize: '100%'}} /></Link>
             <UserStoryCarousel className={cls["story"]}>
-              <Photo src={PF+'images/nature1.jpeg'} className={cls["story-photo"]} />
-              <Video showControls={PF+'videos/video_nature.mp4'} src={PF+'videos/video_nature1.mp4'} className={cls["story-video"]} />
-              <Photo src={PF+'images/nature4.jpeg'} className={cls["story-photo"]} />
+              <Photo src={PF+'images/nature1.jpg'} className={cls["story-photo"]} />
+              <Video src={PF+'videos/nature_video.mp4'} className={cls["story-video"]} />
+              <Photo src={PF+'images/nature4.jpg'} className={cls["story-photo"]} />
             </UserStoryCarousel>
       </>
   )
