@@ -27,11 +27,6 @@
     gap: 2rem;
 }
 
-.inner-container{
-    width: 60rem;
-    background-color: white;
-    border-radius: 2rem;
-}
 
 .brand-container{
     display: flex;
@@ -51,10 +46,42 @@
 }
 
 .inner-container{
+    background-color: white;
+    border-radius: 2rem;
+    width: 60rem;
     padding: 5rem;
+    display: grid;
+    grid-template-columns: 1fr 2px 1fr;
+    gap: 2rem;
+}
+
+.normal-login-wrapper{
+    padding: 2rem;
+    grid-column: 1/2;
+    display: flex;
+    gap: 2rem;
+    flex-direction: column; 
+}
+
+.form-divider{
+    width: 100%;
+    height: 100%;
+    margin: auto auto;
+    background-color: #eee;
+    top: 15%;
+}
+
+.oauth-login-wrapper{
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
     gap: 2rem;
+}
+
+.oauth-login-wrapper span{
+    font-size: 2rem; 
+    font-weight: 800;
 }
 
 .form-control{
@@ -114,6 +141,10 @@
     cursor: pointer;
 }
 
+.google{
+    background-color: #049929 !important; 
+}
+
 @media (max-width: 1020px){
     .outer-container{
         flex-direction: column-reverse;
@@ -140,6 +171,15 @@
     .inner-container{
         padding: 2rem;
         width: 100%;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 2px;
+    }
+    .normal-login-wrapper{
+        gap: 1.5rem;
+        padding: 0;
+    }
+    .oauth-login-wrapper{
+        flex-direction: row;
     }
     .login-form{
         width: 90%;

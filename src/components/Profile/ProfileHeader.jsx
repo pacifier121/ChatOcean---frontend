@@ -1,10 +1,9 @@
 import React from 'react'
-import bg from "./bg.jpg";
-import logo from "../Navbar/logo.png";
 import SendIcon from '@mui/icons-material/Send';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import Divider from '../UI/Divider';
 import cls from "./ProfileHeader.module.css";
+import {PF} from "../../constants/constants";
 
 const ProfileHeader = () => {
    const classes =  cls["profile-header"] + " card-shadow";
@@ -12,10 +11,10 @@ const ProfileHeader = () => {
   return (
         <div className={classes}>
             <div className={cls["cover"]}>
-                <img src={bg} alt="" className={cls["cover-img"]} />
+                <img src={PF+"bg.png"} alt="" className={cls["cover-img"]} />
             </div>
             <div className={cls["user-info"]}>
-                <img src={logo} className={cls["user-info-img"]} />
+                <img src={PF+'logo.png'} className={cls["user-info-img"]} />
                 <div className={cls["user-info-desc"]}>
                     <span className={cls["user-info-name"]}>Pacifire Ocean</span> 
                     <span className={cls["user-info-email"]}>pacifire@ocean.com</span> 

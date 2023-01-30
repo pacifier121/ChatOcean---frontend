@@ -1,12 +1,12 @@
 import React from 'react'
 import cls from "./Notification.module.css";
-import logo from "../Navbar/logo.png";
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import {PF} from "../../constants/constants";
 
 const Notification = () => {
   return (
         <div className={cls["notification"]}>
-            <img src={logo} className={cls["user-img"]} />
+            <img src={PF+"logo.png"} className={cls["user-img"]} />
             <div className={cls["info"]}>
                <div className={cls["info-text"]}>
                     <b>User</b> liked your post <b>&lt;link to post&gt;</b>

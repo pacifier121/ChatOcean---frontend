@@ -1,8 +1,8 @@
 import React from 'react'
-import logo from "../Navbar/logo.png";
 import cls from "./StoryCard.module.css";
 import { Link, useNavigate } from 'react-router-dom';
 import { Add } from '@mui/icons-material';
+import {PF} from "../../constants/constants";
 
 const StoryCard = ({ type, className }) => {
    const cardClasses = `${cls["story-card"]} ${className}`;
@@ -10,7 +10,7 @@ const StoryCard = ({ type, className }) => {
    const regularCard = (
       <Link to="/story/abcd" className={cardClasses}>
         <div className={cls["story-card-user"]}>
-            <img src={logo} className={cls["story-card-img"]} />
+            <img src={PF+'logo.png'} className={cls["story-card-img"]} />
             <span className={cls["story-card-text"]}>Pacifire Ocean</span>
         </div>
       </Link>

@@ -1,11 +1,11 @@
 import React from 'react'
 import cls from "./CreatePost.module.css";
 import CreateIcon from '@mui/icons-material/Create';
-import logo from "../Navbar/logo.png";
 import VideoCameraBackIcon from '@mui/icons-material/VideoCameraBack';
 import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import { MoreHoriz } from '@mui/icons-material';
+import {PF} from "../../constants/constants";
 
 const CreatePost = () => {
   return (
@@ -19,7 +19,7 @@ const CreatePost = () => {
         </div>
         <div className={cls['create-post-descbox']}>
             <textarea placeholder={`What's on your mind ${'pacifire'}?`} className={cls['create-post-input']} />
-            <img src={logo} className={cls['create-post-user-img']} />
+            <img src={PF+'logo.png'} className={cls['create-post-user-img']} />
         </div>
         <div className={cls['create-post-options']}>
             <div className={cls['option']}>

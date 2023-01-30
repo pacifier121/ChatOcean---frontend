@@ -23,7 +23,8 @@ function App() {
       <Route path="/profile/:username" element={ <Layout> <Profile /> </Layout> } />
       <Route path="/post/:postId" element={ <Layout> <PostPage /> </Layout> } />
       <Route path="/story/:storyId" element={ <Layout storyMode={true}> <StoryPage /> </Layout> } />
-      <Route path="/notifications" element={ <Layout> <Notifications /> </Layout> } /> </Routes>
+      <Route path="/notifications" element={ <Layout> <Notifications /> </Layout> } /> 
+    </Routes>
   );
 }
 

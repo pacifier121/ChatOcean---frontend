@@ -78,7 +78,7 @@
     }
     .navbar{
         height: 7.5rem;
-        background: white url('./logo.png');
+        background: white url('http://localhost:8000/images/logo.png');
         background-size: contain;
         background-repeat: no-repeat;
         background-size: 20rem;

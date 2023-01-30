@@ -55,6 +55,11 @@ code {
     color: #444;
 }
 
+.linkStyles{
+    color: inherit;
+    text-decoration: none;
+}
+
 /* For xlg devices */
 @media (max-width: 1400px){
     .category-card{

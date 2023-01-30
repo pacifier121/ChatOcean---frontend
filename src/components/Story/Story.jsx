@@ -2,15 +2,11 @@ import React from 'react'
 import cls from "./Story.module.css";
 import Video from "../Videos/Video";
 import Photo from "../Photos/Photo";
-import logo from "../Navbar/logo.png";
 import UserStoryCarousel from "./UserStoryCarousel";
-import n1 from  "../../pages/images/nature1.jpg";
-import n2 from  "../../pages/images/nature2.jpeg";
-import n4 from  "../../pages/images/nature4.jpg";
-import v1 from "../../pages/videos/nature_video.mp4";
 import BasicInfo from "../UI/BasicInfo";
 import HomeIcon from '@mui/icons-material/Home';
 import { Link } from "react-router-dom"
+import {PF} from "../../constants/constants";
 
 const removeLinkStyles = { textDecoration: 'none' };
 
@@ -21,12 +17,12 @@ const Story = ({ type }) => {
 
   return (
       <>
-          <BasicInfo className={cls['profile-info']} theme="dark" img={logo} name={"Pacifire Ocean"} info={"1 hr ago"} />
+          <BasicInfo className={cls['profile-info']} theme="dark" img={PF+'logo.png'} name={"Pacifire Ocean"} info={"1 hr ago"} />
           <Link onClick={() => console.log("helo")} className={cls['home-link']} to="/" style={removeLinkStyles}><HomeIcon sx={{fontSize: '100%'}} /></Link>
             <UserStoryCarousel className={cls["story"]}>
-              <Photo src={n1} className={cls["story-photo"]} />
-              <Video showControls={false} src={v1} className={cls["story-video"]} />
-              <Photo src={n4} className={cls["story-photo"]} />
+              <Photo src={PF+'images/nature1.jpeg'} className={cls["story-photo"]} />
+              <Video showControls={PF+'videos/video_nature.mp4'} src={PF+'videos/video_nature1.mp4'} className={cls["story-video"]} />
+              <Photo src={PF+'images/nature4.jpeg'} className={cls["story-photo"]} />
             </UserStoryCarousel>
       </>
   )

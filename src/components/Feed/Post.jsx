@@ -1,6 +1,5 @@
 import React from 'react'
 import cls from "./Post.module.css";
-import logo from "../Navbar/logo.png";
 import PostCarousel from "./PostCarousel";
 import { MoreHoriz } from '@mui/icons-material';
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
@@ -11,6 +10,7 @@ import ShareIcon from '@mui/icons-material/Share';
 import ChatIcon from '@mui/icons-material/Chat';
 import ArticleIcon from '@mui/icons-material/Article';
 import { Link } from 'react-router-dom';
+import {PF} from "../../constants/constants";
 
 const removeLinkStyles = { textDecoration: 'none', color: 'inherit'};
 
@@ -19,7 +19,7 @@ const Post = ({ children }) => {
         <div className={cls["post"] + " card-shadow"}>
             <div className={cls["post-top"]}>
                 <Link to="/profile/abcd" replace style={removeLinkStyles}  className={cls["post-top-left"]}>
-                    <img src={logo} alt="" className={cls["user-img"]} />
+                    <img src={PF+'logo.png'} alt="" className={cls["user-img"]} />
                     <div className={cls["user-info"]}>
                         <span className={cls["user-info-username"]}>Pacifire Ocean</span> 
                         <span className={cls["user-info-time"]}>1 hr ago</span> 

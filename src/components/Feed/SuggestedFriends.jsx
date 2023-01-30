@@ -1,14 +1,14 @@
 import React from 'react'
-import logo from "../Navbar/logo.png"
 import BasicInfo from '../UI/BasicInfo'
 import cls from "./SuggestedFriends.module.css"
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import SectionCard from '../UI/SectionCard';
+import {PF} from "../../constants/constants";
 
 const SuggestedRequest = () => {
     return (
         <div className={cls["request"]}>
-            <BasicInfo img={logo} name={"Pacifire Ocean"} info={"12 mutual friends"} />
+            <BasicInfo img={PF+"logo.png"} name={"Pacifire Ocean"} info={"12 mutual friends"} />
             <button className={cls["profile-btn"]}>
                <KeyboardArrowRightIcon /> 
             </button>

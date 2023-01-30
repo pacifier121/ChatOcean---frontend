@@ -7,7 +7,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import "./PostCarouselExtra.css";
 
 const PostCarousel = ({ children }) => {
-    const itemsCount = 4;
+    const itemsCount = children.length || 1;
     
     const arrowPrev = (clickHandler, hasPrev, labelPrev) => hasPrev && (
             <button className={cls["carousel-control-btn"] + " " + cls["back"]} onClick={clickHandler}>
@@ -29,9 +29,9 @@ const PostCarousel = ({ children }) => {
     
 
   return (
-        <Carousel className={cls["carousel"] + " mypostcarousel"} showThumbs={false} showArrows={itemsCount === 1 ? false: true} showStatus={false} showIndicators={itemsCount === 1 ? false: true}
-                renderItem={item => item} renderArrowPrev={arrowPrev} renderArrowNext={arrowNext} 
-                renderIndicator={indicator}
+        <Carousel className={cls["carousel"] + " mypostcarousel"} showThumbs={false} showArrows={itemsCount === 1 ? false: true} showStatus={false} 
+                showIndicators={itemsCount === 1 ? false: true} renderItem={item => item} renderArrowPrev={arrowPrev} 
+                renderArrowNext={arrowNext} renderIndicator={indicator}
                 >
                 {children}
       </Carousel>
