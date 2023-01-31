@@ -1,10 +1,13 @@
 import { LineAxisOutlined } from "@mui/icons-material";
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { backendURL } from "../constants/constants";
+
+const userInLocalStorage = localStorage.getItem('CO_user');
 
 const initialState = {
-    isLoggedIn: false,
-    user: null
+    isLoggedIn: userInLocalStorage ? true : false,
+    user: userInLocalStorage
 }
 
 const authSlice = createSlice({
@@ -17,24 +20,48 @@ const authSlice = createSlice({
         },
         logout: (state) => {
             state.isLoggedIn = false;
-            state.user = null
-        }
+            state.user = undefined;
+        },
     }
 })
 
-export const tryLogin = () => {
-   return async (dispatch) => {
-        const fetchUser = async () => {
-            const { data } = await axios.get('http://localhost:8000/auth/checkAuthentication');
-            console.log(data);
-            if (data.authenticated){
-                dispatch(authSlice.actions.login());
-            }
-        }
-        console.log("HERE");
-        fetchUser();
-   } 
+// // For OAuth
+// export const tryLogin = () => {
+//    return async (dispatch) => {
+//         const fetchUser = async () => {
+//             const { data } = await axios.get('http://localhost:8000/auth/checkAuthentication');
+//             console.log(data);
+//             if (data.authenticated){
+//                 dispatch(authSlice.actions.login());
+//             }
+//         }
+//         console.log("HERE");
+//         fetchUser();
+//    } 
 
+// }
+// 
+
+
+export const loginUser = (userData) => {
+    return async (dispatch) => {
+        const saveUser = async() => {
+            const { data } = await axios.post(backendURL + '/login', userData);
+            if (data.msg){
+              return (data.msg);   
+            }
+            dispatch(authSlice.actions.login(data));
+            localStorage.setItem('CO_user', data);
+        }
+        return { err: await saveUser()};
+    }
+}
+
+export const logoutUser = () => {
+    return async (dispatch) => {
+        localStorage.setItem('CO_user', "");
+        dispatch(authSlice.actions.logout());
+    }
 }
 
 export const authActions = authSlice.actions;

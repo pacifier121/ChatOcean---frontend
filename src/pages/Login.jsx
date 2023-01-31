@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { authActions, tryLogin } from "../store/auth";
 import { useRef, useState } from "react";
 import axios from "axios";
+import { loginUser } from "../store/auth";
 
 const Login = () => {
   const dispatch = useDispatch(); 
@@ -23,16 +24,12 @@ const Login = () => {
       password: passwordRef.current.value
     }
     
-    const { data } = await axios.post('http://localhost:8000/login', userData);
-    console.log(data)
-    if (data.msg){
-      return setError(data.msg);   
-    }
-    dispatch(authActions.login(data));
+    const { err } = await dispatch(loginUser(userData));
+    if (err) return setError(err);
   };
 
   const googleAuthHandler = () => {
-      window.open('http://localhost:8000/auth/google', '_self');
+      // window.open('http://localhost:8000/auth/google', '_self');
   }
 
   return (

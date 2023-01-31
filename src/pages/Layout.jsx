@@ -1,6 +1,7 @@
 import Navbar from "../components/Navbar/Navbar";
 import Sidebar from "../components/Sidebar/Sidebar";
 import cls from "./Layout.module.css";
+import { Outlet } from "react-router-dom";
 
 const Layout = ({ children, storyMode }) => {
   const mainSectionClasses =  cls["mainSection"] + " " + (storyMode ? cls["disable-scroll"] : "");
@@ -13,7 +14,7 @@ const Layout = ({ children, storyMode }) => {
           <Sidebar />
         </div>
         <div className={cls['rightSection']}>
-          {children}
+          <Outlet />
         </div>
       </div>
     </>

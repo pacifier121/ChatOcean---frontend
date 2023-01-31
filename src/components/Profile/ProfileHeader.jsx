@@ -3,15 +3,18 @@ import SendIcon from '@mui/icons-material/Send';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import Divider from '../UI/Divider';
 import cls from "./ProfileHeader.module.css";
+import { NavLink } from 'react-router-dom';
 import {PF} from "../../constants/constants";
+import { useSelector } from 'react-redux';
 
 const ProfileHeader = () => {
    const classes =  cls["profile-header"] + " card-shadow";
+    const { user } = useSelector(state => state.auth);
 
   return (
         <div className={classes}>
             <div className={cls["cover"]}>
-                <img src={PF+"bg.png"} alt="" className={cls["cover-img"]} />
+                <img src={user?.coverImg ? PF+user.coverImg : PF+"bg.jpg"} alt="" className={cls["cover-img"]} />
             </div>
             <div className={cls["user-info"]}>
                 <img src={PF+'logo.png'} className={cls["user-info-img"]} />
@@ -31,21 +34,21 @@ const ProfileHeader = () => {
             </div>
             <Divider />
         <nav className={cls["profile-nav"]}>
-            <div className={cls["nav-section"]}>
+            <NavLink to="posts" className={(state) => cls["nav-section"] + " linkStyles " + (state.isActive ? cls['active'] : '')}>
                 <span>Posts</span>
-            </div>
-            <div className={cls["nav-section"] + " " + cls["active"]}>
+            </NavLink>
+            <NavLink to="videos" className={(state) => cls["nav-section"] + " linkStyles " + (state.isActive ? cls['active'] : '')}>
                 <span>Video</span>
-            </div>
-            <div className={cls["nav-section"]}>
-                <span>Group</span>
-            </div>
-            <div className={cls["nav-section"]}>
+            </NavLink>
+            <NavLink to="stories" className={(state) => cls["nav-section"] + " linkStyles " + (state.isActive ? cls['active'] : '')}>
+                <span>Stories</span>
+            </NavLink>
+            <NavLink to="followers" className={(state) => cls["nav-section"] + " linkStyles " + (state.isActive ? cls['active'] : '')}>
                 <span>Followers</span>
-            </div>
-            <div className={cls["nav-section"]}>
-                <span>Following</span>
-            </div>
+            </NavLink>
+            <NavLink to="followings" className={(state) => cls["nav-section"] + " linkStyles " + (state.isActive ? cls['active'] : '')}>
+                <span>Followings</span>
+            </NavLink>
         </nav>
         </div>
   )

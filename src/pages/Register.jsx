@@ -38,7 +38,7 @@ const Register = () => {
   } 
     
   const googleAuthHandler = () => {
-      window.open('http://localhost:8000/auth/google', '_self');
+      // window.open('http://localhost:8000/auth/google', '_self');
   } 
 
   return (
