@@ -32,9 +32,8 @@ export const PostsContent = () => {
     useEffect(() => {
        const fetchPosts = async () => {
          try {
-           const { data } = await axios.get(backendURL + '/post/post?userId=' + user._id);
+           const { data } = await axios.get(backendURL + '/user/posts?userId=' + user._id);
             setPosts(data);
-           console.log(data);
          } catch (err) {
             console.log(err);
          }
@@ -47,8 +46,8 @@ export const PostsContent = () => {
    return (
         <Content>
             {posts.map(post => (
-              <Post key={post._id}>
-                  {post.content.map(item => (
+              <Post postId={post._id} owner={user} key={post._id}>
+{post.content.map(item => (
                       <>
                         {(item.type === 'photo') && <Photo key={item.src} src={asset(item.src, 'photo')} />} 
                         {(item.type === 'video') && <Video key={item.src} clickToMute={true} autoPlay={true} src={asset(item.src, 'video')} />} 
@@ -61,14 +60,30 @@ export const PostsContent = () => {
 }
 
 export const VideosContent = () => {
+    const { user } = useSelector(state => state.auth);
+    const [videos, setVideos] = useState([]);
+  
+    useEffect(() => {
+       const fetchVideos = async () => {
+         try {
+           const { data } = await axios.get(backendURL + '/user/videos?userId=' + user._id);
+            setVideos(data);
+         } catch (err) {
+            console.log(err);
+         }
+       }
+      if (user){
+       fetchVideos();
+      }
+    }, [user])
+
   return (
         <Content>
-              <Post>
-                   <Video autoPlay={false} showControls={true} src={asset('videos/op.mp4', 'video')} />
-              </Post>
-              <Post>
-                   <Video autoPlay={false} showControls={true} src={asset('videos/nature_video_2.mp4', 'video')} />
-              </Post>
+              {videos.map(video => (
+                <Post postId={video.postId} owner={user}>
+                     <Video autoPlay={false} showControls={true} src={asset(video.src, 'video')} />
+                </Post>
+              ))}
         </Content>
   )
 }

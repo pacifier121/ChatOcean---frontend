@@ -1,4 +1,4 @@
-import React from 'react'
+import { useState, useEffect } from 'react'
 import cls from "./Post.module.css";
 import PostCarousel from "./PostCarousel";
 import { MoreHoriz } from '@mui/icons-material';
@@ -10,23 +10,42 @@ import ShareIcon from '@mui/icons-material/Share';
 import ChatIcon from '@mui/icons-material/Chat';
 import ArticleIcon from '@mui/icons-material/Article';
 import { Link } from 'react-router-dom';
-import {PF} from "../../constants/constants";
+import {asset, backendURL} from "../../constants/constants";
+import { ownerWindow } from '@mui/material';
+import { format } from "timeago.js";
+import axios from "axios";
 
 const removeLinkStyles = { textDecoration: 'none', color: 'inherit'};
 
-const Post = ({ children }) => {
+const Post = ({ children, postId }) => {
+   const [owner, setOwner] = useState(null);
+   
+    useEffect(() => {
+       const fetchPosts = async () => {
+         try {
+           const { data } = await axios.get(backendURL + '/post/owner?postId=' + postId);
+            setOwner(data);
+         } catch (err) {
+            console.log(err);
+         }
+       }
+       fetchPosts();
+    }, [])
+
+
   return (
+      owner && 
         <div className={cls["post"] + " card-shadow"}>
             <div className={cls["post-top"]}>
                 <Link to="/profile/abcd" replace style={removeLinkStyles}  className={cls["post-top-left"]}>
-                    <img src={PF+'logo.png'} alt="" className={cls["user-img"]} />
+                    <img src={asset(owner.avatar, 'profile')} alt="" className={cls["user-img"]} />
                     <div className={cls["user-info"]}>
-                        <span className={cls["user-info-username"]}>Pacifire Ocean</span> 
-                        <span className={cls["user-info-time"]}>1 hr ago</span> 
+                        <span className={cls["user-info-username"]}>{owner.username}</span> 
+                        <span className={cls["user-info-time"]}>{format(owner.createdAt)}</span> 
                     </div>
                 </Link>
                <div className={cls["post-top-right"]}>
-                   <Link style={removeLinkStyles} to="/post/abcd" replace className={cls["more-option"]}>
+                   <Link style={removeLinkStyles} to={`/post/${postId || 'dummy'}`} replace className={cls["more-option"]}>
                         <ArticleIcon sx={{fontSize: "25px"}} /> 
                     </Link> 
                     <div className={cls['more-option']}>

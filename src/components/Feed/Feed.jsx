@@ -8,16 +8,20 @@ import Video from '../Videos/Video';
 import FriendRequests from './FriendRequests';
 import SuggestedFriends from "./SuggestedFriends";
 import {PF} from "../../constants/constants";
+import { useSelector } from 'react-redux';
 
 
 const Feed = () => {
+  const { user } = useSelector(state => state.auth); 
+  
+
   return (
       <div className={cls["feed"]}>
         <div className={cls['centerSection']}>
             <Stories />    
             <div className={cls["postsSection"]}>
                 <CreatePost />
-                  <Post>
+                  <Post owner={user} postId={'dummy'}>
                        <Photo src={PF + 'images/nature1.jpg'} />
                        <Video src={PF+'videos/nature_video.mp4'} />
                   </Post>

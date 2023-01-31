@@ -4,27 +4,45 @@ import Post from '../components/Feed/Post'
 import cls from "./PostPage.module.css";
 import Photo from '../components/Photos/Photo';
 import Video from '../components/Videos/Video';
-import {PF} from "./../constants/constants";
+import { asset } from "./../constants/constants";
+import { useSelector } from "react-redux";
+import { useEffect, useState, useReducer } from 'react';
+import axios from 'axios';
+
+const postReducer = (state, action) => {
+     if (action.type === 'SAVE_POST'){
+          return {
+               post: action.payload.post,
+               owner: action.payload.owner
+          }
+     }
+     return state;
+}
 
 const PostPage = () => {
      const params = useParams();
-     const type = (params.postId === 'abcde' ? 'video' : 'photo');
+     const [postState, dispatch] = useReducer(postReducer, { post: null, owner: null });
+     
+     useEffect(() => {
+          const fetchPost = async () => {
+               const { data: postData } = await axios.get('/post/post?postId=' + params.postId);
+               const { data: ownerData }  = await axios.get('/user/user?userId=' + postData.userId);
+               dispatch({ type: 'SAVE_POST', payload: { post: postData, owner: ownerData }})
+          }
+          fetchPost();
+     }, []);
 
   return (
+       postState.post && 
        <div className={cls["post-page"]}>
-          <Post>
-               <Photo src={PF+'images/nature1.jpeg'} />
-               <Video src={PF+'videos/nature_video.mp4'} />
+          <Post postId={postState.post?._id} owner={postState.owner}>
+             {postState.post.content.map(item => (
+                 <>
+                   {(item.type === 'photo') && <Photo key={item.src} src={asset(item.src, 'photo')} />} 
+                   {(item.type === 'video') && <Video key={item.src} clickToMute={true} autoPlay={true} src={asset(item.src, 'video')} />} 
+                 </>
+             ))}
           </Post>
-          {/* <Post>
-               <Photo src={n3} />
-               <Photo src={n2} />
-               <Video src={v2} />
-          </Post>
-          <Post>
-               <Photo src={n4} />
-               <Photo src={n2} />
-          </Post> */}
        </div> 
   )
 }
