@@ -5,9 +5,12 @@ import VideoCameraBackIcon from '@mui/icons-material/VideoCameraBack';
 import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import { MoreHoriz } from '@mui/icons-material';
-import {PF} from "../../constants/constants";
+import { asset } from "../../constants/constants";
+import { useSelector } from 'react-redux';
 
 const CreatePost = () => {
+   const { user } = useSelector(state => state.auth); 
+
   return (
       <div className={cls["create-post"] + " card-shadow"}>
         <div className={cls["create-post-title"]} >
@@ -19,7 +22,7 @@ const CreatePost = () => {
         </div>
         <div className={cls['create-post-descbox']}>
             <textarea placeholder={`What's on your mind ${'pacifire'}?`} className={cls['create-post-input']} />
-            <img src={PF+'logo.png'} className={cls['create-post-user-img']} />
+            <img src={asset(user.avatar, 'profile')} className={cls['create-post-user-img']} />
         </div>
         <div className={cls['create-post-options']}>
             <div className={cls['option']}>

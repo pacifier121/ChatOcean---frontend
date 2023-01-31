@@ -5,9 +5,12 @@ import Post from '../components/Feed/Post';
 import Photo from '../components/Photos/Photo';
 import Video from "../components/Videos/Video";
 import FriendRequests from '../components/Feed/FriendRequests';
-import {PF} from "./../constants/constants";
+import {asset, backendURL, PF} from "./../constants/constants";
 import { Outlet } from 'react-router-dom';
 import StoryCard from '../components/Feed/StoryCard';
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
 
 const Content = ({children}) => {
   return (
@@ -23,13 +26,36 @@ const Content = ({children}) => {
 }
 
 export const PostsContent = () => {
+    const { user } = useSelector(state => state.auth);
+    const [posts, setPosts] = useState([]);
+  
+    useEffect(() => {
+       const fetchPosts = async () => {
+         try {
+           const { data } = await axios.get(backendURL + '/post/post?userId=' + user._id);
+            setPosts(data);
+           console.log(data);
+         } catch (err) {
+            console.log(err);
+         }
+       }
+      if (user){
+       fetchPosts();
+      }
+    }, [user])
+
    return (
         <Content>
-            <Post>
-                 <Photo src={PF+"images/nature1.jpg"} />
-                 <Photo src={PF+"images/nature3.jpg"} />
-                 <Video src={PF+'videos/nature_video.mp4'} />
-            </Post>
+            {posts.map(post => (
+              <Post key={post._id}>
+                  {post.content.map(item => (
+                      <>
+                        {(item.type === 'photo') && <Photo key={item.src} src={asset(item.src, 'photo')} />} 
+                        {(item.type === 'video') && <Video key={item.src} clickToMute={true} autoPlay={true} src={asset(item.src, 'video')} />} 
+                      </>
+                  ))}
+              </Post>
+            ))}
         </Content>
    ) 
 }
@@ -38,10 +64,10 @@ export const VideosContent = () => {
   return (
         <Content>
               <Post>
-                   <Video src={PF+'videos/nature_video_2.mp4'} />
+                   <Video autoPlay={false} showControls={true} src={asset('videos/op.mp4', 'video')} />
               </Post>
               <Post>
-                   <Video src={PF+'videos/nature_video_3.mp4'} />
+                   <Video autoPlay={false} showControls={true} src={asset('videos/nature_video_2.mp4', 'video')} />
               </Post>
         </Content>
   )

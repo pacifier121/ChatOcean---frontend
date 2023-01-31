@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { backendURL } from "../constants/constants";
 
-const userInLocalStorage = localStorage.getItem('CO_user');
+const userInLocalStorage = JSON.parse(localStorage.getItem('CO_user'));
 
 const initialState = {
     isLoggedIn: userInLocalStorage ? true : false,
@@ -51,7 +51,7 @@ export const loginUser = (userData) => {
               return (data.msg);   
             }
             dispatch(authSlice.actions.login(data));
-            localStorage.setItem('CO_user', data);
+            localStorage.setItem('CO_user', JSON.stringify(data));
         }
         return { err: await saveUser()};
     }
@@ -59,7 +59,7 @@ export const loginUser = (userData) => {
 
 export const logoutUser = () => {
     return async (dispatch) => {
-        localStorage.setItem('CO_user', "");
+        localStorage.setItem('CO_user', null);
         dispatch(authSlice.actions.logout());
     }
 }

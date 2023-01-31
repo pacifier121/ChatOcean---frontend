@@ -4,23 +4,24 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import Divider from '../UI/Divider';
 import cls from "./ProfileHeader.module.css";
 import { NavLink } from 'react-router-dom';
-import {PF} from "../../constants/constants";
+import {asset, PF} from "../../constants/constants";
 import { useSelector } from 'react-redux';
 
 const ProfileHeader = () => {
    const classes =  cls["profile-header"] + " card-shadow";
-    const { user } = useSelector(state => state.auth);
+    const { user } = useSelector(state => state.auth)
+    const fullName = (user.firstName || '') + " " + (user.lastName || '');
 
   return (
         <div className={classes}>
             <div className={cls["cover"]}>
-                <img src={user?.coverImg ? PF+user.coverImg : PF+"bg.jpg"} alt="" className={cls["cover-img"]} />
+                <img src={asset(user.coverImg, 'cover')} alt="" className={cls["cover-img"]} />
             </div>
             <div className={cls["user-info"]}>
-                <img src={PF+'logo.png'} className={cls["user-info-img"]} />
+                <img src={asset(user.avatar, 'profile')} className={cls["user-info-img"]} />
                 <div className={cls["user-info-desc"]}>
-                    <span className={cls["user-info-name"]}>Pacifire Ocean</span> 
-                    <span className={cls["user-info-email"]}>pacifire@ocean.com</span> 
+                    <span className={cls["user-info-name"]}>{fullName}</span> 
+                    <span className={cls["user-info-email"]}>@{user.username}</span> 
                 </div>
                 <div className={cls["user-info-actions"]}>
                     <button className={cls["follow-btn"]}>Follow</button>

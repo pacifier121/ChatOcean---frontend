@@ -137,9 +137,11 @@
     }
     .user-info-name{
         font-size: 1.5rem;
+        white-space: nowrap;
     }
     .user-info-email{
         font-size: 1.2rem;
+        white-space: nowrap;
     }
 }
 
