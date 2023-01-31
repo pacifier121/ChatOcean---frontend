@@ -4,6 +4,7 @@ import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
 import LanguageIcon from '@mui/icons-material/Language';
 import BoltIcon from '@mui/icons-material/Bolt';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
+import { Link } from "react-router-dom";
 
 const NewFeeds = () => {
   return (
@@ -17,10 +18,10 @@ const NewFeeds = () => {
             <WorkspacePremiumIcon sx={{fontSize:"30px"}} /> 
             <span className={"category-text"}>NewsFeed</span>
         </div>
-        <div className={"category"}>
+        <Link to="/stories" className={"category linkStyles"}>
             <LanguageIcon sx={{fontSize:"30px"}} />
             <span className={"category-text"}>Explore Stories </span>
-        </div>
+        </Link>
         <div className={"category"}>
             <BoltIcon sx={{fontSize:"30px"}} />
             <span className={"category-text"}>Popular Groups </span>

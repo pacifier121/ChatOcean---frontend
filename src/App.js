@@ -2,7 +2,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Feed from "./components/Feed/Feed";
 import Layout from "./pages/Layout";
-import Profile, { PostsContent, VideosContent } from "./pages/Profile";
+import Profile, { PostsContent, StoriesContent, VideosContent } from "./pages/Profile";
 import Stories from "./pages/Stories";
 import ChatPage from "./pages/ChatPage";
 import Notifications from "./pages/Notifications";
@@ -34,7 +34,7 @@ function App() {
                     <Route index element={<Navigate to="posts" />} /> 
                     <Route path="posts" element={<PostsContent />} /> 
                     <Route path="videos" element={<VideosContent />} /> 
-                    <Route path="stories" element={<PostsContent />} /> 
+                    <Route path="stories" element={<StoriesContent />} /> 
                     <Route path="followers" element={<PostsContent />} /> 
                     <Route path="followings" element={<PostsContent />} /> 
                 </Route>
