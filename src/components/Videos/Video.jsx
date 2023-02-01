@@ -5,69 +5,49 @@ import VolumeUpIcon from '@mui/icons-material/VolumeUp';
 import VolumeDownIcon from '@mui/icons-material/VolumeDown';
 import VolumeOffIcon from '@mui/icons-material/VolumeOff';
 import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { videoActions } from '../../store/video';
 
 
 const Video = ({ showControls, clickToMute, autoPlay, muted, src, loop }) => {
-    const classes = cls["video-wrapper"];
-    const videoRef = useRef();
-     const [volume, setVolume] = useState(0);
-     // const [volumeTimer, setVolumeTimer] = useState(false);
+     const dispatch = useDispatch();
+     const { isVideoPlaying, video, volume } = useSelector(state => state.video);
+     const videoRef = useRef();
      
      useEffect(() => {
-          // let animationTimer = null;
-          if (videoRef){
-               videoRef.current.volume = volume;
-               // setVolumeTimer(true);
-               // animationTimer = setTimeout(() => {
-               //      setVolumeTimer(false); 
-               // }, 1000);
-          }
-          
-          // return () => {
-          //      if (animationTimer) clearTimeout(animationTimer); 
-          // }
-     }, [volume]);
+          if (!video) dispatch(videoActions.setVideoStart(videoRef.current));
+     }, [video]);
     
      const pauseVideoHandler = () => {
-          videoRef.current.pause();
+          dispatch(videoActions.setVideoPause());
      }
      
      const playVideoHandler = () => {
-          videoRef.current.play();
+          dispatch(videoActions.setVideoResume());
      }
      
      const toggleVideoHandler = () => {
-          if (videoRef.current.paused) playVideoHandler();
-          else pauseVideoHandler(); 
+          if (video === videoRef.current){
+               if (isVideoPlaying) dispatch(videoActions.setVideoPause());
+               else dispatch(videoActions.setVideoResume());
+          } else {
+               dispatch(videoActions.setVideoStart(videoRef.current));
+          }
      }
      
      const muteClickHandler = () => {
-          if (clickToMute){
-               if (volume > 0.4){
-                    setVolume(0.4);
-               } else if (volume > 0){
-                    setVolume(0);
-               } else {
-                    setVolume(1);
-               }
-
-               // if (videoRef.current.volume > 0.4){
-               //      videoRef.current.volume = 0.4;
-               // } else if (videoRef.current.volume > 0) {
-               //      videoRef.current.volume = 0;
-               // } else {
-               //      videoRef.current.volume = 1;
-               // } 
-          } 
+          if (clickToMute) dispatch(videoActions.toggleVolume());
      }
 
+
+    const classes = cls["video-wrapper"];
+
   return (
-       <div className={classes}>
+       <div className={classes} >
               <video ref={videoRef} onTouchStart={pauseVideoHandler} onTouchEnd={playVideoHandler} onTouchCancel={playVideoHandler} 
                autoPlay={autoPlay} muted={muted} preload={'metadata'} loop={loop || true} controls={showControls} width="100%" className={cls["video"]}
-               clickToMute={clickToMute}  onClick={toggleVideoHandler}
+               clickToMute={clickToMute}  onClick={toggleVideoHandler} 
                >
-                {/* <source src="https://archive.org/download/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.mp4" type="video/mp4" /> */}
                 <source src={src} type="video/mp4" />
                 {/* <source src="./nature_video.webm" type="video/webm" /> */}
                   Sorry, browser doesn't support video
