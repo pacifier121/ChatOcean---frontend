@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { backendURL } from "../constants/constants";
+import { profileActions } from "./profile";
 
 const userInLocalStorage = JSON.parse(localStorage.getItem('CO_user'));
 

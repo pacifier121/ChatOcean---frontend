@@ -40,6 +40,15 @@ const profileSlice = createSlice({
         setFollowings: (state, action) => {
             state.followings = action.payload
         },
+        resetProfile: (state) => {
+            state.profileUser = null;
+            state.isFollowed = false;
+            state.posts = null;
+            state.videos = null;
+            state.stories = null;
+            state.followers = null;
+            state.followings = null;
+        },
     }
 })
 

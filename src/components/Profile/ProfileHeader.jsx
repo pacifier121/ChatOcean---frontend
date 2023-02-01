@@ -16,7 +16,7 @@ const ProfileHeader = () => {
 
     useEffect(() => {
         dispatch(fetchProfileUser(user, params.username));
-    }, [params])
+    }, [params.username, user])
     
     const followUserHandler = () => {
         dispatch(followProfileUser(user, profileUser));

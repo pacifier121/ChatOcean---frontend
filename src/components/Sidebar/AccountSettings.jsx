@@ -4,11 +4,13 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useSelector, useDispatch } from 'react-redux';
 import { logoutUser } from '../../store/auth';
+import { profileActions } from '../../store/profile';
 
 const AccountSettings = () => {
   const dispatch = useDispatch();
   
   const logoutUserHandler = () => {
+    dispatch(profileActions.resetProfile());
     dispatch(logoutUser());
   }
   

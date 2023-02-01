@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 
 const PersonCard = ({ person, followersCount, followingsCount }) => {
    const fullName = (person.firstName || '') + ' ' + (person.lastName || '');
-    console.log(person);
 
   return (
     <Link to={`/profile/${person.username}`}  className={cls["person-card"] + " card-shadow linkStyles"}>
