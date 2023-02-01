@@ -13,6 +13,7 @@ import PostCarousel from './PostCarousel';
 import Photo from '../Photos/Photo';
 import Video from '../Videos/Video';
 import axios from 'axios';
+import CancelIcon from '@mui/icons-material/Cancel';
 
 const CreatePost = () => {
    const { user } = useSelector(state => state.auth); 
@@ -62,6 +63,12 @@ const CreatePost = () => {
             console.log(err); 
         }
     }
+    
+    const deletePostItemHandler = (idx) => {
+        if (files[idx].type === 'photo') setPhotosCount((prevCount) => prevCount - 1);
+        else if (files[idx].type === 'video') setVideosCount((prevCount) => prevCount - 1);
+        setFiles((oldFiles) => oldFiles.filter((f, i) => i !== idx));
+    }
 
   return (
       <div className={cls["create-post"] + " card-shadow"}>
@@ -99,11 +106,12 @@ const CreatePost = () => {
         </div>
         {error && <span className={cls['upload-error']}>{error}</span>}
         {files !== [] && <PostCarousel className={cls['preview-post']} >
-            {files.map(item => (
-              <>
+            {files.map((item, idx) => (
+              <div className={cls['preview-item']}>
                 {(item.type === 'photo') && <Photo key={item.file.name} src={URL.createObjectURL(item.file)}  />} 
                 {(item.type === 'video') && <Video key={item.file.name} clickToMute={true} autoPlay={true} src={URL.createObjectURL(item.file)}  />} 
-              </>
+                <span onClick={() => deletePostItemHandler(idx)} className={cls["post-cancel-btn"]}><CancelIcon style={{fontSize: '100%'}} /></span>
+              </div>
             ))}
             </PostCarousel>}
       </div>
