@@ -52,7 +52,7 @@ const Video = ({ showControls, clickToMute, autoPlay, muted, src, loop }) => {
   return (
        <div className={classes} >
               <video ref={videoRef} onTouchStart={pauseVideoHandler} onTouchEnd={playVideoHandler} onTouchCancel={playVideoHandler} 
-               autoPlay={autoPlay} muted={muted} preload={'metadata'} loop={loop || true} controls={showControls} width="100%" className={cls["video"]}
+               autoPlay={false} muted={muted} preload={'metadata'} loop={loop || true} controls={showControls} width="100%" className={cls["video"]}
                clickToMute={clickToMute}  onClick={toggleVideoHandler} 
                >
                 <source src={src} type="video/mp4" />
