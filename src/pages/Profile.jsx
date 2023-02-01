@@ -6,7 +6,7 @@ import Photo from '../components/Photos/Photo';
 import Video from "../components/Videos/Video";
 import FriendRequests from '../components/Feed/FriendRequests';
 import {asset, backendURL, dummyPost } from "./../constants/constants";
-import { Outlet } from 'react-router-dom';
+import { Outlet, useParams } from 'react-router-dom';
 import StoryCard from '../components/Feed/StoryCard';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -29,6 +29,7 @@ const Content = ({children}) => {
 
 export const PostsContent = () => {
   const dispatch = useDispatch();
+  const params = useParams();
   const { profileUser, posts } = useSelector(state => state.profile);
   
   useEffect(() => {
@@ -39,7 +40,7 @@ export const PostsContent = () => {
         console.log(err); 
       }
     }
-    if (!posts) fetchPosts();
+    if (posts === null || (params.username !== profileUser.username)) fetchPosts();
   }, [profileUser])
 
    return (
@@ -54,6 +55,7 @@ export const PostsContent = () => {
 
 export const VideosContent = () => {
   const dispatch = useDispatch();
+  const params = useParams();
   const { profileUser, videos } = useSelector(state => state.profile);
   
   useEffect(() => {
@@ -64,7 +66,7 @@ export const VideosContent = () => {
         console.log(err); 
       }
     }
-    if (!videos) fetchVideos();
+    if (videos === null || (params.username !== profileUser.username))  fetchVideos();
   }, [profileUser])
 
   return (
@@ -81,6 +83,7 @@ export const VideosContent = () => {
 
 export const StoriesContent = () => {
   const dispatch = useDispatch();
+  const params = useParams();
   const { profileUser, stories } = useSelector(state => state.profile);
   
   useEffect(() => {
@@ -91,7 +94,7 @@ export const StoriesContent = () => {
         console.log(err); 
       }
     }
-    if (!stories) fetchStories();
+   if (stories === null || (params.username !== profileUser.username))  fetchStories();
   }, [profileUser])
   
   
@@ -109,6 +112,7 @@ export const StoriesContent = () => {
 
 export const FollowersContent = () => {
   const dispatch = useDispatch();
+  const params = useParams();
   const { profileUser, followers } = useSelector(state => state.profile);
   
   useEffect(() => {
@@ -119,7 +123,7 @@ export const FollowersContent = () => {
         console.log(err); 
       }
     }
-    if (!followers) fetchFollowers();
+    if (followers === null || (params.username !== profileUser.username)) fetchFollowers();
   }, [profileUser])
 
   return (
@@ -138,7 +142,10 @@ export const FollowersContent = () => {
 
 export const FollowingsContent = () => {
   const dispatch = useDispatch();
+  const params = useParams();
   const { profileUser, followings } = useSelector(state => state.profile);
+  const profile = useSelector(state => state.profile);
+  console.log(profile);
   
   useEffect(() => {
     const fetchFollowings = async() => {
@@ -148,7 +155,7 @@ export const FollowingsContent = () => {
         console.log(err); 
       }
     }
-    if (!followings) fetchFollowings();
+    if (followings === null || (params.username !== profileUser?.username)) fetchFollowings();
   }, [profileUser])
 
   return (

@@ -7,6 +7,7 @@ import { NavLink, useParams } from 'react-router-dom';
 import {asset, backendURL, PF} from "../../constants/constants";
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProfileUser, followProfileUser, unfollowProfileUser  } from '../../store/profile';
+import { profileActions } from '../../store/profile';
 
 const ProfileHeader = () => {
     const params = useParams();
@@ -15,6 +16,7 @@ const ProfileHeader = () => {
     const { profileUser, isFollowed } = useSelector(state => state.profile);
 
     useEffect(() => {
+        dispatch(profileActions.resetProfile());
         dispatch(fetchProfileUser(user, params.username));
     }, [params.username, user])
     
