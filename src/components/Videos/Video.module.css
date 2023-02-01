@@ -10,9 +10,11 @@
     background-color: rgba(0,0,0,0.7);
     position: absolute;
     animation: fadeOut 1s 1;
-    right: 2rem;
+    right: 5rem;
     bottom: 2rem;
+    z-index: 3;
 }
+
 
 @keyframes fadeOut {
     0%{
