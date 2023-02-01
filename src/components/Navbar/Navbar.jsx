@@ -34,7 +34,7 @@ const Navbar = () => {
            <Link to="/chat" className={cls["btn-icon"]}>
                <ChatBubbleOutlineIcon sx={removeLinkStyles} />
             </Link> 
-           <Link to="/profile/abcd" className={cls["btn-icon"]}>
+           <Link to={`/profile/${user.username}`}  className={cls["btn-icon"]}>
                { user.avatar ? <img src={PF+user.avatar} className={cls["user-img"]} /> : <AccountCircleIcon sx={removeLinkStyles} />}
             </Link> 
         </div>

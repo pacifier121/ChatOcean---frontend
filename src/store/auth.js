@@ -1,4 +1,3 @@
-import { LineAxisOutlined } from "@mui/icons-material";
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { backendURL } from "../constants/constants";

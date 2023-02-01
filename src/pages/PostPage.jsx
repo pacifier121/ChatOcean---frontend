@@ -35,14 +35,7 @@ const PostPage = () => {
   return (
        postState.post && 
        <div className={cls["post-page"]}>
-          <Post postId={postState.post?._id} owner={postState.owner}>
-             {postState.post.content.map(item => (
-                 <>
-                   {(item.type === 'photo') && <Photo key={item.src} src={asset(item.src, 'photo')} />} 
-                   {(item.type === 'video') && <Video key={item.src} clickToMute={true} autoPlay={true} src={asset(item.src, 'video')} />} 
-                 </>
-             ))}
-          </Post>
+          <Post post={postState.post} postId={postState.post?._id} owner={postState.owner} />
        </div> 
   )
 }

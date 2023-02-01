@@ -5,7 +5,7 @@ import Post from '../components/Feed/Post';
 import Photo from '../components/Photos/Photo';
 import Video from "../components/Videos/Video";
 import FriendRequests from '../components/Feed/FriendRequests';
-import {asset, backendURL, PF} from "./../constants/constants";
+import {asset, backendURL, dummyPost } from "./../constants/constants";
 import { Outlet } from 'react-router-dom';
 import StoryCard from '../components/Feed/StoryCard';
 import { useEffect, useState } from 'react';
@@ -26,34 +26,26 @@ const Content = ({children}) => {
 }
 
 export const PostsContent = () => {
+    const { profileUser } = useSelector(state => state.profile);
     const { user } = useSelector(state => state.auth);
     const [posts, setPosts] = useState([]);
   
     useEffect(() => {
        const fetchPosts = async () => {
          try {
-           const { data } = await axios.get(backendURL + '/user/posts?userId=' + user._id);
+           const { data } = await axios.get(backendURL + '/user/posts?userId=' + profileUser._id);
             setPosts(data);
          } catch (err) {
             console.log(err);
          }
        }
-      if (user){
-       fetchPosts();
-      }
-    }, [user])
+      if (profileUser) fetchPosts();
+    }, [profileUser, user])
 
    return (
         <Content>
             {posts.map(post => (
-              <Post postId={post._id} owner={user} key={post._id}>
-{post.content.map(item => (
-                      <>
-                        {(item.type === 'photo') && <Photo key={item.src} src={asset(item.src, 'photo')} />} 
-                        {(item.type === 'video') && <Video key={item.src} clickToMute={true} autoPlay={true} src={asset(item.src, 'video')} />} 
-                      </>
-                  ))}
-              </Post>
+              <Post post={post} owner={profileUser} key={post._id} />
             ))}
         </Content>
    ) 
@@ -61,28 +53,29 @@ export const PostsContent = () => {
 
 export const VideosContent = () => {
     const { user } = useSelector(state => state.auth);
+    const { profileUser } = useSelector(state => state.profile);
     const [videos, setVideos] = useState([]);
   
     useEffect(() => {
        const fetchVideos = async () => {
          try {
-           const { data } = await axios.get(backendURL + '/user/videos?userId=' + user._id);
+           const { data } = await axios.get(backendURL + '/user/videos?userId=' + profileUser._id);
             setVideos(data);
          } catch (err) {
             console.log(err);
          }
        }
-      if (user){
+      if (profileUser){
        fetchVideos();
       }
-    }, [user])
+    }, [profileUser, user])
 
   return (
         <Content>
               {videos.map(video => (
-                <Post postId={video.postId} owner={user}>
+                  <Post post={dummyPost} owner={profileUser} key={video.src} >
                      <Video autoPlay={false} showControls={true} src={asset(video.src, 'video')} />
-                </Post>
+                  </Post>
               ))}
         </Content>
   )
@@ -91,7 +84,7 @@ export const VideosContent = () => {
 export const StoriesContent = () => {
   return (
         <Content>
-            <div classname={cls['stories']} style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem'  }}>
+            <div className={cls['stories']} style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem'  }}>
               <StoryCard className={cls['storycard']} />
               <StoryCard className={cls['storycard']} />
               <StoryCard className={cls['storycard']} />

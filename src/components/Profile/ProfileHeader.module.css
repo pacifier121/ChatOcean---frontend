@@ -59,15 +59,24 @@
     align-items: center;
 }
 
-.follow-btn{
-    background-color: green;
+.follow-btn,
+.unfollow-btn{
     font-size: 1.5rem;
     color: white;
     height: 5rem;
-    padding: 1rem 3rem;
+    width: 10rem;
     border: none;
     border-radius: 1rem;
     cursor: pointer;
+}
+
+.follow-btn{
+    background-color: green;
+}
+
+.unfollow-btn{
+    background-color: #ECE8DD;
+    color: black;
 }
 
 .message-btn,

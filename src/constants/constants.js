@@ -20,3 +20,7 @@ export const asset = (src, type) => {
     }
     return PF+src;
 }
+
+export const dummyPost = {
+    _id: 'dummy',
+}

@@ -3,16 +3,32 @@ import Stories from "./Stories";
 import CreatePost from "./CreatePost";
 import cls from "./Feed.module.css";
 import Post from "./Post";
-import Photo from '../Photos/Photo';
-import Video from '../Videos/Video';
 import FriendRequests from './FriendRequests';
 import SuggestedFriends from "./SuggestedFriends";
-import {PF} from "../../constants/constants";
+import { asset, backendURL } from "../../constants/constants";
 import { useSelector } from 'react-redux';
+import { useState, useEffect } from "react";
+import axios from 'axios';
 
 
 const Feed = () => {
   const { user } = useSelector(state => state.auth); 
+  const [timelinePosts, setTimelinePosts] = useState([]);
+
+  useEffect(() => {
+     const fetchPosts = async () => {
+       try {
+         const { data } = await axios.get(backendURL + '/user/timeline?userId=' + user._id );
+          setTimelinePosts(data);
+         console.log(data);
+       } catch (err) {
+          console.log(err);
+       }
+     }
+    if (user){
+     fetchPosts();
+    }
+  }, [user])
   
 
   return (
@@ -21,15 +37,9 @@ const Feed = () => {
             <Stories />    
             <div className={cls["postsSection"]}>
                 <CreatePost />
-                  <Post owner={user} postId={'dummy'}>
-                       <Photo src={PF + 'images/nature1.jpg'} />
-                       <Video src={PF+'videos/nature_video.mp4'} />
-                  </Post>
-                  <Post>
-                       <Photo src={PF + 'images/nature4.jpg'} />
-                       {/* <Photo src={n2} /> */}
-                       {/* <Video src={v2} /> */}
-                  </Post>
+                {timelinePosts.map(post => (
+                    <Post post={post} owner={post.owner} key={post._id} /> 
+                ))}
             </div>
         </div>
         <div className={cls['rightSection']}>

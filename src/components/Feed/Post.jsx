@@ -11,30 +11,26 @@ import ChatIcon from '@mui/icons-material/Chat';
 import ArticleIcon from '@mui/icons-material/Article';
 import { Link } from 'react-router-dom';
 import {asset, backendURL} from "../../constants/constants";
-import { ownerWindow } from '@mui/material';
 import { format } from "timeago.js";
 import axios from "axios";
+import Photo from '../Photos/Photo';
+import Video from '../Videos/Video';
 
 const removeLinkStyles = { textDecoration: 'none', color: 'inherit'};
 
-const Post = ({ children, postId }) => {
-   const [owner, setOwner] = useState(null);
+const Post = ({ children, post, owner }) => {
+   const carouselContent = (post._id === 'dummy' ? 
+        children :
+         post.content.map(item => (
+              <>
+                {(item.type === 'photo') && <Photo key={item.src} src={asset(item.src, 'photo')} />} 
+                {(item.type === 'video') && <Video key={item.src} clickToMute={true} autoPlay={true} src={asset(item.src, 'video')} />} 
+              </>
+          ))
+   );
    
-    useEffect(() => {
-       const fetchPosts = async () => {
-         try {
-           const { data } = await axios.get(backendURL + '/post/owner?postId=' + postId);
-            setOwner(data);
-         } catch (err) {
-            console.log(err);
-         }
-       }
-       fetchPosts();
-    }, [])
-
-
+    
   return (
-      owner && 
         <div className={cls["post"] + " card-shadow"}>
             <div className={cls["post-top"]}>
                 <Link to="/profile/abcd" replace style={removeLinkStyles}  className={cls["post-top-left"]}>
@@ -45,9 +41,9 @@ const Post = ({ children, postId }) => {
                     </div>
                 </Link>
                <div className={cls["post-top-right"]}>
-                   <Link style={removeLinkStyles} to={`/post/${postId || 'dummy'}`} replace className={cls["more-option"]}>
+                   { post._id !== 'dummy' && <Link style={removeLinkStyles} to={`/post/${post._id || 'dummy'}`} replace className={cls["more-option"]}>
                         <ArticleIcon sx={{fontSize: "25px"}} /> 
-                    </Link> 
+                        </Link> }
                     <div className={cls['more-option']}>
                         <MoreHoriz sx={{fontSize: "25px"}} />
                     </div>
@@ -55,13 +51,13 @@ const Post = ({ children, postId }) => {
             </div>
             <div className={cls["post-center"]}>
                 <PostCarousel>
-                    {children}
+                    {carouselContent} 
                 </PostCarousel>
-                <p className={cls["post-center-caption"]}>
-                    This is the caption
-                </p>
+                {post._id !== 'dummy' && <p className={cls["post-center-caption"]}>
+                    {post.desc}
+                </p>}
             </div>
-            <div className={cls["post-bottom"]}>
+            {post._id !== 'dummy' && <div className={cls["post-bottom"]}>
                 <div className={cls["post-bottom-likes"]}>
                    <div className={cls["button-icon"]}>
                         <ThumbUpOffAltIcon sx={{fontSize: "100%"}} /> 
@@ -83,7 +79,7 @@ const Post = ({ children, postId }) => {
                     </div> 
                     <span className={cls["post-share-text"]}>Share</span>
                 </div>
-            </div>
+            </div>}
         </div>
   )
 }

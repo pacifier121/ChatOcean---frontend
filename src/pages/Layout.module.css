@@ -5,6 +5,8 @@
 .leftSection{
     flex: 2;
     align-self: flex-start;
+    position: sticky;
+    top: 10rem;
 }
 
 .rightSection{
@@ -21,6 +23,7 @@
     }
     .leftSection{
         flex: 0;
+        position: static;
     }
     .rightSection{
         flex: 1 1 20rem;

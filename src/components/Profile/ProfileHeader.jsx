@@ -1,30 +1,53 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import SendIcon from '@mui/icons-material/Send';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import Divider from '../UI/Divider';
 import cls from "./ProfileHeader.module.css";
-import { NavLink } from 'react-router-dom';
-import {asset, PF} from "../../constants/constants";
-import { useSelector } from 'react-redux';
+import { NavLink, useParams } from 'react-router-dom';
+import {asset, backendURL, PF} from "../../constants/constants";
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProfileUser, followProfileUser, unfollowProfileUser  } from '../../store/profile';
 
 const ProfileHeader = () => {
-   const classes =  cls["profile-header"] + " card-shadow";
+    const params = useParams();
+    const dispatch = useDispatch();
     const { user } = useSelector(state => state.auth)
-    const fullName = (user.firstName || '') + " " + (user.lastName || '');
+    const { profileUser, isFollowed } = useSelector(state => state.profile);
+
+    useEffect(() => {
+        dispatch(fetchProfileUser(user, params.username));
+    }, [user])
+    
+    const followUserHandler = () => {
+        dispatch(followProfileUser(user, profileUser));
+    }
+
+    const unfollowUserHandler = () => {
+        dispatch(unfollowProfileUser(user, profileUser));
+    }
+    
+    const fullName = profileUser && (profileUser.firstName || '') + " " + (profileUser.lastName || '');
+
+   const classes =  cls["profile-header"] + " card-shadow";
 
   return (
+        profileUser && 
         <div className={classes}>
             <div className={cls["cover"]}>
                 <img src={asset(user.coverImg, 'cover')} alt="" className={cls["cover-img"]} />
             </div>
             <div className={cls["user-info"]}>
-                <img src={asset(user.avatar, 'profile')} className={cls["user-info-img"]} />
+                <img src={asset(profileUser.avatar, 'profile')} className={cls["user-info-img"]} />
                 <div className={cls["user-info-desc"]}>
                     <span className={cls["user-info-name"]}>{fullName}</span> 
-                    <span className={cls["user-info-email"]}>@{user.username}</span> 
+                    <span className={cls["user-info-email"]}>@{profileUser.username}</span> 
                 </div>
                 <div className={cls["user-info-actions"]}>
-                    <button className={cls["follow-btn"]}>Follow</button>
+                    { user._id !== profileUser._id && 
+                    ( !isFollowed ? 
+                        <button onClick={followUserHandler} className={cls["follow-btn"]}>Follow</button> :
+                        <button onClick={unfollowUserHandler} className={cls["unfollow-btn"]}>Unfollow</button>
+                     )}
                     <div className={cls["message-btn"]}>
                         <SendIcon sx={{fontSize: "25px"}} /> 
                     </div>
