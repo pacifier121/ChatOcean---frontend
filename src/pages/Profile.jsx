@@ -9,8 +9,10 @@ import {asset, backendURL, dummyPost } from "./../constants/constants";
 import { Outlet } from 'react-router-dom';
 import StoryCard from '../components/Feed/StoryCard';
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import PersonCard from "../components/UI/PersonCard";
 import axios from 'axios';
+import { fetchProfileFollowers, fetchProfileFollowings, fetchProfilePosts, fetchProfileStories, fetchProfileVideos } from '../store/profile';
 
 const Content = ({children}) => {
   return (
@@ -26,23 +28,22 @@ const Content = ({children}) => {
 }
 
 export const PostsContent = () => {
-    const { profileUser } = useSelector(state => state.profile);
-    const { user } = useSelector(state => state.auth);
-    const [posts, setPosts] = useState([]);
+  const dispatch = useDispatch();
+  const { profileUser, posts } = useSelector(state => state.profile);
   
-    useEffect(() => {
-       const fetchPosts = async () => {
-         try {
-           const { data } = await axios.get(backendURL + '/user/posts?userId=' + profileUser._id);
-            setPosts(data);
-         } catch (err) {
-            console.log(err);
-         }
-       }
-      if (profileUser) fetchPosts();
-    }, [profileUser, user])
+  useEffect(() => {
+    const fetchPosts = async() => {
+      try {
+        dispatch(fetchProfilePosts(profileUser));
+      } catch (err) {
+        console.log(err); 
+      }
+    }
+    if (!posts) fetchPosts();
+  }, [profileUser])
 
    return (
+     posts && 
         <Content>
             {posts.map(post => (
               <Post post={post} owner={profileUser} key={post._id} />
@@ -52,25 +53,22 @@ export const PostsContent = () => {
 }
 
 export const VideosContent = () => {
-    const { user } = useSelector(state => state.auth);
-    const { profileUser } = useSelector(state => state.profile);
-    const [videos, setVideos] = useState([]);
+  const dispatch = useDispatch();
+  const { profileUser, videos } = useSelector(state => state.profile);
   
-    useEffect(() => {
-       const fetchVideos = async () => {
-         try {
-           const { data } = await axios.get(backendURL + '/user/videos?userId=' + profileUser._id);
-            setVideos(data);
-         } catch (err) {
-            console.log(err);
-         }
-       }
-      if (profileUser){
-       fetchVideos();
+  useEffect(() => {
+    const fetchVideos = async() => {
+      try {
+        dispatch(fetchProfileVideos(profileUser));
+      } catch (err) {
+        console.log(err); 
       }
-    }, [profileUser, user])
+    }
+    if (!videos) fetchVideos();
+  }, [profileUser])
 
   return (
+      videos && 
         <Content>
               {videos.map(video => (
                   <Post post={dummyPost} owner={profileUser} key={video.src} >
@@ -82,7 +80,23 @@ export const VideosContent = () => {
 }
 
 export const StoriesContent = () => {
+  const dispatch = useDispatch();
+  const { profileUser, stories } = useSelector(state => state.profile);
+  
+  useEffect(() => {
+    const fetchStories = async() => {
+      try {
+        dispatch(fetchProfileStories(profileUser));
+      } catch (err) {
+        console.log(err); 
+      }
+    }
+    if (!stories) fetchStories();
+  }, [profileUser])
+  
+  
   return (
+        stories && 
         <Content>
             <div className={cls['stories']} style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem'  }}>
               <StoryCard className={cls['storycard']} />
@@ -90,6 +104,64 @@ export const StoriesContent = () => {
               <StoryCard className={cls['storycard']} />
             </div>
         </Content>
+  )
+}
+
+export const FollowersContent = () => {
+  const dispatch = useDispatch();
+  const { profileUser, followers } = useSelector(state => state.profile);
+  
+  useEffect(() => {
+    const fetchFollowers = async() => {
+      try {
+        dispatch(fetchProfileFollowers(profileUser));
+      } catch (err) {
+        console.log(err); 
+      }
+    }
+    if (!followers) fetchFollowers();
+  }, [profileUser])
+
+  return (
+    followers && 
+    <Content>
+          { followers.length === 0 ?
+          <div className={cls['no-followers']}>No one is following you yet</div> :
+          <div className={cls['followers-container']}>
+              {followers.map(person => (
+                <PersonCard key={person._id} person={person}  />
+              ))}
+          </div>}
+    </Content>
+  )
+}
+
+export const FollowingsContent = () => {
+  const dispatch = useDispatch();
+  const { profileUser, followings } = useSelector(state => state.profile);
+  
+  useEffect(() => {
+    const fetchFollowings = async() => {
+      try {
+        dispatch(fetchProfileFollowings(profileUser));
+      } catch (err) {
+        console.log(err); 
+      }
+    }
+    if (!followings) fetchFollowings();
+  }, [profileUser])
+
+  return (
+    followings && 
+    <Content>
+          { followings.length === 0 ?
+          <div className={cls['no-followers']}>Follow some people to show here</div> :
+          <div className={cls['followers-container']}>
+              {followings.map(person => (
+                <PersonCard key={person._id} person={person}  />
+              ))}
+          </div>}
+    </Content>
   )
 }
 

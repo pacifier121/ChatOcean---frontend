@@ -2,7 +2,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Feed from "./components/Feed/Feed";
 import Layout from "./pages/Layout";
-import Profile, { PostsContent, StoriesContent, VideosContent } from "./pages/Profile";
+import Profile, { FollowersContent, FollowingsContent, PostsContent, StoriesContent, VideosContent } from "./pages/Profile";
 import Stories from "./pages/Stories";
 import ChatPage from "./pages/ChatPage";
 import Notifications from "./pages/Notifications";
@@ -31,12 +31,12 @@ function App() {
                 <Route path="stories" element={ <Stories /> } />
                 <Route path="chat" element={ <ChatPage /> } />
                 <Route path="profile/:username" element={ <Profile /> } >
-                    <Route index element={<Navigate to="posts" />} /> 
+                    <Route index element={<Navigate to="posts" replace />} /> 
                     <Route path="posts" element={<PostsContent />} /> 
                     <Route path="videos" element={<VideosContent />} /> 
                     <Route path="stories" element={<StoriesContent />} /> 
-                    <Route path="followers" element={<PostsContent />} /> 
-                    <Route path="followings" element={<PostsContent />} /> 
+                    <Route path="followers" element={<FollowersContent />} /> 
+                    <Route path="followings" element={<FollowingsContent />} /> 
                 </Route>
                 <Route path="post/:postId" element={ <PostPage /> } />
                 <Route path="notifications" element={ <Notifications /> } /> 

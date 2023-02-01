@@ -19,7 +19,7 @@ const Navbar = () => {
     <nav className={cls["navbar"]}>
         <div className={cls["navbarLeft"]}>
             <img src={PF+'logo.png'} alt="" className={cls["brandLogo"]} />
-            <span className={cls["brandTitle"]}>ChatOcean</span>
+            <Link to="/" className={cls["brandTitle"] + " linkStyles"}>ChatOcean</Link>
         </div>      
         <div className={cls["navbarCenter"]} >
             <SearchBar />

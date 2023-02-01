@@ -20,7 +20,6 @@ const Feed = () => {
        try {
          const { data } = await axios.get(backendURL + '/user/timeline?userId=' + user._id );
           setTimelinePosts(data);
-         console.log(data);
        } catch (err) {
           console.log(err);
        }

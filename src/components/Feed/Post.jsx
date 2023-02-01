@@ -33,7 +33,7 @@ const Post = ({ children, post, owner }) => {
   return (
         <div className={cls["post"] + " card-shadow"}>
             <div className={cls["post-top"]}>
-                <Link to="/profile/abcd" replace style={removeLinkStyles}  className={cls["post-top-left"]}>
+                <Link to={`/profile/${owner.username}`} replace style={removeLinkStyles}  className={cls["post-top-left"]}>
                     <img src={asset(owner.avatar, 'profile')} alt="" className={cls["user-img"]} />
                     <div className={cls["user-info"]}>
                         <span className={cls["user-info-username"]}>{owner.username}</span> 

@@ -4,7 +4,12 @@ import { backendURL } from "../constants/constants";
 
 const initialState = {
     profileUser: null,
-    isFollowed: false
+    isFollowed: false,
+    posts: null,
+    videos: null,
+    stories: null,
+    followers: null,
+    followings: null
 }
 
 const profileSlice = createSlice({
@@ -19,7 +24,22 @@ const profileSlice = createSlice({
         },
         unfollowUser: (state) => {
             state.isFollowed = false;
-        }
+        },
+        setPosts: (state, action) => {
+            state.posts = action.payload
+        },
+        setVideos: (state, action) => {
+            state.videos = action.payload
+        },
+        setStories: (state, action) => {
+            state.stories = action.payload
+        },
+        setFollowers: (state, action) => {
+            state.followers = action.payload
+        },
+        setFollowings: (state, action) => {
+            state.followings = action.payload
+        },
     }
 })
 
@@ -57,6 +77,73 @@ export const unfollowProfileUser = (user, profileUser) => {
         }
     }
 }
+
+// Profile content fetching logic
+export const fetchProfilePosts = (profileUser) => {
+    return async (dispatch) => {
+        try {
+            if (profileUser){
+                const { data } = await axios.get(backendURL + '/user/posts/' + profileUser._id);
+                dispatch(profileSlice.actions.setPosts(data));
+            }
+        } catch (err) {
+            console.log(err); 
+        }
+    }
+}
+
+export const fetchProfileVideos = (profileUser) => {
+    return async (dispatch) => {
+        try {
+            if (profileUser){
+                const { data } = await axios.get(backendURL + '/user/videos/' + profileUser._id);
+                dispatch(profileSlice.actions.setVideos(data));
+            }
+        } catch (err) {
+            console.log(err); 
+        }
+    }
+}
+
+export const fetchProfileStories = (profileUser) => {
+    return async (dispatch) => {
+        try {
+            if (profileUser){
+                const { data } = await axios.get(backendURL + '/user/stories/' + profileUser._id);
+                dispatch(profileSlice.actions.setStories(data));
+            }
+        } catch (err) {
+            console.log(err); 
+        }
+    }
+}
+
+export const fetchProfileFollowers = (profileUser) => {
+    return async (dispatch) => {
+        try {
+            if (profileUser){
+                const { data } = await axios.get(backendURL + '/user/followers/' + profileUser._id);
+                dispatch(profileSlice.actions.setFollowers(data));
+            }
+        } catch (err) {
+            console.log(err); 
+        }
+    }
+}
+
+export const fetchProfileFollowings = (profileUser) => {
+    return async (dispatch) => {
+        try {
+            if (profileUser){
+                const { data } = await axios.get(backendURL + '/user/followings/' + profileUser._id);
+                dispatch(profileSlice.actions.setFollowings(data));
+            }
+        } catch (err) {
+            console.log(err); 
+        }
+    }
+}
+
 
 export const profileActions = profileSlice.actions;
 
