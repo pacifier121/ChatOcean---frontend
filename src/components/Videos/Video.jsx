@@ -15,7 +15,14 @@ const Video = ({ showControls, clickToMute, autoPlay, muted, src, loop }) => {
      const videoRef = useRef();
      
      useEffect(() => {
+         return () => {
+               if (video) dispatch(videoActions.setVideoStop());
+         } 
+     }, []) 
+
+     useEffect(() => {
           if (!video) dispatch(videoActions.setVideoStart(videoRef.current));
+          
      }, [video]);
     
      const pauseVideoHandler = () => {

@@ -3,13 +3,16 @@ import BasicInfo from './BasicInfo';
 import cls from "./PersonCard.module.css";
 import { Link } from 'react-router-dom';
 
-const PersonCard = ({ person }) => {
+const PersonCard = ({ person, followersCount, followingsCount }) => {
+   const fullName = (person.firstName || '') + ' ' + (person.lastName || '');
+    console.log(person);
+
   return (
     <Link to={`/profile/${person.username}`}  className={cls["person-card"] + " card-shadow linkStyles"}>
-        <BasicInfo name={"Pacifire Ocean"} info={"@abcdef"} />
+        <BasicInfo name={fullName !== ' ' ? fullName : (person.username)} info={'@'+ person.username} />
         <div className={cls["info"]}>
-            <span className="follower-info">12K Followers</span> 
-            <span className="following-info">1K Following</span> 
+            <span className="follower-info">{followersCount || 0} followers</span> 
+            <span className="following-info">{followingsCount || 0} following</span> 
         </div>
     </Link>
   )

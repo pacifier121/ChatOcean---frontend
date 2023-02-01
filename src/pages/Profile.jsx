@@ -129,7 +129,7 @@ export const FollowersContent = () => {
           <div className={cls['no-followers']}>No one is following you yet</div> :
           <div className={cls['followers-container']}>
               {followers.map(person => (
-                <PersonCard key={person._id} person={person}  />
+                <PersonCard key={person._id} followersCount={person.followers.length} followingsCount={person.followings.length} person={person}  />
               ))}
           </div>}
     </Content>
@@ -158,7 +158,7 @@ export const FollowingsContent = () => {
           <div className={cls['no-followers']}>Follow some people to show here</div> :
           <div className={cls['followers-container']}>
               {followings.map(person => (
-                <PersonCard key={person._id} person={person}  />
+                <PersonCard key={person._id} followersCount={person.followers.length} followingsCount={person.followings.length} person={person}  />
               ))}
           </div>}
     </Content>

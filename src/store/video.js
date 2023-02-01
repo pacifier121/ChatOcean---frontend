@@ -29,7 +29,10 @@ const videoSlice = createSlice({
             state.video.pause();
         },
         setVideoStop: (state) => {
-            state.video.pause();
+            if (state.video) {
+                state.video.pause();
+                state.video.currentTime = 0;
+            }
             state.isVideoPlaying = false;
             state.video = null; 
         },
