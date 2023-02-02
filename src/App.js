@@ -15,6 +15,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { tryLogin } from "./store/auth";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
+import EditProfile from './components/Profile/EditProfile';
 
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
                     <Route path="stories" element={<StoriesContent />} /> 
                     <Route path="followers" element={<FollowersContent />} /> 
                     <Route path="followings" element={<FollowingsContent />} /> 
+                    <Route path="edit" element={<EditProfile />} /> 
                 </Route>
                 <Route path="post/:postId" element={ <PostPage /> } />
                 <Route path="notifications" element={ <Notifications /> } /> 

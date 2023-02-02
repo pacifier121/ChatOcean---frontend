@@ -46,7 +46,7 @@ const authSlice = createSlice({
 export const loginUser = (userData) => {
     return async (dispatch) => {
         const saveUser = async() => {
-            const { data } = await axios.post(backendURL + '/login', userData);
+            const { data } = await axios.post('/login', userData);
             if (data.msg){
               return (data.msg);   
             }

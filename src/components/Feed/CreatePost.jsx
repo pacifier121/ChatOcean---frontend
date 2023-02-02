@@ -72,7 +72,7 @@ const CreatePost = () => {
         formData.append('userId', user._id);
 
         try {
-            await axios.post(backendURL + '/post/post', formData, {
+            await axios.post('/post/post', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }

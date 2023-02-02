@@ -15,10 +15,83 @@ import { format } from "timeago.js";
 import axios from "axios";
 import Photo from '../Photos/Photo';
 import Video from '../Videos/Video';
+import { useSelector } from 'react-redux';
+import { useReducer } from 'react';
+
+const postStatesReducer = (state, action) => {
+    switch(action.type){
+        case 'UPDATE_STATES':
+            return {
+                isLiked: action.payload.isLiked,
+                isFavorite: action.payload.isFavorite,
+                totalLikes: action.payload.totalLikes,
+                totalComments: action.payload.totalComments
+            }
+        case 'TOGGLE_LIKE':
+            if (state.isLiked)
+                return {
+                    ...state,
+                    isLiked: false,
+                    totalLikes: state.totalLikes - 1
+                }            
+            else
+                return {
+                    ...state,
+                    isLiked: true,
+                    totalLikes: state.totalLikes + 1
+                }            
+        case 'TOGGLE_FAVORITE':
+            if (state.isFavorite)
+                return {
+                    ...state,
+                    isFavorite: false,
+                }            
+            else
+                return {
+                    ...state,
+                    isFavorite: true,
+                }            
+        default:
+            return state;
+    }
+}
 
 const removeLinkStyles = { textDecoration: 'none', color: 'inherit'};
 
 const Post = ({ children, post, owner }) => {
+   const { user } = useSelector(state => state.auth);
+   const [{ isLiked, isFavorite, totalLikes, totalComments, comments} , dispatch] = useReducer(postStatesReducer, { isLiked: false, isFavorite: false, totalLikes: 0, totalComments: 0, comments: [] })
+    
+   useEffect(() => {
+        const fetchPostStates = async() => {
+            try {
+                const { data } = await axios.get(`/post/states/${post._id}/${user._id}`);
+                dispatch(postStatesReducer({type: 'UPDATE_STATES', payload: data}))
+            } catch (err) {
+                console.log(err);
+            }
+        }
+        if (post._id !== 'dummy') fetchPostStates();
+   }, [user]);
+
+   const likeButtonHandler = async() => {
+        try {
+            await axios.put(`/post/${post._id}/like`, { userId: user._id });
+            dispatch(postStatesReducer({type: 'TOGGLE_LIKE'}))
+        } catch (err) {
+            console.log(err) 
+        }
+   }
+
+   const favoriteButtonHandler = async() => {
+        try {
+            await axios.put(`/user/${user._id}/favorite`, { postId: post._id });
+            dispatch(postStatesReducer({type: 'TOGGLE_FAVORITE'}))
+        } catch (err) {
+            console.log(err) 
+        }
+   }
+
    const carouselContent = (post._id === 'dummy' ? 
         children :
          post.content.map(item => (
@@ -59,19 +132,21 @@ const Post = ({ children, post, owner }) => {
             </div>
             {post._id !== 'dummy' && <div className={cls["post-bottom"]}>
                 <div className={cls["post-bottom-likes"]}>
-                   <div className={cls["button-icon"]}>
-                        <ThumbUpOffAltIcon sx={{fontSize: "100%"}} /> 
+                   <div onClick={likeButtonHandler} className={cls["button-icon"]}>
+                        {isLiked && <ThumbUpIcon sx={{fontSize: "100%", color: "#0B54FA"}} />}
+                        {!isLiked && <ThumbUpOffAltIcon sx={{fontSize: "100%"}} />}
                     </div> 
-                   <div className={cls["button-icon"]}>
-                        <FavoriteBorderIcon sx={{fontSize: "100%"}} />
+                    <span className={cls["post-likes-text"]}>{ totalLikes ? `${totalLikes} Likes` : '' }</span>
+                   <div onClick={favoriteButtonHandler} className={cls["button-icon"]}>
+                        {isFavorite && <FavoriteIcon sx={{fontSize: "100%", color: "#ED1651"}} />}
+                        {!isFavorite && <FavoriteBorderIcon sx={{fontSize: "100%"}} />}
                     </div> 
-                    <span className={cls["post-likes-text"]}>2.8K</span>
                 </div>
                 <div className={cls["post-bottom-comments"]}>
                    <div className={cls["button-icon"]}>
                         <ChatIcon sx={{fontSize: "100%"}} />
                     </div> 
-                    <span className={cls["post-comments-text"]}>22 Comments</span>
+                    <span className={cls["post-comments-text"]}>{ totalComments ? `${totalComments} Comments` : '' }</span>
                 </div>
                 <div className={cls["post-bottom-share"]}>
                    <div className={cls["button-icon"]}>

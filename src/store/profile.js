@@ -55,7 +55,7 @@ const profileSlice = createSlice({
 export const fetchProfileUser = (user, username) => {
     return async (dispatch) => {
         try {
-            const { data: profileUser } = await axios.get(backendURL + '/user/user?username=' + username);
+            const { data: profileUser } = await axios.get('/user/user?username=' + username);
             dispatch(profileSlice.actions.setProfileUser(profileUser));
             const alreadyFollowed = profileUser.followers.find(f => f === user._id);
             if (alreadyFollowed) dispatch(profileSlice.actions.followUser());
@@ -68,7 +68,7 @@ export const fetchProfileUser = (user, username) => {
 export const followProfileUser = (user, profileUser) => {
     return async (dispatch) => {
         try {
-            await axios.put(backendURL + `/user/${profileUser._id}/follow`, { userId: user._id });
+            await axios.put(`/user/${profileUser._id}/follow`, { userId: user._id });
             dispatch(profileSlice.actions.followUser());
         } catch (err) {
             console.log(err); 
@@ -79,7 +79,7 @@ export const followProfileUser = (user, profileUser) => {
 export const unfollowProfileUser = (user, profileUser) => {
     return async (dispatch) => {
         try {
-            await axios.put(backendURL + `/user/${profileUser._id}/unfollow`, { userId: user._id });
+            await axios.put(`/user/${profileUser._id}/unfollow`, { userId: user._id });
             dispatch(profileSlice.actions.unfollowUser());
         } catch (err) {
             console.log(err); 
@@ -92,7 +92,7 @@ export const fetchProfilePosts = (profileUser) => {
     return async (dispatch) => {
         try {
             if (profileUser){
-                const { data } = await axios.get(backendURL + '/user/posts/' + profileUser._id);
+                const { data } = await axios.get('/user/posts/' + profileUser._id);
                 dispatch(profileSlice.actions.setPosts(data));
             }
         } catch (err) {
@@ -105,7 +105,7 @@ export const fetchProfileVideos = (profileUser) => {
     return async (dispatch) => {
         try {
             if (profileUser){
-                const { data } = await axios.get(backendURL + '/user/videos/' + profileUser._id);
+                const { data } = await axios.get('/user/videos/' + profileUser._id);
                 dispatch(profileSlice.actions.setVideos(data));
             }
         } catch (err) {
@@ -118,7 +118,7 @@ export const fetchProfileStories = (profileUser) => {
     return async (dispatch) => {
         try {
             if (profileUser){
-                const { data } = await axios.get(backendURL + '/user/stories/' + profileUser._id);
+                const { data } = await axios.get('/user/stories/' + profileUser._id);
                 dispatch(profileSlice.actions.setStories(data));
             }
         } catch (err) {
@@ -131,7 +131,7 @@ export const fetchProfileFollowers = (profileUser) => {
     return async (dispatch) => {
         try {
             if (profileUser){
-                const { data } = await axios.get(backendURL + '/user/followers/' + profileUser._id);
+                const { data } = await axios.get('/user/followers/' + profileUser._id);
                 dispatch(profileSlice.actions.setFollowers(data));
             }
         } catch (err) {
@@ -144,7 +144,7 @@ export const fetchProfileFollowings = (profileUser) => {
     return async (dispatch) => {
         try {
             if (profileUser){
-                const { data } = await axios.get(backendURL + '/user/followings/' + profileUser._id);
+                const { data } = await axios.get('/user/followings/' + profileUser._id);
                 dispatch(profileSlice.actions.setFollowings(data));
             }
         } catch (err) {

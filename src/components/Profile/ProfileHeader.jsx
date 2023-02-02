@@ -8,6 +8,7 @@ import {asset, backendURL, PF} from "../../constants/constants";
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProfileUser, followProfileUser, unfollowProfileUser  } from '../../store/profile';
 import { profileActions } from '../../store/profile';
+import EditIcon from '@mui/icons-material/Edit';
 
 const ProfileHeader = () => {
     const params = useParams();
@@ -37,6 +38,7 @@ const ProfileHeader = () => {
         <div className={classes}>
             <div className={cls["cover"]}>
                 <img src={asset(user.coverImg, 'cover')} alt="" className={cls["cover-img"]} />
+                <NavLink to="edit" className={cls["edit-profile-btn"] + " linkStyles"}><EditIcon sx={{fontSize: '100%'}} /></NavLink>
             </div>
             <div className={cls["user-info"]}>
                 <img src={asset(profileUser.avatar, 'profile')} className={cls["user-info-img"]} />

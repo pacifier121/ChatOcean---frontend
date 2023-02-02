@@ -18,7 +18,7 @@ const Feed = () => {
   useEffect(() => {
      const fetchPosts = async () => {
        try {
-         const { data } = await axios.get(backendURL + '/user/timeline?userId=' + user._id );
+         const { data } = await axios.get('/user/timeline?userId=' + user._id );
           setTimelinePosts(data);
        } catch (err) {
           console.log(err);

@@ -14,7 +14,8 @@ import PersonCard from "../components/UI/PersonCard";
 import axios from 'axios';
 import { fetchProfileFollowers, fetchProfileFollowings, fetchProfilePosts, fetchProfileStories, fetchProfileVideos } from '../store/profile';
 
-const Content = ({children}) => {
+
+export const Content = ({children}) => {
   return (
         <div className={cls["bottomSection"]}>
             <div className={cls['centerSection']}>
