@@ -21,7 +21,7 @@ const Video = ({ showControls, clickToMute, autoPlay, muted, src, loop }) => {
      }, []) 
 
      useEffect(() => {
-          if (!video) dispatch(videoActions.setVideoStart(videoRef.current));
+          if (!video) dispatch(videoActions.setVideo(videoRef.current));
           
      }, [video]);
     
@@ -38,7 +38,8 @@ const Video = ({ showControls, clickToMute, autoPlay, muted, src, loop }) => {
                if (isVideoPlaying) dispatch(videoActions.setVideoPause());
                else dispatch(videoActions.setVideoResume());
           } else {
-               dispatch(videoActions.setVideoStart(videoRef.current));
+               dispatch(videoActions.setVideo(videoRef.current));
+               dispatch(videoActions.setVideoResume());
           }
      }
      
@@ -51,12 +52,14 @@ const Video = ({ showControls, clickToMute, autoPlay, muted, src, loop }) => {
 
   return (
        <div className={classes} >
-              <video ref={videoRef} onTouchStart={pauseVideoHandler} onTouchEnd={playVideoHandler} onTouchCancel={playVideoHandler} 
+              <video ref={videoRef} 
+               // onTouchStart={toggleVideoHandler} onTouchEnd={playVideoHandler} onTouchCancel={playVideoHandler} 
                autoPlay={false} muted={muted} preload={'metadata'} loop={loop || true} controls={showControls} width="100%" className={cls["video"]}
                clickToMute={clickToMute}  onClick={toggleVideoHandler} 
                >
                 <source src={src} type="video/mp4" />
-                {/* <source src="./nature_video.webm" type="video/webm" /> */}
+                <source src={src} type="video/webm" />
+                <source src={src} type="video/flv" />
                   Sorry, browser doesn't support video
             </video>
             {clickToMute && <span onClick={muteClickHandler} className={cls["volume-info"]}>

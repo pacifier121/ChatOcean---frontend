@@ -37,8 +37,8 @@ const ProfileHeader = () => {
         profileUser && 
         <div className={classes}>
             <div className={cls["cover"]}>
-                <img src={asset(user.coverImg, 'cover')} alt="" className={cls["cover-img"]} />
-                <NavLink to="edit" className={cls["edit-profile-btn"] + " linkStyles"}><EditIcon sx={{fontSize: '100%'}} /></NavLink>
+                <img src={asset(profileUser.coverImg, 'cover')} alt="" className={cls["cover-img"]} />
+                {user._id === profileUser._id && <NavLink to="edit" className={cls["edit-profile-btn"] + " linkStyles"}><EditIcon sx={{fontSize: '100%'}} /></NavLink>}
             </div>
             <div className={cls["user-info"]}>
                 <img src={asset(profileUser.avatar, 'profile')} className={cls["user-info-img"]} />

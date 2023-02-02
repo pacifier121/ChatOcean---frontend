@@ -77,13 +77,14 @@ const CreatePost = () => {
                     'Content-Type': 'multipart/form-data'
                 }
             });
-            setSendingPost(false);
             setPhotosCount(0);
             setVideosCount(0);
             setFiles([]);
             window.open('/', '_self');
         } catch (err) {
             console.log(err); 
+        } finally {
+            setSendingPost(false);
         }
     }
     

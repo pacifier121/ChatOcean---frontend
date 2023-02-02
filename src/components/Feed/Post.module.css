@@ -25,9 +25,10 @@
 }
 
 .user-img{
-    height: 4rem;
-    width: 4rem;
+    height: 4rem; 
+    min-width: 4rem; 
     border-radius: 50%;
+    object-fit: cover;
 }
 
 .user-info{

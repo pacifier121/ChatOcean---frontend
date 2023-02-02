@@ -10,7 +10,7 @@ const videoSlice = createSlice({
     name: 'video',
     initialState: initialState,
     reducers: {
-        setVideoStart: (state, action) => {
+        setVideo: (state, action) => {
             if (state.video){
                 state.video.pause();
             } 
@@ -18,7 +18,6 @@ const videoSlice = createSlice({
             state.isVideoPlaying = true;
             state.video = action.payload;
             state.volume = 1;
-            state.video.play();
         },
         setVideoResume: (state) => {
             state.isVideoPlaying = true;

@@ -4,6 +4,10 @@ import { Content } from "../../pages/Profile";
 import { useRef, useState } from 'react';
 import { Divider } from '@mui/material';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
+import { CircularProgress } from '@mui/material';
+import { logoutUser } from '../../store/auth';
+import { profileActions } from '../../store/profile';
 
 const EditProfile = () => {
     const firstNameRef = useRef();
@@ -19,11 +23,15 @@ const EditProfile = () => {
     const newPasswordRef = useRef(); 
     const [avatarSelected, setAvatarSelected] = useState(false);
     const [coverImgSelected, setCoverImgSelected] = useState(false);
+    const { user, logoutRef } = useSelector(state => state.auth);
+    const [sendingPost, setSendingPost] = useState(false);
+    const [error, setError] = useState('');
     
     const editProfileHandler = async(e) => {
        e.preventDefault(); 
        
        let updates = {};
+       let types = [];
        if (firstNameRef.current.value) updates.firstName = firstNameRef.current.value;
        if (lastNameRef.current.value) updates.lastName = lastNameRef.current.value;
        if (emailRef.current.value) updates.email = emailRef.current.value;
@@ -34,17 +42,44 @@ const EditProfile = () => {
            if (oldPasswordRef.current.value) updates.oldPassword = oldPasswordRef.current.value;
            if (newPasswordRef.current.value) updates.newPassword = newPasswordRef.current.value;
         }
-        if (avatarSelected) updates.avatar = avatarRef.current.files[0];
-        if (coverImgSelected) updates.coverImg = coverImgRef.current.files[0];
-        
+        if (avatarSelected) {
+            types.push('avatar');
+        }
+        if (coverImgSelected){
+            types.push('coverImg');
+        }
+        if (!Object.keys(updates).find(k => updates[k] !== '') && !avatarSelected && !coverImgSelected) return setError("Please fill at least one field");
+        setSendingPost(true); 
+        setError('');
+
+        types = JSON.stringify(types);
+        updates.types = types;
+
+       let formData = new FormData();
+        formData.append('userId', user._id);
+       Object.keys(updates).forEach(u => formData.append(u, updates[u]));
+        if (avatarSelected) formData.append('images', avatarRef.current.files[0]);
+        if (coverImgSelected) formData.append('images', coverImgRef.current.files[0]);
+
         try {
-            await axios.put('/user/update', updates, {
+            const response = await axios.put('/user/update', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
             });
+            if (response.status !== 200){
+                setError(response.data.err.message);
+            } else {
+                if (updates.username) {
+                    logoutRef.click();
+                }
+                else window.open(`/profile/${user.username}/`, '_self');
+            }
         } catch (err) {
-            console.log(err); 
+            // console.log(err); 
+            setError(err.response.data.err);
+        } finally {
+            setSendingPost(false);
         }
     }
     
@@ -76,7 +111,10 @@ const EditProfile = () => {
                         <input ref={emailRef} id="email" type="email" />
                     </label>
                     <label htmlFor="username" className={cls['option']}>
-                        <span>Username</span>
+                        <div className={cls["option-extra-info"]}>
+                            <span>Username</span>
+                            <span className={cls['info']}>* Relogin required</span>
+                        </div>
                         <input ref={usernameRef} id="username" type="text" />
                     </label>
                     <label htmlFor="from" className={cls['option']}>
@@ -84,7 +122,7 @@ const EditProfile = () => {
                         <input ref={fromRef} id="from" type="text" />
                     </label>
                     <label htmlFor="dob" className={cls['option']}>
-                        <span>BirthDay</span>
+                        <span>Birth Day</span>
                         <input ref={dobRef} id="dob" type="date" />
                     </label>
                     <div className={cls["files-section"]}>
@@ -100,12 +138,12 @@ const EditProfile = () => {
                         </div>
                     </div>
                     <Divider className={cls['divider']}>
-                        <button onClick={() => setWantPasswordChange((state) => !state)} className={cls['divider-btn'] + ' ' +
+                        <div onClick={() => setWantPasswordChange((state) => !state)} className={cls['divider-btn'] + ' ' +
                                 (wantPasswordChange ? cls['divider-btn-active'] : '')}>
                             <span> Password Change </span>
                             <i></i>
                             <div></div>
-                        </button>
+                        </div>
                     </Divider>
                     { wantPasswordChange && <div className={cls['want-password-change']}>
                         <label htmlFor="oldpassword" className={cls['option']}>
@@ -117,7 +155,10 @@ const EditProfile = () => {
                             <input ref={newPasswordRef} id="newpassword" type="password" />
                         </label>
                     </div>}
-                    <button type="submit" className={cls["submit-btn"]}>Save</button>
+                    {error && <span className={cls['upload-error']}>{error}</span>}
+                    <button type="submit" className={cls["submit-btn"]}>
+                        {sendingPost ? <CircularProgress color='inherit' size={"2rem"} /> : "Save"}                 
+                    </button>
               </div>
           </form>
       </Content>

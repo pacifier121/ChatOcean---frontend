@@ -7,7 +7,8 @@ const userInLocalStorage = JSON.parse(localStorage.getItem('CO_user'));
 
 const initialState = {
     isLoggedIn: userInLocalStorage ? true : false,
-    user: userInLocalStorage
+    user: userInLocalStorage,
+    logoutRef: null
 }
 
 const authSlice = createSlice({
@@ -22,6 +23,9 @@ const authSlice = createSlice({
             state.isLoggedIn = false;
             state.user = undefined;
         },
+        setLogoutRef: (state, action) => {
+            state.logoutRef = action.payload
+        }
     }
 })
 

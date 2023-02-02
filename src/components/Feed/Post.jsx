@@ -66,7 +66,7 @@ const Post = ({ children, post, owner }) => {
         const fetchPostStates = async() => {
             try {
                 const { data } = await axios.get(`/post/states/${post._id}/${user._id}`);
-                dispatch(postStatesReducer({type: 'UPDATE_STATES', payload: data}))
+                dispatch({type: 'UPDATE_STATES', payload: data})
             } catch (err) {
                 console.log(err);
             }
@@ -77,7 +77,7 @@ const Post = ({ children, post, owner }) => {
    const likeButtonHandler = async() => {
         try {
             await axios.put(`/post/${post._id}/like`, { userId: user._id });
-            dispatch(postStatesReducer({type: 'TOGGLE_LIKE'}))
+            dispatch({type: 'TOGGLE_LIKE'})
         } catch (err) {
             console.log(err) 
         }
@@ -86,7 +86,7 @@ const Post = ({ children, post, owner }) => {
    const favoriteButtonHandler = async() => {
         try {
             await axios.put(`/user/${user._id}/favorite`, { postId: post._id });
-            dispatch(postStatesReducer({type: 'TOGGLE_FAVORITE'}))
+            dispatch({type: 'TOGGLE_FAVORITE'})
         } catch (err) {
             console.log(err) 
         }

@@ -52,6 +52,7 @@
     border-radius: 100%;
     background-color: blue;
     transform: translate(0, -4rem);
+    object-fit: cover;
 }
 
 .user-info-desc{

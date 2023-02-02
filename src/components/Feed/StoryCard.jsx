@@ -5,7 +5,7 @@ import { Add } from '@mui/icons-material';
 import {PF} from "../../constants/constants";
 
 const StoryCard = ({ type, className }) => {
-   const cardClasses = `${cls["story-card"]} ${className} card-shadow`;
+   const cardClasses = `${cls["story-card"]} ${className} card-shadow linkStyles`;
 
    const regularCard = (
       <Link to="/story/abcd" className={cardClasses} style={{ background: `url(${PF+'covers/back.jpg'})`, backgroundSize: 'cover'}}>

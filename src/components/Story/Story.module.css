@@ -27,12 +27,19 @@
     z-index: 50;
 }
 
+.profile-info{
+    display: flex;
+    align-items: center;
+}
+
 .profile-info span{
     white-space: nowrap;
 }
 
 .profile-info img{
-    object-fit: contain;
+    width: 4rem !important;
+    height: 4rem !important;
+    object-fit: cover;
 }
 
 .story-top{
