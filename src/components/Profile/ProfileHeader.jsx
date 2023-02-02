@@ -6,15 +6,26 @@ import cls from "./ProfileHeader.module.css";
 import { NavLink, useParams } from 'react-router-dom';
 import {asset, backendURL, PF} from "../../constants/constants";
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchProfileUser, followProfileUser, unfollowProfileUser  } from '../../store/profile';
-import { profileActions } from '../../store/profile';
+import { fetchProfileUser, followProfileUser, unfollowProfileUser, profileActions, deleteUser  } from '../../store/profile';
 import EditIcon from '@mui/icons-material/Edit';
+import MoreOptionsButton from '../UI/MoreOptionButton';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { logoutUser } from '../../store/auth';
+
 
 const ProfileHeader = () => {
     const params = useParams();
     const dispatch = useDispatch();
     const { user } = useSelector(state => state.auth)
     const { profileUser, isFollowed } = useSelector(state => state.profile);
+
+    const moreActions = [{
+        content: (<span><DeleteIcon sx={{fontSize: "120%"}} /> Delete</span>),
+        clickHandler: () => {
+            dispatch(deleteUser(profileUser)); 
+            dispatch(logoutUser());
+        }
+    }]
 
     useEffect(() => {
         dispatch(profileActions.resetProfile());
@@ -28,6 +39,7 @@ const ProfileHeader = () => {
     const unfollowUserHandler = () => {
         dispatch(unfollowProfileUser(user, profileUser));
     }
+
     
     const fullName = profileUser && (profileUser.firstName || '') + " " + (profileUser.lastName || '');
 
@@ -55,9 +67,9 @@ const ProfileHeader = () => {
                     <div className={cls["message-btn"]}>
                         <SendIcon sx={{fontSize: "25px"}} /> 
                     </div>
-                    <div className={cls["more-options"]}>
+                    { profileUser._id === user._id && <MoreOptionsButton items={moreActions} contextMenuClass={cls["more-options-actions"] + ' card-shadow'} className={cls["more-options"]}>
                         <MoreHorizIcon sx={{fontSize: "25px"}} /> 
-                    </div>
+                    </MoreOptionsButton> }
                 </div>
             </div>
             <Divider />

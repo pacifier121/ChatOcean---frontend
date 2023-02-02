@@ -47,9 +47,11 @@ export const PostsContent = () => {
    return (
      posts && 
         <Content>
-            {posts.map(post => (
-              <Post post={post} owner={profileUser} key={post._id} />
-            ))}
+            {posts.length === 0 ? 
+                  <div className={cls['no-followers']}>No posts to show</div> :
+              posts.map(post => (
+                <Post showContextMenu={true} post={post} owner={profileUser} key={post._id} />
+              ))}
         </Content>
    ) 
 }
@@ -73,10 +75,12 @@ export const VideosContent = () => {
   return (
       videos && 
         <Content>
-              {videos.map(video => (
-                  <Post post={dummyPost} owner={profileUser} key={video.src} >
-                     <Video autoPlay={false} showControls={true} src={asset(video.src, 'video')} />
-                  </Post>
+              {videos.length === 0 ?
+                  <div className={cls['no-followers']}>No videos to show</div> :
+                  videos.map(video => (
+                    <Post post={dummyPost} owner={profileUser} key={video.src} >
+                       <Video autoPlay={false} showControls={true} src={asset(video.src, 'video')} />
+                    </Post>
               ))}
         </Content>
   )
@@ -102,11 +106,13 @@ export const StoriesContent = () => {
   return (
         stories && 
         <Content>
-            <div className={cls['stories']} style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem'  }}>
-              <StoryCard className={cls['storycard']} />
-              <StoryCard className={cls['storycard']} />
-              <StoryCard className={cls['storycard']} />
-            </div>
+            {stories.length === 0 ? 
+              <div className={cls['no-followers']}>No stories to show</div> :
+              <div className={cls['stories']} style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem'  }}>
+                <StoryCard className={cls['storycard']} />
+                <StoryCard className={cls['storycard']} />
+                <StoryCard className={cls['storycard']} />
+              </div>}
         </Content>
   )
 }
@@ -115,6 +121,7 @@ export const FollowersContent = () => {
   const dispatch = useDispatch();
   const params = useParams();
   const { profileUser, followers } = useSelector(state => state.profile);
+  const { user } = useSelector(state => state.auth);
   
   useEffect(() => {
     const fetchFollowers = async() => {
@@ -131,7 +138,7 @@ export const FollowersContent = () => {
     followers && 
     <Content>
           { followers.length === 0 ?
-          <div className={cls['no-followers']}>No one is following you yet</div> :
+          <div className={cls['no-followers']}>{user._id === profileUser._id ? "No one is following you yet" : "Follow some people to show here"}</div> :
           <div className={cls['followers-container']}>
               {followers.map(person => (
                 <PersonCard key={person._id} followersCount={person.followers.length} followingsCount={person.followings.length} person={person}  />
@@ -145,8 +152,7 @@ export const FollowingsContent = () => {
   const dispatch = useDispatch();
   const params = useParams();
   const { profileUser, followings } = useSelector(state => state.profile);
-  const profile = useSelector(state => state.profile);
-  console.log(profile);
+  const { user } = useSelector(state => state.auth);
   
   useEffect(() => {
     const fetchFollowings = async() => {
@@ -163,7 +169,7 @@ export const FollowingsContent = () => {
     followings && 
     <Content>
           { followings.length === 0 ?
-          <div className={cls['no-followers']}>Follow some people to show here</div> :
+          <div className={cls['no-followers']}>{user._id === profileUser._id ? "Follow some people to show here" : "This user doesn't follow anyone yet"}</div> :
           <div className={cls['followers-container']}>
               {followings.map(person => (
                 <PersonCard key={person._id} followersCount={person.followers.length} followingsCount={person.followings.length} person={person}  />

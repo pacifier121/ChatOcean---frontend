@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { videoActions } from '../../store/video';
 
 
-const Video = ({ showControls, clickToMute, autoPlay, muted, src, loop }) => {
+const Video = ({ showControls, muteOnClick, autoPlay, muted, src, loop }) => {
      const dispatch = useDispatch();
      const { isVideoPlaying, video, volume } = useSelector(state => state.video);
      const videoRef = useRef();
@@ -44,7 +44,7 @@ const Video = ({ showControls, clickToMute, autoPlay, muted, src, loop }) => {
      }
      
      const muteClickHandler = () => {
-          if (clickToMute) dispatch(videoActions.toggleVolume());
+          if (muteOnClick) dispatch(videoActions.toggleVolume());
      }
 
 
@@ -55,14 +55,14 @@ const Video = ({ showControls, clickToMute, autoPlay, muted, src, loop }) => {
               <video ref={videoRef} 
                // onTouchStart={toggleVideoHandler} onTouchEnd={playVideoHandler} onTouchCancel={playVideoHandler} 
                autoPlay={false} muted={muted} preload={'metadata'} loop={loop || true} controls={showControls} width="100%" className={cls["video"]}
-               clickToMute={clickToMute}  onClick={toggleVideoHandler} 
+               muteOnClick={muteOnClick}  onClick={toggleVideoHandler} 
                >
                 <source src={src} type="video/mp4" />
                 <source src={src} type="video/webm" />
                 <source src={src} type="video/flv" />
                   Sorry, browser doesn't support video
             </video>
-            {clickToMute && <span onClick={muteClickHandler} className={cls["volume-info"]}>
+            {muteOnClick && <span onClick={muteClickHandler} className={cls["volume-info"]}>
                {volume > 0.4  && <VolumeUpIcon style={{fontSize: "100%"}} />}
                {volume > 0 && volume <= 0.4 && <VolumeDownIcon  style={{fontSize: "100%"}}/>}
                {volume === 0 && <VolumeOffIcon  style={{fontSize: "100%"}}/>}

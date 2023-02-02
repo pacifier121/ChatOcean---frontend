@@ -10,13 +10,17 @@ import ShareIcon from '@mui/icons-material/Share';
 import ChatIcon from '@mui/icons-material/Chat';
 import ArticleIcon from '@mui/icons-material/Article';
 import { Link } from 'react-router-dom';
-import {asset, backendURL} from "../../constants/constants";
+import {asset } from "../../constants/constants";
 import { format } from "timeago.js";
 import axios from "axios";
 import Photo from '../Photos/Photo';
 import Video from '../Videos/Video';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useReducer } from 'react';
+import MoreOptionsButton from '../UI/MoreOptionButton';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { deletePost } from '../../store/profile';
+
 
 const postStatesReducer = (state, action) => {
     switch(action.type){
@@ -58,9 +62,12 @@ const postStatesReducer = (state, action) => {
 
 const removeLinkStyles = { textDecoration: 'none', color: 'inherit'};
 
-const Post = ({ children, post, owner }) => {
+const Post = ({ children, post, owner, showContextMenu }) => {
    const { user } = useSelector(state => state.auth);
+   const { profileUser } = useSelector(state => state.profile);
+    const profileDispatch = useDispatch();
    const [{ isLiked, isFavorite, totalLikes, totalComments, comments} , dispatch] = useReducer(postStatesReducer, { isLiked: false, isFavorite: false, totalLikes: 0, totalComments: 0, comments: [] })
+
     
    useEffect(() => {
         const fetchPostStates = async() => {
@@ -73,6 +80,13 @@ const Post = ({ children, post, owner }) => {
         }
         if (post._id !== 'dummy') fetchPostStates();
    }, [user]);
+
+    const moreActions = [{
+        content: (<span><DeleteIcon sx={{fontSize: "120%"}} /> Delete</span>),
+        clickHandler: () => {
+            profileDispatch(deletePost(post)); 
+        }
+    }]
 
    const likeButtonHandler = async() => {
         try {
@@ -97,7 +111,7 @@ const Post = ({ children, post, owner }) => {
          post.content.map(item => (
               <>
                 {(item.type === 'photo') && <Photo key={item.src} src={asset(item.src, 'photo')} />} 
-                {(item.type === 'video') && <Video key={item.src} clickToMute={true} autoPlay={true} src={asset(item.src, 'video')} />} 
+                {(item.type === 'video') && <Video key={item.src} muteOnClick={true} autoPlay={true} src={asset(item.src, 'video')} />} 
               </>
           ))
    );
@@ -114,12 +128,12 @@ const Post = ({ children, post, owner }) => {
                     </div>
                 </Link>
                <div className={cls["post-top-right"]}>
-                   { post._id !== 'dummy' && <Link style={removeLinkStyles} to={`/post/${post._id || 'dummy'}`} replace className={cls["more-option"]}>
+                   { post._id !== 'dummy' && <Link style={removeLinkStyles} to={`/post/${post._id || 'dummy'}`} replace className={cls["more-options"]}>
                         <ArticleIcon sx={{fontSize: "25px"}} /> 
                         </Link> }
-                    <div className={cls['more-option']}>
-                        <MoreHoriz sx={{fontSize: "25px"}} />
-                    </div>
+                    { profileUser?._id === user?._id && showContextMenu && <MoreOptionsButton items={moreActions} contextMenuClass={cls["more-options-actions"] + ' card-shadow'} className={cls["more-options"]}>
+                        <MoreHoriz sx={{fontSize: "25px"}} /> 
+                    </MoreOptionsButton> }
                 </div> 
             </div>
             <div className={cls["post-center"]}>

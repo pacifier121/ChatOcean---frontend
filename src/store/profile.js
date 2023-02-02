@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { backendURL } from "../constants/constants";
 
 const initialState = {
     profileUser: null,
@@ -27,6 +26,9 @@ const profileSlice = createSlice({
         },
         setPosts: (state, action) => {
             state.posts = action.payload
+        },
+        removePost: (state, action) => {
+            state.posts = state.posts.filter(p => p._id !== action.payload._id);
         },
         setVideos: (state, action) => {
             state.videos = action.payload
@@ -153,6 +155,30 @@ export const fetchProfileFollowings = (profileUser) => {
     }
 }
 
+export const deleteUser = (profileUser) => {
+    return async (dispatch) => {
+        try{
+            if (profileUser){
+                await axios.delete('/user/user/' + profileUser._id);
+            } 
+        } catch (err) {
+            console.log(err); 
+        }
+    } 
+}
+
+export const deletePost = (post) => {
+    return async (dispatch) => {
+        try {
+            if (post){
+                await axios.delete('/post/post/' + post._id);
+                dispatch(profileSlice.actions.removePost(post));
+            } 
+        } catch (err) {
+            console.log(err);
+        }
+    } 
+}
 
 export const profileActions = profileSlice.actions;
 
