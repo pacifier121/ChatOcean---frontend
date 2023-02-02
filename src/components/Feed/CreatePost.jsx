@@ -14,6 +14,7 @@ import Photo from '../Photos/Photo';
 import Video from '../Videos/Video';
 import axios from 'axios';
 import CancelIcon from '@mui/icons-material/Cancel';
+import { CircularProgress } from '@mui/material';
 
 const CreatePost = () => {
    const { user } = useSelector(state => state.auth); 
@@ -22,10 +23,12 @@ const CreatePost = () => {
     const [quotesCount, setQuotesCount] = useState(0);
     const [error, setError] = useState('');
     const [files, setFiles] = useState([]);
+    const [sendingPost, setSendingPost] = useState(false);
     
     const photoRef = useRef();
     const videoRef = useRef();
     const quoteRef = useRef();
+    const descRef = useRef();
     
 
     const photoFilePickerHandler = () => {
@@ -57,8 +60,28 @@ const CreatePost = () => {
     }
     
     const createPostHandler = async() => {
+        if (files.length === 0 || sendingPost) return;
+        setSendingPost(true); 
+
+        let formData = new FormData();
+        for (let i = 0; i < files.length; i++){
+            formData.append('post_upload', files[i].file); 
+        }
+        formData.append('type', JSON.stringify(files.map(f => f.type)));
+        formData.append('desc', descRef.current.value);
+        formData.append('userId', user._id);
+
         try {
-            const { data } = await axios.post(backendURL + '/post/post', files);
+            await axios.post(backendURL + '/post/post', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+            setSendingPost(false);
+            setPhotosCount(0);
+            setVideosCount(0);
+            setFiles([]);
+            window.open('/', '_self');
         } catch (err) {
             console.log(err); 
         }
@@ -77,10 +100,13 @@ const CreatePost = () => {
                 <CreateIcon sx={{ fontSize: "25px" }} />
             </div>
             <span className={cls["create-post-title-text"]} >Create Post</span>
-            <span onClick={createPostHandler} className={cls["submit-btn"]}>Create</span>
+            <button onClick={createPostHandler} className={cls["submit-btn"] + ' ' + ((files.length === 0) && cls['disabled-submit-btn'])}>
+                {sendingPost ? <CircularProgress color='inherit' size={"2rem"} /> : "Create"}                 
+                {/* Create */}
+            </button>
         </div>
         <div className={cls['create-post-descbox']}>
-            <textarea placeholder={`What's on your mind ${'pacifire'}?`} className={cls['create-post-input']} />
+            <textarea ref={descRef} placeholder={`What's on your mind ${'pacifire'}?`} className={cls['create-post-input']} />
             <img src={asset(user.avatar, 'profile')} className={cls['create-post-user-img']} />
         </div>
         <div className={cls['create-post-options']}>
