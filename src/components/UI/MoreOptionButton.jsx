@@ -2,11 +2,12 @@ import {useState} from 'react'
 import ContextMenu from './ContextMenu';
 import cls from "./MoreOptionsButton.module.css"
 
-const MoreOptionsButton = ({ className, items, children, contextMenuClass }) => {
+const MoreOptionsButton = ({ className, onClick, items, children, contextMenuClass }) => {
    const [contextMenuOpen, setContextMenuOpen] = useState(false);
     const classes = className + ' ' + cls["btn"];
 
    const clickHandler = () => {
+        onClick();
         setContextMenuOpen((state) => !state);
    } 
 

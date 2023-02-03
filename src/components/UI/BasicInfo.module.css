@@ -38,3 +38,7 @@
 .dark .info{
     color: #ddd;
 }
+
+.user-info-mini{
+    display: none;
+}

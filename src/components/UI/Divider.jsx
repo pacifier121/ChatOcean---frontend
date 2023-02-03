@@ -1,9 +1,11 @@
 import React from 'react'
 import cls from "./Divider.module.css";
 
-const Divider = ({ children }) => {
+const Divider = ({ children, className }) => {
+  const classes = cls['divider'] + ' ' + className;
+
   return (
-      <hr className={cls["divider"]} >
+      <hr className={classes} >
         {children}
       </hr>
   )
