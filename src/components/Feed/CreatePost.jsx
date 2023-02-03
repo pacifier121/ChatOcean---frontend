@@ -136,7 +136,7 @@ const CreatePost = () => {
             {files.map((item, idx) => (
               <div className={cls['preview-item']}>
                 {(item.type === 'photo') && <Photo key={item.file.name} src={URL.createObjectURL(item.file)}  />} 
-                {(item.type === 'video') && <Video key={item.file.name} clickToMute={true} autoPlay={true} src={URL.createObjectURL(item.file)}  />} 
+                {(item.type === 'video') && <Video key={item.file.name} muteOnClick={true} autoPlay={true} src={URL.createObjectURL(item.file)}  />} 
                 <span onClick={() => deletePostItemHandler(idx)} className={cls["post-cancel-btn"]}><CancelIcon style={{fontSize: '100%'}} /></span>
               </div>
             ))}

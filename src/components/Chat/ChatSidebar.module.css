@@ -8,11 +8,13 @@
     .chat-sidebar{
         flex-direction: row;
         gap: 2rem;
+        padding: 0 1rem;
     }
 }
 
 @media (max-width: 450px){
     .chat-sidebar{
         gap: 1rem;
+        padding: 0;
     }
 }

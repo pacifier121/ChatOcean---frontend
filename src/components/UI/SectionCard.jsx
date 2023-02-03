@@ -7,7 +7,7 @@ const SectionCard = ({ className, children, title, expandLinkText, type }) => {
   const classesMini = className + " " + cls['section-card-mini'] + ' card-shadow';
 
   let card = null;
-  if (type !== 'mini'){
+  if (type === 'mini'){
     card = (<div className={classesMini}>
               <div className={cls["section-top-mini"]}>
                 <span className={cls["section-top-text-mini"]}>{title}</span>
