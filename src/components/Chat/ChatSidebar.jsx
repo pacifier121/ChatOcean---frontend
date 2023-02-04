@@ -6,7 +6,7 @@ import { NavLink } from "react-router-dom";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { chatActions, fetchChat, addOnlineFriend, removeOnlineFriend, setOnlineFriends } from "../../store/chat";
+import { chatActions, fetchChat, addOnlineFriend, removeOnlineFriend, setOnlineFriends, setOfflineFriends } from "../../store/chat";
 import { asset } from "../../constants/constants";
 import { format } from "timeago.js";
 
@@ -36,11 +36,12 @@ const ChatSidebar = () => {
             socket.on('friendOffline', (friendId) => {
                   dispatch(removeOnlineFriend(friendId));
             })
-            socket.on('updateOnlineFriends', (friends) => {
+            socket.on('updateFriends', (friends) => {
                   console.log("THIS RAN")
-                  dispatch(setOnlineFriends(friends));
+                  dispatch(setOnlineFriends(friends.onlineFriends));
+                  dispatch(setOfflineFriends(friends.offlineFriends));
             })
-            socket.emit('getOnlineFriends', user?._id);
+            socket.emit('getFriends', user?._id);
             // if (window.performance) {
             //   if (performance.navigation.type == 1) {
             //       socket.emit('getOnlineFriends', user?._id);
@@ -70,16 +71,13 @@ const ChatSidebar = () => {
        
 
            <SectionCard type={sidebarMini && 'mini'} className={cls["offline-friends"]} title={"Offline Friends"} expandLinkText={"See All"}>
-               <div style={{ flexDirection : (sidebarMini ? 'row' : 'column') }} className={cls["online-friends-nav"]}>
-                    <NavLink to={`/chat/${'mnop'}`} className={(state) => ('linkStyles ' + cls['navlink'] + ' ' + (state.isActive ? cls['active'] : ''))}>
-                          <BasicInfo cardStatus={'offline'} type={sidebarMini && 'mini'} className={sidebarMini ? cls["basic-info-mini"] : cls['basic-info']} img={''} name={"Pacifire Ocean"} info={"1 hr ago"} />
-                    </NavLink>
-                    <NavLink to={`/chat/${'qrst'}`} className={(state) => ('linkStyles ' + cls['navlink'] + ' ' + (state.isActive ? cls['active'] : ''))}>
-                          <BasicInfo cardStatus={'offline'} type={sidebarMini && 'mini'} className={sidebarMini ? cls["basic-info-mini"] : cls['basic-info']} img={''} name={"Pacifire Ocean"} info={"1 hr ago"} />
-                    </NavLink>
-                    <NavLink to={`/chat/${'uvwx'}`} className={(state) => ('linkStyles ' + cls['navlink'] + ' ' + (state.isActive ? cls['active'] : ''))}>
-                          <BasicInfo cardStatus={'offline'} type={sidebarMini && 'mini'} className={sidebarMini ? cls["basic-info-mini"] : cls['basic-info']} img={''} name={"Pacifire Ocean"} info={"1 hr ago"} />
-                    </NavLink>
+               <div style={{ flexDirection : (sidebarMini ? 'row' : 'column') }} className={cls["offline-friends-nav"]}>
+                  {offlineFriends?.map(friend => 
+                    {return (user?._id !== friend._id) && <NavLink key={friend._id} to={`/chat/${friend.username}`} className={(state) => ('linkStyles ' + cls['navlink'] + ' ' + (state.isActive ? cls['active'] : ''))}>
+                          <BasicInfo cardStatus={'offline'} type={sidebarMini && 'mini'} className={sidebarMini ? cls["basic-info-mini"] : cls['basic-info']} 
+                                img={friend.avatar} name={friend.username} info={''} />
+                    </NavLink>}
+                  )}
                </div>
            </SectionCard>
        </div> 

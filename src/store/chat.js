@@ -35,8 +35,22 @@ const chatSlice = createSlice({
             state.onlineFriends = state.onlineFriends?.filter(f => f._id !== action.payload)
             if (state.activeChat?._id === action.payload) state.activeChat = null;
         },
+        addOffline: (state, action) => {
+            if (!state.offlineFriends) {
+                state.offlineFriends = [action.payload];
+            } else if (!state.offlineFriends?.find(f => f._id === action.payload._id)){
+                state.offlineFriends.push(action.payload);
+            }
+        }, 
+        removeOffline: (state, action) => {
+            state.offlineFriends = state.offlineFriends?.filter(f => f._id !== action.payload)
+            if (state.activeChat?._id === action.payload) state.activeChat = null;
+        },
         setOnlineFriends: (state, action) => {
             state.onlineFriends = action.payload;
+        },
+        setOfflineFriends: (state, action) => {
+            state.offlineFriends = action.payload;
         }
     }
 }) 
@@ -88,11 +102,23 @@ export const setOnlineFriends = (friends) => {
     }
 }
 
+export const setOfflineFriends = (friends) => {
+    return async(dispatch) => {
+        try {
+            dispatch(chatSlice.actions.setOfflineFriends(friends)); 
+        } catch (err) {
+            console.log(err); 
+        }
+    }
+}
+
 export const addOnlineFriend = (friendId) => {
     return async(dispatch) => {
         try {
             const { data } = await axios.get(`/user/user?userId=${friendId}`);
             dispatch(chatSlice.actions.addOnline(data));
+            
+            dispatch(chatSlice.actions.removeOffline(data._id));
         } catch (err) {
            console.log(err); 
         }
@@ -103,6 +129,9 @@ export const removeOnlineFriend = (userId) => {
     return async(dispatch) => {
         try {
             dispatch(chatSlice.actions.removeOnline(userId));
+            
+            const { data:user } = await axios.get('/user/user?userId=' + userId);
+            dispatch(chatSlice.actions.addOffline(user));
         } catch (err) {
            console.log(err); 
         }
