@@ -7,7 +7,7 @@ const MoreOptionsButton = ({ className, onClick, items, children, contextMenuCla
     const classes = className + ' ' + cls["btn"];
 
    const clickHandler = () => {
-        onClick();
+        if (onClick) onClick();
         setContextMenuOpen((state) => !state);
    } 
 

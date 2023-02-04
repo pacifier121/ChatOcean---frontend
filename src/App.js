@@ -16,11 +16,17 @@ import { useEffect } from "react";
 import { tryLogin } from "./store/auth";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import EditProfile from './components/Profile/EditProfile';
+import { connectSocket } from "./store/chat";
 
 
 function App() {
   const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
+  const { user } = useSelector(state => state.auth); 
+  const dispatch = useDispatch();
   
+  useEffect(() => {
+      if (user) dispatch(connectSocket(user));
+  }, [user])
 
   return (
     <Routes>
@@ -30,7 +36,7 @@ function App() {
             <Route path="/" element={<Layout />}>
                 <Route index element={<Feed type="user-home" /> } />
                 <Route path="stories" element={ <Stories /> } />
-                <Route path="chat" element={ <ChatPage /> } />
+                <Route path="chat/:chatName" element={ <ChatPage /> } />
                 <Route path="profile/:username" element={ <Profile /> } >
                     <Route index element={<Navigate to="posts" replace />} /> 
                     <Route path="posts" element={<PostsContent />} /> 

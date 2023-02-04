@@ -29,6 +29,7 @@
     height: 5rem;
     border-radius: 100%;
     background: #0B54FA;
+    object-fit: cover;
 }
 
 .name{

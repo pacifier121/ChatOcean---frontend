@@ -6,10 +6,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import { authActions, logoutUser } from '../../store/auth';
 import { profileActions } from '../../store/profile';
 import { useEffect, useRef } from 'react';
+import { disconnectSocket  } from '../../store/chat';
 
 const AccountSettings = () => {
   const dispatch = useDispatch();
   const logoutRef = useRef();
+  const { socket } = useSelector(state => state.chat);
   
   useEffect(() => {
       dispatch(authActions.setLogoutRef(logoutRef.current));
@@ -18,6 +20,7 @@ const AccountSettings = () => {
   const logoutUserHandler = () => {
     dispatch(profileActions.resetProfile());
     dispatch(logoutUser());
+    if (socket) dispatch(disconnectSocket(socket));
   }
   
   return (

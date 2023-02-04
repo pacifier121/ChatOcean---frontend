@@ -6,7 +6,7 @@ import Post from "./Post";
 import FriendRequests from './FriendRequests';
 import SuggestedFriends from "./SuggestedFriends";
 import { asset, backendURL } from "../../constants/constants";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useState, useEffect } from "react";
 import axios from 'axios';
 

@@ -3,8 +3,6 @@ import cls from "./ContextMenu.module.css";
 
 const ContextMenu = ({className, items}) => {
     const classes = className + ' ' + cls["context-menu"];
-    
-
 
   return (
       <div className={classes}>

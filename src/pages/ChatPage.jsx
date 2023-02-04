@@ -9,7 +9,6 @@ import { chatActions } from '../store/chat';
 
 
 const ChatPage = () => {
-  const items = []; 
   const dispatch = useDispatch();
   const { chatsVisible } = useSelector(state => state.chat); 
 
@@ -27,9 +26,9 @@ const ChatPage = () => {
               <ChatSidebar />
             </div>
             <div className={cls["sidebar-bottom"]} style={{backgroundColor: 'transparent'}}>
-               <MoreOptionsButton onClick={toggleChatsHandler} className={cls["chats-dropdown"]} contextMenuClass={cls["chats-dropdown-actions"]} items={items}>
+               <div onClick={toggleChatsHandler} className={cls["chats-dropdown"]}>
                     <ArrowDropDownIcon className={cls["dropdown-icon"] + ' ' + (chatsVisible ? '' : cls['collapsed-dropdown'])} sx={{fontSize: "120%"}} />
-               </MoreOptionsButton>
+               </div>
             </div>
         </div> 
       </div>

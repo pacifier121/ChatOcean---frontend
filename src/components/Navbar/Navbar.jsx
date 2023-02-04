@@ -31,7 +31,7 @@ const Navbar = () => {
            <Link to="/notifications" className={cls["btn-icon"]}>
                <NotificationsNoneIcon sx={removeLinkStyles} /> 
             </Link> 
-           <Link to="/chat" className={cls["btn-icon"]}>
+           <Link to="/chat/_" className={cls["btn-icon"]}>
                <ChatBubbleOutlineIcon sx={removeLinkStyles} />
             </Link> 
            <Link to={`/profile/${user.username}`}  className={cls["btn-icon"]}>

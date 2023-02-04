@@ -9,11 +9,11 @@ const SectionCard = ({ className, children, title, expandLinkText, type }) => {
   let card = null;
   if (type === 'mini'){
     card = (<div className={classesMini}>
-              <div className={cls["section-top-mini"]}>
+              {/* <div className={cls["section-top-mini"]}>
                 <span className={cls["section-top-text-mini"]}>{title}</span>
                 <a href="#" className={cls["section-top-link-mini"]}>{expandLinkText} </a>
               </div>
-              <Divider className={cls["section-divider-mini"]} />
+              <Divider className={cls["section-divider-mini"]} /> */}
               <div className={cls["section-container-mini"]}>
                 {children}
               </div>
