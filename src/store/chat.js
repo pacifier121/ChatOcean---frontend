@@ -83,7 +83,7 @@ export const setOnlineFriends = (friends) => {
         try {
             dispatch(chatSlice.actions.setOnlineFriends(friends)); 
         } catch (err) {
-            
+            console.log(err); 
         }
     }
 }
