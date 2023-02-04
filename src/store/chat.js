@@ -46,11 +46,23 @@ const chatSlice = createSlice({
             state.offlineFriends = state.offlineFriends?.filter(f => f._id !== action.payload)
             if (state.activeChat?._id === action.payload) state.activeChat = null;
         },
-        setOnlineFriends: (state, action) => {
+        setOnlineFriends: (state, action) => {  
             state.onlineFriends = action.payload;
         },
         setOfflineFriends: (state, action) => {
             state.offlineFriends = action.payload;
+        },
+        addNewMessage: (state, action) => {
+            if (state.activeChat) {
+                // Checking if last message is duplicate of current message (i.e. having same time)
+                if (state.activeChat.content.length){
+                    if (state.activeChat.content.slice(-1)[0].time !== action.payload.time) state.activeChat.content.push(action.payload);
+                } 
+            }
+            else state.activeChat = {
+                members: [action.payload.senderId, action.payload.recieverId].sort(),
+                content: [action.payload]
+            } 
         }
     }
 }) 
@@ -88,6 +100,7 @@ export const fetchChat = (userId, chatName) => {
             dispatch(chatSlice.actions.setActiveChat(data));
         } catch (err) {
             console.log(err); 
+            dispatch(chatSlice.actions.setActiveChat(null));
         }
     }
 }
@@ -136,6 +149,27 @@ export const removeOnlineFriend = (userId) => {
            console.log(err); 
         }
     }    
+}
+
+export const sendNewMessage = (socket, msg) => {
+    return async(dispatch) => {
+        try {
+            socket.emit('sendNewMessage', msg);
+            dispatch(chatSlice.actions.addNewMessage(msg));
+        } catch (err) {
+            console.log(err);
+        }
+    }
+}
+
+export const recieveNewMessage = (msg) => {
+    return async(dispatch) => {
+        try {
+            dispatch(chatSlice.actions.addNewMessage(msg));
+        } catch (err) {
+            console.log(err);
+        }
+    }
 }
 
 export const chatActions = chatSlice.actions;

@@ -11,7 +11,9 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
-import { fetchChat } from "../../store/chat";
+import { chatActions, recieveNewMessage, sendNewMessage } from "../../store/chat";
+import { fetchChat } from "../../store/chat"; 
+
 
 const fileReducer = (state, action) => {
   if (action.type === 'IMG'){
@@ -47,39 +49,62 @@ const Chat = ({ }) => {
   const videoRef = useRef();
   const textRef = useRef();
   const { user } = useSelector(state => state.auth);
-  const { activeChat } = useSelector(state => state.chat);
+  const { activeChat, socket } = useSelector(state => state.chat);
   const { chatName } = useParams();
+  const scrollRef = useRef();
+  const dispatch = useDispatch();
+  
+
+  useEffect(() => {
+      if (socket) {
+          socket.on('recieveNewMessage', (msg) => {
+              dispatch(recieveNewMessage(msg));
+          })
+      }
+  }, [user, socket])
+  
+  useEffect(() => {
+      scrollRef?.current?.current?.scrollIntoView({ behaviour: 'smooth' }); 
+  }, [activeChat])
   
   const sendMessageHandler = async(e) => {
     e.preventDefault();
     if (!textRef.current.value) return;
     
+    
+    const { data: reciever } = await axios.get('/user/user?username=' + chatName);
     const msg = {
-        text: textRef.current.value
-    } 
+        text: textRef.current.value,
+        senderId: user._id,
+        recieverId: reciever._id, 
+        time: Date.now()
+    }
     textRef.current.value = '';
+    dispatch(sendNewMessage(socket, msg));
 
     try {
-      await axios.post('/chat/message', { chatName: chatName, senderId: user._id , msg: msg});
+      const { data: newChat } = await axios.post('/chat/message', { msg, chatName, senderId: user._id });
+      if (!activeChat) dispatch(chatActions.setActiveChat(newChat));
     } catch (err) {
       console.log(err);
     }
   };
+  
 
   return (
     <div className={cls["chat"]}>
       <div className={cls["chat-wrapper"]}>
-        {!activeChat ? <div className={cls['no-chat']}>Select a chat to message</div> :
-          activeChat.content?.length === 0 ? 
+        {chatName === '_' ? <div className={cls['no-chat']}>Select a chat to message</div> :
+          (!activeChat || activeChat.content?.length === 0) ? 
             <div className={cls['no-messages']}>No messages to show</div> :
             <>
               {activeChat.content.map(msg => (
-                  <Message key={msg.time} msg={msg} own={msg.senderId === user?._id} />
+                  <Message ref={scrollRef} key={msg.time} msg={msg} own={msg.senderId === user?._id} />
               ))}
             </>
         }
       </div>
-        {activeChat && 
+        {chatName !== '_' && 
           <form onSubmit={sendMessageHandler}>
             <div className={cls["chat-input-wrapper"]}>
               <div className={cls["file-btn-wrapper"]}>

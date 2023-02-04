@@ -4,7 +4,8 @@
     flex-direction: column;
 }
 
-.online-friends-nav{
+.online-friends-nav,
+.offline-friends-nav{
     display: flex;
     gap: 2rem; 
     /* align-items: center; */

@@ -15,13 +15,16 @@ const ChatSidebar = () => {
     const dispatch = useDispatch();
     const { user } = useSelector(state => state.auth);
     const { chatName } = useParams();
-    const { socket, onlineFriends, offlineFriends } = useSelector(state => state.chat);
+    const { socket, onlineFriends, offlineFriends, activeChat } = useSelector(state => state.chat);
     
 
     useEffect(() => {
-          if (chatName && chatName !== '_') {
+          if (chatName !== '_') {
             dispatch(fetchChat(user._id, chatName));
+          } else {
+            dispatch(chatActions.setActiveChat(null));
           }
+          console.log(activeChat);
     }, [chatName])
       
     useEffect(() => {
