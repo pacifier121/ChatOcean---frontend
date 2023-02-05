@@ -12,7 +12,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PersonCard from "../components/UI/PersonCard";
 import axios from 'axios';
-import { fetchProfileFollowers, fetchProfileFollowings, fetchProfilePosts, fetchProfileStories, fetchProfileVideos } from '../store/profile';
+import { fetchProfileFollowers, fetchProfileFollowings, fetchProfilePosts, fetchProfileStories, fetchProfileVideos, fetchFavoritePosts } from '../store/profile';
 
 
 export const Content = ({children}) => {
@@ -179,6 +179,33 @@ export const FollowingsContent = () => {
   )
 }
 
+export const FavoritesContent = () => {
+  const dispatch = useDispatch();
+  const params = useParams();
+  const { profileUser, favorites } = useSelector(state => state.profile);
+  
+  useEffect(() => {
+    const fetchPosts = async() => {
+      try {
+        dispatch(fetchFavoritePosts(profileUser));
+      } catch (err) {
+        console.log(err); 
+      }
+    }
+    if (favorites === null || (params.username !== profileUser.username)) fetchPosts();
+  }, [profileUser])
+
+   return (
+     favorites && 
+        <Content>
+            {favorites.length === 0 ? 
+                  <div className={cls['no-followers']}>Give posts a heart and they'll show here</div> :
+              favorites.map(post => (
+                <Post showContextMenu={true} post={post} owner={profileUser} key={post._id} />
+              ))}
+        </Content>
+   ) 
+}
 
 const Profile = () => {
   return (

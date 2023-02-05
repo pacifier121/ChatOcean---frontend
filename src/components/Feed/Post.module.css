@@ -113,6 +113,10 @@
     margin-left: auto;
 }
 
+.post-bottom-share span{
+    font-size: 1.5rem;
+}
+
 .button-icon{
     font-size: 2rem;
 }

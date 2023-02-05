@@ -99,7 +99,8 @@
 }
 
 .message-btn,
-.more-options{
+.more-options,
+.favorites-btn{
     background-color: #eee;
     width: 5rem;
     height: 5rem;
@@ -109,6 +110,10 @@
     justify-content: center;
     border-radius: 1rem;
     color: #555;
+}
+
+.favorites-btn-active{
+    color: #d87fd8; 
 }
 
 .more-options-actions{

@@ -2,7 +2,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Feed from "./components/Feed/Feed";
 import Layout from "./pages/Layout";
-import Profile, { FollowersContent, FollowingsContent, PostsContent, StoriesContent, VideosContent } from "./pages/Profile";
+import Profile, { FollowersContent, FollowingsContent, PostsContent, StoriesContent, VideosContent, FavoritesContent } from "./pages/Profile";
 import Stories from "./pages/Stories";
 import ChatPage from "./pages/ChatPage";
 import Notifications from "./pages/Notifications";
@@ -46,6 +46,7 @@ function App() {
                     <Route path="followers" element={<FollowersContent />} /> 
                     <Route path="followings" element={<FollowingsContent />} /> 
                     <Route path="edit" element={<EditProfile />} /> 
+                    <Route path="favorites" element={<FavoritesContent />} /> 
                 </Route>
                 <Route path="post/:postId" element={ <PostPage /> } />
                 <Route path="notifications" element={ <Notifications /> } /> 

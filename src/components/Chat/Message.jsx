@@ -2,6 +2,7 @@ import React from 'react'
 import cls from "./Message.module.css";
 import { format } from 'timeago.js';
 import { useImperativeHandle, useRef, forwardRef } from 'react';
+import ShareableLink from '../UI/ShareableLink';
 
 const Message = forwardRef(({ own, msg }, ref) => {
   const msgRef = useRef();
@@ -10,7 +11,10 @@ const Message = forwardRef(({ own, msg }, ref) => {
 
   return (
        <div ref={msgRef} className={cls["message"] + ` ${own ? cls["own"] : ""}`}>
-          <div className={cls["text"]}>{msg.text}</div>  
+          <div className={cls["text"]}>{msg.text.startsWith('__^__') ? 
+              <ShareableLink own={own} content={msg.text.replace('__^__', '')} 
+                  to={msg.text.replace('__^__', '')} /> : msg.text}
+          </div>  
            <div className={cls["time"]}>{format(msg.time)}</div> 
        </div> 
   )

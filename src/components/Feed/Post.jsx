@@ -20,9 +20,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useReducer } from 'react';
 import MoreOptionsButton from '../UI/MoreOptionButton';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { deletePost } from '../../store/profile';
+import { deletePost, profileActions } from '../../store/profile';
 import Modal from '../Modal/Modal';
 import { displayModal, sendNotification } from '../../store/ui';
+import ShareButton from './ShareButton';
 
 
 const postStatesReducer = (state, action) => {
@@ -181,10 +182,10 @@ const Post = ({ children, post, owner, showContextMenu }) => {
                     <span className={cls["post-comments-text"]}>{ totalComments ? `${totalComments} Comments` : '' }</span>
                 </div>
                 <div className={cls["post-bottom-share"]}>
-                   <div className={cls["button-icon"]}>
-                        <ShareIcon sx={{fontSize: "100%"}} /> 
-                    </div> 
-                    <span className={cls["post-share-text"]}>Share</span>
+                   <ShareButton postId={post._id} className={cls["button-icon"]}>
+                        <ShareIcon sx={{fontSize: "120%"}} /> 
+                        <span className={cls["post-share-text"]}>Share</span>
+                    </ShareButton> 
                 </div>
             </div>}
         </div>

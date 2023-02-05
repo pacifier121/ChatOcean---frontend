@@ -14,6 +14,7 @@ import { logoutUser } from '../../store/auth';
 import { displayModal } from '../../store/ui';
 import Modal from '../Modal/Modal';
 import ProfileNotFound from '../../pages/ProfileNotFound';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 
 
 const ProfileHeader = () => {
@@ -74,6 +75,11 @@ const ProfileHeader = () => {
                         <Link className="linkStyles" to={`/chat/${profileUser.username}`}>
                             <SendIcon sx={{fontSize: "25px"}} /> 
                         </Link>
+                    </div>}
+                    { user._id === profileUser._id && <div className={cls["favorites-btn"]}>
+                        <NavLink className={(state) => "linkStyles " + (state.isActive ? cls['favorites-btn-active'] : '')} to={`favorites`} >
+                            <FavoriteIcon sx={{fontSize: "25px"}} /> 
+                        </NavLink>
                     </div>}
                     { profileUser._id === user._id && <MoreOptionsButton items={moreActions} contextMenuClass={cls["more-options-actions"] + ' card-shadow'} className={cls["more-options"]}>
                         <MoreHorizIcon sx={{fontSize: "25px"}} /> 

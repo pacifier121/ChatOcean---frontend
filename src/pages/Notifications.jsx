@@ -32,9 +32,9 @@ const Notifications = () => {
                        {unreadNotifications?.length && <div className={cls["top-left-total"]}>{unreadNotifications?.length}</div> }
                     </div> 
                    <div className={cls["top-right"]}>
-                       <div className={cls["btn-icon"]}>
+                       {/* <div className={cls["btn-icon"]}>
                             <DoneAllIcon /> 
-                        </div> 
+                        </div>  */}
                        {/* <div className={cls["btn-icon"]}>
                             <DeleteIcon /> 
                         </div>  */}

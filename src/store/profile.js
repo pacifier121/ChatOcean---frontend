@@ -7,6 +7,7 @@ const initialState = {
     posts: null,
     videos: null,
     stories: null,
+    favorites: null,
     followers: null,
     followings: null
 }
@@ -35,6 +36,9 @@ const profileSlice = createSlice({
         },
         setStories: (state, action) => {
             state.stories = action.payload
+        },
+        setFavorites: (state, action) => {
+            state.favorites = action.payload
         },
         setFollowers: (state, action) => {
             state.followers = action.payload
@@ -96,6 +100,20 @@ export const fetchProfilePosts = (profileUser) => {
             if (profileUser){
                 const { data } = await axios.get('/user/posts/' + profileUser._id);
                 dispatch(profileSlice.actions.setPosts(data));
+            }
+        } catch (err) {
+            console.log(err); 
+        }
+    }
+}
+
+// Profile favorite posts
+export const fetchFavoritePosts = (profileUser) => {
+    return async (dispatch) => {
+        try {
+            if (profileUser){
+                const { data } = await axios.get('/user/favorites/' + profileUser._id);
+                dispatch(profileSlice.actions.setFavorites(data));
             }
         } catch (err) {
             console.log(err); 

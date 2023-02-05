@@ -40,16 +40,10 @@ const ChatSidebar = () => {
                   dispatch(removeOnlineFriend(friendId));
             })
             socket.on('updateFriends', (friends) => {
-                  console.log("THIS RAN")
                   dispatch(setOnlineFriends(friends.onlineFriends));
                   dispatch(setOfflineFriends(friends.offlineFriends));
             })
             socket.emit('getFriends', user?._id);
-            // if (window.performance) {
-            //   if (performance.navigation.type == 1) {
-            //       socket.emit('getOnlineFriends', user?._id);
-            //   }
-            // }  
           }
     }, [socket, user])
       
