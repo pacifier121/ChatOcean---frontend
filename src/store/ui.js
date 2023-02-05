@@ -1,10 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 import Modal from "../components/Modal/Modal";
+import axios from "axios"
+import { CleaningServices } from "@mui/icons-material";
 
 const initialState = {
     modalActive: false,
     modal: null,
-    loginError: null
+    loginError: null,
+    notificationDot: false,
+    readNotifications: null,
+    unreadNotifications: null
 }
 
 const uiSlice = createSlice({
@@ -22,6 +27,25 @@ const uiSlice = createSlice({
         },
         setLoginError: (state, action) => {
             state.loginError = action.payload;
+        },
+        setNotificationDot: (state) => {
+            state.notificationDot = true;
+        },
+        setReadNotifications: (state, action) => {
+            state.readNotifications = action.payload;
+        },
+        setUnreadNotifications: (state, action) => {
+            state.unreadNotifications = action.payload;            
+        },
+        readNotifications: (state) => {
+            if (state.readNotifications) state.readNotifications = [...state.unreadNotifications, ...state.readNotifications];
+            else state.readNotifications = state.unreadNotifications;
+            state.unreadNotifications = null;
+        },
+        addNotification: (state, action) => {
+            if (state.unreadNotifications) state.unreadNotifications = [action.payload, ...state.unreadNotifications];
+            else state.unreadNotifications = [action.payload];
+            state.notificationDot = true;
         }
     }
 })
@@ -40,6 +64,48 @@ export const displayModal = (modal) => {
     }
 }
 
+export const sendNotification = (socket, targetUserId, notification) => {
+    return async(dispatch) => {
+        try {
+            socket.emit('sendNotification', { targetUserId, notification });
+            await axios.put('/user/notification', { targetUserId, notification });
+        } catch (err) {
+            console.log(err);
+        }
+    }
+}
+
+export const fetchNotifications = (userId) => {
+    return async(dispatch) => {
+        try {
+            const { data } = await axios.get('/user/notifications/' + userId);
+            dispatch(uiSlice.actions.setReadNotifications(data.readNotifications));
+            dispatch(uiSlice.actions.setUnreadNotifications(data.unreadNotifications));
+        } catch (err) {
+            console.log(err); 
+        }
+    }
+}
+
+export const markAsReadNotifications = () => {
+    return async(dispatch) => {
+        try {
+            dispatch(uiSlice.actions.readNotifications())
+        } catch (err) {
+            console.log(err); 
+        }
+    }
+}
+
+export const getNotification = (notification) => {
+    return async(dispatch) => {
+        try {
+           dispatch(uiSlice.actions.addNotification(notification));
+        } catch (err) {
+            console.log(err); 
+        }
+    }
+}
 
 export const uiActions = uiSlice.actions;
 

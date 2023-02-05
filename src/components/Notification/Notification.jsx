@@ -1,15 +1,22 @@
 import React from 'react'
 import cls from "./Notification.module.css";
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import {PF} from "../../constants/constants";
+import {asset, PF} from "../../constants/constants";
+import { Link } from 'react-router-dom';
 
-const Notification = () => {
+const Notification = ({ type, notification }) => {
+   const action = notification.action === 'like' ? 'liked' : ''; 
+
   return (
-        <div className={cls["notification"]}>
-            <img src={PF+"logo.png"} className={cls["user-img"]} />
+        <div className={(type === 'unread' ? cls['unread'] : '') + ' ' + cls["notification"]}>
+            <img src={asset(notification.image, 'profile')} className={cls["user-img"]} />
             <div className={cls["info"]}>
                <div className={cls["info-text"]}>
-                    <b>User</b> liked your post <b>&lt;link to post&gt;</b>
+                    <span className={cls['username']}>{notification.username}</span> {action} your post <span className={cls['link']}>
+                            <Link to={`/post/${notification.postId}`} className="linkStyles">
+                                {notification.desc || 'this post'}
+                            </Link>
+                        </span>
                 </div> 
                 <span className={cls["info-time"]}>1 hr ago</span>
             </div>  

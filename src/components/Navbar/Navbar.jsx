@@ -7,12 +7,25 @@ import HomeIcon from '@mui/icons-material/Home';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Link, useNavigate } from 'react-router-dom';
 import {PF} from "../../constants/constants";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchNotifications, getNotification } from '../../store/ui';
 
 const removeLinkStyles = { textDecoration: 'none', color: 'inherit', fontSize: "100%"};
 
 const Navbar = () => { 
     const { user } = useSelector(state => state.auth);
+    const { socket } = useSelector(state => state.chat);
+    const { notificationDot } = useSelector(state => state.ui);
+    const dispatch = useDispatch();
+    
+    useEffect(() => {
+        if (socket){
+            socket.on('recieveNotification', (notification) => {
+                dispatch(getNotification(notification));
+            })
+        }
+        dispatch(fetchNotifications(user?._id));
+    }, [socket, user]);
 
   return (
     <nav className={cls["navbar"]}>
@@ -29,6 +42,7 @@ const Navbar = () => {
             </Link> 
            <Link to="/notifications" className={cls["btn-icon"]}>
                <NotificationsNoneIcon sx={removeLinkStyles} /> 
+               { notificationDot && <div className={cls['notification-dot']}></div> }
             </Link> 
            <Link to="/chat/_" className={cls["btn-icon"]}>
                <ChatBubbleOutlineIcon sx={removeLinkStyles} />

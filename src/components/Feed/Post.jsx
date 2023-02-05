@@ -22,7 +22,7 @@ import MoreOptionsButton from '../UI/MoreOptionButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { deletePost } from '../../store/profile';
 import Modal from '../Modal/Modal';
-import { displayModal } from '../../store/ui';
+import { displayModal, sendNotification } from '../../store/ui';
 
 
 const postStatesReducer = (state, action) => {
@@ -68,6 +68,7 @@ const removeLinkStyles = { textDecoration: 'none', color: 'inherit'};
 const Post = ({ children, post, owner, showContextMenu }) => {
    const { user } = useSelector(state => state.auth);
    const { profileUser } = useSelector(state => state.profile);
+    const { socket } = useSelector(state => state.chat);
     const { modal, modalActive } = useSelector(state => state.ui);
     const stateDispatch = useDispatch();
    const [{ isLiked, isFavorite, totalLikes, totalComments, comments} , dispatch] = useReducer(postStatesReducer, { isLiked: false, isFavorite: false, totalLikes: 0, totalComments: 0, comments: [] })
@@ -95,6 +96,17 @@ const Post = ({ children, post, owner, showContextMenu }) => {
 
    const likeButtonHandler = async() => {
         try {
+            if (!isLiked){
+                const notification = {
+                    userId: user._id,
+                    action: 'like',
+                    postId: post._id,
+                    username: user.username,
+                    desc: post.desc,
+                    image: user.avatar 
+                };
+                stateDispatch(sendNotification(socket, post.userId, notification))
+            }
             await axios.put(`/post/${post._id}/like`, { userId: user._id });
             dispatch({type: 'TOGGLE_LIKE'})
         } catch (err) {
