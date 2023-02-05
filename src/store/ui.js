@@ -31,6 +31,9 @@ const uiSlice = createSlice({
         setNotificationDot: (state) => {
             state.notificationDot = true;
         },
+        unsetNotificationDot: (state) => {
+            state.notificationDot = false;
+        },
         setReadNotifications: (state, action) => {
             state.readNotifications = action.payload;
         },
@@ -38,7 +41,9 @@ const uiSlice = createSlice({
             state.unreadNotifications = action.payload;            
         },
         readNotifications: (state) => {
-            if (state.readNotifications) state.readNotifications = [...state.unreadNotifications, ...state.readNotifications];
+            if (state.readNotifications){
+                if (state.unreadNotifications) state.readNotifications = [...state.unreadNotifications, ...state.readNotifications];
+            } 
             else state.readNotifications = state.unreadNotifications;
             state.unreadNotifications = null;
         },
@@ -68,7 +73,7 @@ export const sendNotification = (socket, targetUserId, notification) => {
     return async(dispatch) => {
         try {
             socket.emit('sendNotification', { targetUserId, notification });
-            await axios.put('/user/notification', { targetUserId, notification });
+            await axios.post('/user/notification', { targetUserId, notification });
         } catch (err) {
             console.log(err);
         }
@@ -81,16 +86,19 @@ export const fetchNotifications = (userId) => {
             const { data } = await axios.get('/user/notifications/' + userId);
             dispatch(uiSlice.actions.setReadNotifications(data.readNotifications));
             dispatch(uiSlice.actions.setUnreadNotifications(data.unreadNotifications));
+            if (data.unreadNotifications.length) dispatch(uiSlice.actions.setNotificationDot());
         } catch (err) {
             console.log(err); 
         }
     }
 }
 
-export const markAsReadNotifications = () => {
+export const markAsReadNotifications = (unreadNotifications) => {
     return async(dispatch) => {
         try {
+            if (unreadNotifications && unreadNotifications.length) await axios.put('/user/readNotifications', { notifications: unreadNotifications });
             dispatch(uiSlice.actions.readNotifications())
+            dispatch(uiSlice.actions.unsetNotificationDot());
         } catch (err) {
             console.log(err); 
         }

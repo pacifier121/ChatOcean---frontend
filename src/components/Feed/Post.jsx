@@ -103,7 +103,8 @@ const Post = ({ children, post, owner, showContextMenu }) => {
                     postId: post._id,
                     username: user.username,
                     desc: post.desc,
-                    image: user.avatar 
+                    image: user.avatar,
+                    read: false
                 };
                 stateDispatch(sendNotification(socket, post.userId, notification))
             }

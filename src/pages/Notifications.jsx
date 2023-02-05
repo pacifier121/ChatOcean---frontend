@@ -17,7 +17,10 @@ const Notifications = () => {
     let totalNotifications = (unreadNotifications && unreadNotifications.length || 0) + (readNotifications && readNotifications.length || 0)
 
     useEffect(() => {
-        if (location.pathname !== '/notifications/') dispatch(markAsReadNotifications());
+        
+        return () => {
+            if (location.pathname !== '/notifications/') dispatch(markAsReadNotifications(unreadNotifications));
+        }
     }, [location, socket]);
 
   return (
