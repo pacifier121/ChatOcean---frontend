@@ -8,3 +8,26 @@
     gap: 0.5rem;
     font-size: 1.5rem;
 }
+
+.search-btn{
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+}
+
+.search-btn:hover{
+    background-color: transparent;
+}
+
+.searchbar input{
+    background-color: inherit;
+    border: none;
+    height: 90%;
+    width: 100%;
+    margin-right: 1rem;
+    font-size: 1.5rem;
+}
+
+.searchbar input:focus{
+    outline: none;
+}

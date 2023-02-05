@@ -3,7 +3,7 @@ import SendIcon from '@mui/icons-material/Send';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import Divider from '../UI/Divider';
 import cls from "./ProfileHeader.module.css";
-import { NavLink, useParams } from 'react-router-dom';
+import { NavLink, Link, useParams } from 'react-router-dom';
 import {asset, backendURL, PF} from "../../constants/constants";
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProfileUser, followProfileUser, unfollowProfileUser, profileActions, deleteUser  } from '../../store/profile';
@@ -11,33 +11,39 @@ import EditIcon from '@mui/icons-material/Edit';
 import MoreOptionsButton from '../UI/MoreOptionButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { logoutUser } from '../../store/auth';
+import { displayModal } from '../../store/ui';
+import Modal from '../Modal/Modal';
+import ProfileNotFound from '../../pages/ProfileNotFound';
 
 
 const ProfileHeader = () => {
     const params = useParams();
-    const dispatch = useDispatch();
+    const stateDispatch = useDispatch();
     const { user } = useSelector(state => state.auth)
     const { profileUser, isFollowed } = useSelector(state => state.profile);
 
     const moreActions = [{
         content: (<span><DeleteIcon sx={{fontSize: "120%"}} /> Delete</span>),
         clickHandler: () => {
-            dispatch(deleteUser(profileUser)); 
-            dispatch(logoutUser());
-        }
+            stateDispatch(displayModal( <Modal title={"Confirm Delete Account"} msg={"Are your sure you want to delete this account? This cannot be undone."} 
+                        cb={() => {
+                            stateDispatch(deleteUser(profileUser));
+                            stateDispatch(logoutUser());
+                         }} /> 
+                     ))}
     }]
 
     useEffect(() => {
-        dispatch(profileActions.resetProfile());
-        dispatch(fetchProfileUser(user, params.username));
+        stateDispatch(profileActions.resetProfile());
+        stateDispatch(fetchProfileUser(user, params.username));
     }, [params.username, user])
     
     const followUserHandler = () => {
-        dispatch(followProfileUser(user, profileUser));
+        stateDispatch(followProfileUser(user, profileUser));
     }
 
     const unfollowUserHandler = () => {
-        dispatch(unfollowProfileUser(user, profileUser));
+        stateDispatch(unfollowProfileUser(user, profileUser));
     }
 
     
@@ -46,7 +52,7 @@ const ProfileHeader = () => {
    const classes =  cls["profile-header"] + " card-shadow";
 
   return (
-        profileUser && 
+        profileUser ? (
         <div className={classes}>
             <div className={cls["cover"]}>
                 <img src={asset(profileUser.coverImg, 'cover')} alt="" className={cls["cover-img"]} />
@@ -64,9 +70,11 @@ const ProfileHeader = () => {
                         <button onClick={followUserHandler} className={cls["follow-btn"]}>Follow</button> :
                         <button onClick={unfollowUserHandler} className={cls["unfollow-btn"]}>Unfollow</button>
                      )}
-                    <div className={cls["message-btn"]}>
-                        <SendIcon sx={{fontSize: "25px"}} /> 
-                    </div>
+                    { isFollowed && <div className={cls["message-btn"]}>
+                        <Link className="linkStyles" to={`/chat/${profileUser.username}`}>
+                            <SendIcon sx={{fontSize: "25px"}} /> 
+                        </Link>
+                    </div>}
                     { profileUser._id === user._id && <MoreOptionsButton items={moreActions} contextMenuClass={cls["more-options-actions"] + ' card-shadow'} className={cls["more-options"]}>
                         <MoreHorizIcon sx={{fontSize: "25px"}} /> 
                     </MoreOptionsButton> }
@@ -90,7 +98,9 @@ const ProfileHeader = () => {
                 <span>Followings</span>
             </NavLink>
         </nav>
-        </div>
+        </div> ) : (
+            <ProfileNotFound />
+        )
   )
 }
 

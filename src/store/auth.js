@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { backendURL } from "../constants/constants";
 import { profileActions } from "./profile";
+import { uiActions } from "./ui";
 
 const userInLocalStorage = JSON.parse(localStorage.getItem('CO_user'));
 
@@ -50,14 +51,17 @@ const authSlice = createSlice({
 export const loginUser = (userData) => {
     return async (dispatch) => {
         const saveUser = async() => {
-            const { data } = await axios.post('/login', userData);
-            if (data.msg){
-              return (data.msg);   
+            try {
+                const { data } = await axios.post('/login', userData);
+
+                dispatch(authSlice.actions.login(data));
+                localStorage.setItem('CO_user', JSON.stringify(data));
+            } catch (err) {
+                dispatch(uiActions.setLoginError(err.response.data.err));
+                console.log(err);
             }
-            dispatch(authSlice.actions.login(data));
-            localStorage.setItem('CO_user', JSON.stringify(data));
         }
-        return { err: await saveUser()};
+        await saveUser();
     }
 }
 

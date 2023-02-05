@@ -14,7 +14,7 @@ const Login = () => {
   const navigate = useNavigate();
   const emailRef = useRef();
   const passwordRef = useRef();
-  const [error, setError] = useState('');
+  const { loginError } = useSelector(state => state.ui);
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -24,8 +24,7 @@ const Login = () => {
       password: passwordRef.current.value
     }
     
-    const { err } = await dispatch(loginUser(userData));
-    if (err) return setError(err);
+    dispatch(loginUser(userData));
   };
 
   const googleAuthHandler = () => {
@@ -55,7 +54,7 @@ const Login = () => {
               </div>
                 <div className={cls["submit-wrapper"]}>
                   <button className={cls["submit-btn"]} type="submit" >Log In</button>
-                  { error && <span className={cls["error"]}>{error}</span> }
+                  { loginError && <span className={cls["error"]}>{loginError}</span> }
                 </div>
             </div>
            <div className={cls["form-divider"]} ></div>

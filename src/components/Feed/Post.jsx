@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import ReactDOM from 'react-dom'
 import cls from "./Post.module.css";
 import PostCarousel from "./PostCarousel";
 import { MoreHoriz } from '@mui/icons-material';
@@ -20,6 +21,8 @@ import { useReducer } from 'react';
 import MoreOptionsButton from '../UI/MoreOptionButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { deletePost } from '../../store/profile';
+import Modal from '../Modal/Modal';
+import { displayModal } from '../../store/ui';
 
 
 const postStatesReducer = (state, action) => {
@@ -65,7 +68,8 @@ const removeLinkStyles = { textDecoration: 'none', color: 'inherit'};
 const Post = ({ children, post, owner, showContextMenu }) => {
    const { user } = useSelector(state => state.auth);
    const { profileUser } = useSelector(state => state.profile);
-    const profileDispatch = useDispatch();
+    const { modal, modalActive } = useSelector(state => state.ui);
+    const stateDispatch = useDispatch();
    const [{ isLiked, isFavorite, totalLikes, totalComments, comments} , dispatch] = useReducer(postStatesReducer, { isLiked: false, isFavorite: false, totalLikes: 0, totalComments: 0, comments: [] })
 
     
@@ -84,7 +88,8 @@ const Post = ({ children, post, owner, showContextMenu }) => {
     const moreActions = [{
         content: (<span><DeleteIcon sx={{fontSize: "120%"}} /> Delete</span>),
         clickHandler: () => {
-            profileDispatch(deletePost(post)); 
+            stateDispatch(displayModal( <Modal title={"Confirm Delete Post"} msg={"Are your sure you want to delete this post? This cannot be undone."} 
+                        cb={() => stateDispatch(deletePost(post))} />)); 
         }
     }]
 

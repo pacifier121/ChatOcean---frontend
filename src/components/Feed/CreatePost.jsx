@@ -107,7 +107,7 @@ const CreatePost = () => {
             </button>
         </div>
         <div className={cls['create-post-descbox']}>
-            <textarea ref={descRef} placeholder={`What's on your mind ${'pacifire'}?`} className={cls['create-post-input']} />
+            <textarea ref={descRef} placeholder={`What's on your mind ${user.username}?`} className={cls['create-post-input']} />
             <img src={asset(user.avatar, 'profile')} className={cls['create-post-user-img']} />
         </div>
         <div className={cls['create-post-options']}>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import cls from "./Navbar.module.css";
 import SearchBar from "./SearchBar";
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
@@ -13,7 +13,6 @@ const removeLinkStyles = { textDecoration: 'none', color: 'inherit', fontSize: "
 
 const Navbar = () => { 
     const { user } = useSelector(state => state.auth);
-
 
   return (
     <nav className={cls["navbar"]}>

@@ -17,6 +17,7 @@ import { tryLogin } from "./store/auth";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import EditProfile from './components/Profile/EditProfile';
 import { connectSocket } from "./store/chat";
+import PageNotFound from "./pages/PageNotFound";
 
 
 function App() {
@@ -53,6 +54,7 @@ function App() {
                 <Route index element={<StoryPage />} />
             </Route>
       </Route>
+      <Route path="/*" element={ <PageNotFound /> } />
     </Routes>
 
   );

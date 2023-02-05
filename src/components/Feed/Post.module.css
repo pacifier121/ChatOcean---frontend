@@ -99,6 +99,10 @@
     font-weight: 600;
 }
 
+.post-bottom .button-icon{
+    cursor: pointer;
+}
+
 .post-bottom div{
     display: flex;
     align-items: center;
