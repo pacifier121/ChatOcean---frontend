@@ -74,3 +74,22 @@
     background-color: #fa0b1f;
     color: white;
 }
+
+@media (max-width: 700px){
+    .modal-container{
+        max-width: 90%;
+    }
+    .modal-top{
+        padding: 1rem;
+        border-top-left-radius: 1rem;
+        border-top-right-radius: 1rem;
+    } 
+    .modal-center{
+        padding: 1rem;
+    }
+    .modal-bottom{
+        padding: 1rem;
+        border-bottom-left-radius: 1rem;
+        border-bottom-right-radius: 1rem;
+    }
+}
