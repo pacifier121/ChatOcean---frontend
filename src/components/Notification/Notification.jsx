@@ -5,18 +5,23 @@ import {asset, PF} from "../../constants/constants";
 import { Link } from 'react-router-dom';
 
 const Notification = ({ type, notification }) => {
-   const action = notification.action === 'like' ? 'liked' : ''; 
 
   return (
         <div className={(type === 'unread' ? cls['unread'] : '') + ' ' + cls["notification"]}>
             <img src={asset(notification.image, 'profile')} className={cls["user-img"]} />
             <div className={cls["info"]}>
                <div className={cls["info-text"]}>
-                    <span className={cls['username']}>{notification.username}</span> {action} your post <span className={cls['link']}>
-                            <Link to={`/post/${notification.postId}`} className="linkStyles">
-                                {notification.desc || 'this post'}
-                            </Link>
-                        </span>
+                    {notification.action === 'like' && (<>
+                        <span className={cls['username']}>{notification.username}</span> liked your post
+                        <span className={cls['link']}>
+                                <Link to={`/post/${notification.postId}`} className="linkStyles">
+                                    {notification.desc || 'this post'}
+                                </Link>
+                            </span>
+                    </>)}
+                    {notification.action === 'follow' && (<>
+                        <span className={cls['username']}>{notification.username}</span> started following you
+                    </>)}
                 </div> 
                 <span className={cls["info-time"]}>1 hr ago</span>
             </div>  

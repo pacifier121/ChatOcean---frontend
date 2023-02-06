@@ -7,12 +7,12 @@ import {PF} from "../../constants/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../../store/auth";
 import axios from "axios";
-import { confirmFriendRequest, profileActions } from "../../store/profile";
+import { confirmFriendRequest, deleteFriendRequest, profileActions } from "../../store/profile";
 
 const FriendRequest = ({ req, onConfirm, onDelete }) => {
     return (
         <div className={cls["request"]}>
-            <BasicInfo img={req.avatar} name={req.username} info={"12 mutual friends"} />
+            <BasicInfo img={req.avatar} name={req.username} info={req.from} />
             <div className={cls["request-actions"]} >
                 <button onClick={() => onConfirm(req._id)} className={cls["confirm-btn"]}>Confirm</button>
                 <button onClick={() => onDelete(req._id)} className={cls["delete-btn"]}>Delete</button>
@@ -31,8 +31,8 @@ const FriendRequests = () => {
         dispatch(confirmFriendRequest(socket, user._id, reqId));
     } 
     
-    const deleteRequestHandler = () => {
-
+    const deleteRequestHandler = (reqId) => {
+        dispatch(deleteFriendRequest(user._id, reqId));
     }
     
     useEffect(() => {

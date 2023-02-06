@@ -237,6 +237,18 @@ export const confirmFriendRequest = (socket, userId, friendId) => {
     }
 }
 
+export const deleteFriendRequest = (userId, friendId) => {
+    return async(dispatch) => {
+        try{
+            await axios.put('/user/deleteFollowRequest', { friendId, userId });
+            dispatch(authActions.removePendingRequest(friendId));
+        } catch (err) {
+            console.log(err);
+        }
+    }
+}
+
+
 export const profileActions = profileSlice.actions;
 
 export default profileSlice.reducer;

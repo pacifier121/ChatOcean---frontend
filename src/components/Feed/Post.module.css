@@ -20,13 +20,12 @@
     display: flex;
     gap: 2rem;
     flex: 0;
-    max-width: 30%;
     align-items: center;
 }
 
 .user-img{
-    height: 4rem; 
-    width: 4rem; 
+    height: 4rem !important; 
+    width: 4rem !important; 
     border-radius: 50%;
     object-fit: cover;
 }

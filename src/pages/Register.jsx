@@ -29,8 +29,9 @@ const Register = () => {
     const { err, user } = validateRegisterForm(emailRef.current.value, usernameRef.current.value, passwordRef.current.value, confirmPasswordRef.current.value);
     if (err) return setError(err);
     
+    
     try {
-      await axios.post('http://localhost:8000/register', user);
+      await axios.post('/register', user);
       navigate('/login');
     } catch (err) {
       console.log(err); 
