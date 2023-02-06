@@ -23,8 +23,8 @@ export const Content = ({children}) => {
   return (
         <div className={cls["bottomSection"]}>
             <div className={cls['centerSection']}>
-                { (profileUser.accountType === 'public' || profileUser._id === user._id || followStatus === 'followed') && children}
-                { profileUser.accountType === 'private' && profileUser._id !== user._id && followStatus !== 'followed' && 
+                { (profileUser?.accountType === 'public' || profileUser?._id === user._id || followStatus === 'followed') && children}
+                { profileUser?.accountType === 'private' && profileUser?._id !== user._id && followStatus !== 'followed' && 
                       <div className={cls['private-account-msg']} >
                           <LockIcon style={{fontSize: '100%'}} /><span>Account is private. <br />Follow this user to see their content</span>
                       </div>} 

@@ -70,7 +70,7 @@ const chatSlice = createSlice({
 export const connectSocket = (user) => {
     return async(dispatch) => {
        try {
-            const socket = io('ws://198.168.1.6:8000');
+            const socket = io('ws://localhost:8000');
             socket.emit('addUser', user._id);
 
             dispatch(chatSlice.actions.setSocket(socket));

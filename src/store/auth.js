@@ -11,7 +11,8 @@ const initialState = {
     user: userInLocalStorage,
     logoutRef: null,
     avatar: null,
-    pendingRequests: null
+    pendingRequests: null,
+    suggestedFriends: null
 }
 
 const authSlice = createSlice({
@@ -43,7 +44,10 @@ const authSlice = createSlice({
         },
         removePendingRequest: (state, action) => {
             state.pendingRequests = state.pendingRequests.filter(r => r._id !== action.payload);
-        }
+        },
+        setSuggestedFriends: (state, action) => {
+            state.suggestedFriends = action.payload
+        },
     }
 })
 

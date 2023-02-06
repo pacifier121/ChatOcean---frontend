@@ -37,6 +37,8 @@ const EditProfile = () => {
         if (user){
             console.log(user);
             setAccountTypeSelected(user.accountType);
+            setAvatarSelected(user.avatar);
+            setCoverImgSelected(user.coverImg);
         }
     }, [user]);
     
@@ -64,9 +66,13 @@ const EditProfile = () => {
         }
         if (avatarSelected) {
             types.push('avatar');
+        } else {
+            updates.avatar = '';
         }
         if (coverImgSelected){
             types.push('coverImg');
+        } else {
+            updates.coverImg = '';
         }
         if (!Object.keys(updates).find(k => updates[k] !== '') && !avatarSelected && !coverImgSelected) return setError("Please fill at least one field");
         setSendingPost(true); 

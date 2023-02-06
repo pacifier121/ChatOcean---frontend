@@ -2,10 +2,12 @@ import React from 'react'
 import cls from "./ShareableLink.module.css";
 import { Link } from 'react-router-dom';
 
-const ShareableLink = ({ to, content, own }) => {
+const ShareableLink = ({ className, to, content, own, children }) => {
+  const classes = className + ' linkStyles ' + cls['shareable-link'] + ' ' + (own && cls['own']);
+
   return (
-      <Link to={to} className={'linkStyles ' + cls["shareable-link"] + ' ' + (own && cls['own'])}>
-        {content}
+      <Link to={to} className={classes}>
+        {children}
       </Link>
   )
 }

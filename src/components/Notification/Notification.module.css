@@ -33,11 +33,11 @@
 }
 
 .info-text .username{
-    color: #fa570b;
+    color: #fa570b !important;
 }
 
 .info-text .link{
-    color: #0B54FA;
+    color: #0B54FA !important;
 }
 
 .unread .info-text{
