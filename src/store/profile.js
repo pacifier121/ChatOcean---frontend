@@ -1,9 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { authActions } from "./auth";
 
 const initialState = {
     profileUser: null,
-    isFollowed: false,
+    isFollowed: 'notFollowed',
     posts: null,
     videos: null,
     stories: null,
@@ -20,10 +21,13 @@ const profileSlice = createSlice({
             state.profileUser = action.payload;
         },
         followUser: (state) => {
-            state.isFollowed = true;
+            state.followStatus = 'followed';
+        },
+        followPendingUser: (state) => {
+            state.followStatus = 'pending';
         },
         unfollowUser: (state) => {
-            state.isFollowed = false;
+            state.followStatus = 'unFollowed';
         },
         setPosts: (state, action) => {
             state.posts = action.payload
@@ -43,12 +47,16 @@ const profileSlice = createSlice({
         setFollowers: (state, action) => {
             state.followers = action.payload
         },
+        addFollower: (state, action) => {
+            if (state.followers) state.followers.push(action.payload);
+            else state.followers = [action.payload];
+        },
         setFollowings: (state, action) => {
             state.followings = action.payload
         },
         resetProfile: (state) => {
             state.profileUser = null;
-            state.isFollowed = false;
+            state.followStatus = 'unFollowed';
             state.posts = null;
             state.videos = null;
             state.stories = null;
@@ -63,19 +71,25 @@ export const fetchProfileUser = (user, username) => {
         try {
             const { data: profileUser } = await axios.get('/user/user?username=' + username);
             dispatch(profileSlice.actions.setProfileUser(profileUser));
-            const alreadyFollowed = profileUser.followers.find(f => f === user._id);
-            if (alreadyFollowed) dispatch(profileSlice.actions.followUser());
+            // const alreadyFollowed = profileUser.followers.find(f => f === user._id);
+            const { data } = await axios.get(`/user/followStatus/${user._id}/${profileUser._id}`);
+            if (data.followStatus === 'followed') dispatch(profileSlice.actions.followUser());
+            else if (data.followStatus === 'pending') dispatch(profileSlice.actions.followPendingUser());
         } catch (err) {
             console.log(err); 
         }
     }
 }
 
-export const followProfileUser = (user, profileUser) => {
+export const followProfileUser = (socket, user, profileUser) => {
     return async (dispatch) => {
         try {
             await axios.put(`/user/${profileUser._id}/follow`, { userId: user._id });
-            dispatch(profileSlice.actions.followUser());
+            if (profileUser.accountType === 'public') dispatch(profileSlice.actions.followUser());
+            else {
+                dispatch(profileSlice.actions.followPendingUser());
+                socket.emit('myFollowRequest', { friendId: profileUser._id, user });
+            }
         } catch (err) {
             console.log(err); 
         }
@@ -86,6 +100,17 @@ export const unfollowProfileUser = (user, profileUser) => {
     return async (dispatch) => {
         try {
             await axios.put(`/user/${profileUser._id}/unfollow`, { userId: user._id });
+            dispatch(profileSlice.actions.unfollowUser());
+        } catch (err) {
+            console.log(err); 
+        }
+    }
+}
+
+export const cancelPendingRequest = (user, profileUser) => {
+    return async (dispatch) => {
+        try {
+            await axios.put(`/user/${profileUser._id}/cancelPendingRequest`, { userId: user._id });
             dispatch(profileSlice.actions.unfollowUser());
         } catch (err) {
             console.log(err); 
@@ -196,6 +221,20 @@ export const deletePost = (post) => {
             console.log(err);
         }
     } 
+}
+
+export const confirmFriendRequest = (socket, userId, friendId) => {
+    return async(dispatch) => {
+        try{
+            await axios.put('/user/acceptFollowRequest', { friendId, userId });
+            const { data } = await axios.get('/user/user?userId=' + friendId);
+            socket.emit('yourFollowRequestAccepted', { friendId, userId });
+            dispatch(profileSlice.actions.addFollower(data));
+            dispatch(authActions.removePendingRequest(friendId));
+        } catch (err) {
+            console.log(err);
+        }
+    }
 }
 
 export const profileActions = profileSlice.actions;

@@ -7,9 +7,26 @@
     gap: 2rem;
 }
 
+.private-account-msg{
+    display: flex; 
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    min-height: 20rem;
+    line-height: 1.5;
+    font-size: 4rem;
+    gap: 2rem;
+    color: #555;
+}
+
+.private-account-msg span{
+    font-size: 2rem;
+}
+
 .bottomSection{
     display: flex;
     gap: 2rem;
+    min-height: 30rem;
 }
 
 .centerSection{
@@ -62,5 +79,8 @@
 @media (max-width: 450px) {
     .profile{
         padding: 0.5rem;
+    }
+    .private-account-msg span{
+        font-size: 1.5rem;
     }
 }

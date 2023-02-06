@@ -1,7 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import Modal from "../components/Modal/Modal";
 import axios from "axios"
-import { CleaningServices } from "@mui/icons-material";
 
 const initialState = {
     modalActive: false,

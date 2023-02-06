@@ -1,6 +1,6 @@
 export const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-export const backendURL = "http://localhost:8000";
-// export const backendURL = "http://127.0.0.1:8000";
+// export const backendURL = "http://192.168.1.6:8000";
+export const backendURL = "http://127.0.0.1:8000";
 export const PHOTO_SIZE_LIMIT = 10;
 export const VIDEO_SIZE_LIMIT = 20;
 export const PHOTO_ACCEPTABLE_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.gif'];

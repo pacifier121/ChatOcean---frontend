@@ -6,7 +6,7 @@ import cls from "./ProfileHeader.module.css";
 import { NavLink, Link, useParams } from 'react-router-dom';
 import {asset, backendURL, PF} from "../../constants/constants";
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchProfileUser, followProfileUser, unfollowProfileUser, profileActions, deleteUser  } from '../../store/profile';
+import { fetchProfileUser, followProfileUser, unfollowProfileUser, cancelPendingRequest, profileActions, deleteUser  } from '../../store/profile';
 import EditIcon from '@mui/icons-material/Edit';
 import MoreOptionsButton from '../UI/MoreOptionButton';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -20,13 +20,14 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 const ProfileHeader = () => {
     const params = useParams();
     const stateDispatch = useDispatch();
+    const {socket } = useSelector(state => state.chat);
     const { user } = useSelector(state => state.auth)
-    const { profileUser, isFollowed } = useSelector(state => state.profile);
+    const { profileUser, followStatus } = useSelector(state => state.profile);
 
     const moreActions = [{
         content: (<span><DeleteIcon sx={{fontSize: "120%"}} /> Delete</span>),
         clickHandler: () => {
-            stateDispatch(displayModal( <Modal title={"Confirm Delete Account"} msg={"Are your sure you want to delete this account? This cannot be undone."} 
+            stateDispatch(displayModal( <Modal showControls={true} title={"Confirm Delete Account"} msg={"Are your sure you want to delete this account? This cannot be undone."} 
                         cb={() => {
                             stateDispatch(deleteUser(profileUser));
                             stateDispatch(logoutUser());
@@ -40,11 +41,15 @@ const ProfileHeader = () => {
     }, [params.username, user])
     
     const followUserHandler = () => {
-        stateDispatch(followProfileUser(user, profileUser));
+        stateDispatch(followProfileUser(socket, user, profileUser));
     }
 
     const unfollowUserHandler = () => {
         stateDispatch(unfollowProfileUser(user, profileUser));
+    }
+    
+    const cancelPendingRequestHandler = () => {
+        stateDispatch(cancelPendingRequest(user, profileUser));
     }
 
     
@@ -67,11 +72,13 @@ const ProfileHeader = () => {
                 </div>
                 <div className={cls["user-info-actions"]}>
                     { user._id !== profileUser._id && 
-                    ( !isFollowed ? 
+                    ( followStatus === 'unFollowed' ? 
                         <button onClick={followUserHandler} className={cls["follow-btn"]}>Follow</button> :
-                        <button onClick={unfollowUserHandler} className={cls["unfollow-btn"]}>Unfollow</button>
+                        followStatus === 'pending' ?
+                            <button onClick={cancelPendingRequestHandler} className={cls["follow-pending-btn"]}>Pending</button> :
+                            <button onClick={unfollowUserHandler} className={cls["unfollow-btn"]}>Unfollow</button>
                      )}
-                    { isFollowed && <div className={cls["message-btn"]}>
+                    { followStatus === 'followed' && <div className={cls["message-btn"]}>
                         <Link className="linkStyles" to={`/chat/${profileUser.username}`}>
                             <SendIcon sx={{fontSize: "25px"}} /> 
                         </Link>

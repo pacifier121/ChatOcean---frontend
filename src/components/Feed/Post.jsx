@@ -90,7 +90,7 @@ const Post = ({ children, post, owner, showContextMenu }) => {
     const moreActions = [{
         content: (<span><DeleteIcon sx={{fontSize: "120%"}} /> Delete</span>),
         clickHandler: () => {
-            stateDispatch(displayModal( <Modal title={"Confirm Delete Post"} msg={"Are your sure you want to delete this post? This cannot be undone."} 
+            stateDispatch(displayModal( <Modal showControls={true} title={"Confirm Delete Post"} msg={"Are your sure you want to delete this post? This cannot be undone."} 
                         cb={() => stateDispatch(deletePost(post))} />)); 
         }
     }]

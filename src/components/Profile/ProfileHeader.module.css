@@ -79,7 +79,8 @@
 }
 
 .follow-btn,
-.unfollow-btn{
+.unfollow-btn,
+.follow-pending-btn{
     font-size: 1.5rem;
     color: white;
     height: 5rem;
@@ -96,6 +97,11 @@
 .unfollow-btn{
     background-color: #ECE8DD;
     color: black;
+}
+
+.follow-pending-btn{
+    background: linear-gradient(45deg, rgb(0, 81, 255), rgb(14, 181, 247));
+    color: white;
 }
 
 .message-btn,

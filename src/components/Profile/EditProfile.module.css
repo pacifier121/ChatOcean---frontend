@@ -40,6 +40,36 @@
     padding: 0.5rem 1rem;
 }
 
+.account-type{
+    font-size: 3.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.account-type-option{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #f9f9f9; 
+    height: 7rem;
+    width: 7rem;
+    border-radius: 1rem;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+
+.account-type-option-selected{
+    background-color: #dde7fc;
+}
+
+.account-type span{
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+}
+
 .option input{
     border: 1px solid #aaa;
     background-color: white;

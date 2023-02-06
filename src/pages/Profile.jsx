@@ -13,13 +13,21 @@ import { useDispatch, useSelector } from 'react-redux';
 import PersonCard from "../components/UI/PersonCard";
 import axios from 'axios';
 import { fetchProfileFollowers, fetchProfileFollowings, fetchProfilePosts, fetchProfileStories, fetchProfileVideos, fetchFavoritePosts } from '../store/profile';
+import LockIcon from '@mui/icons-material/Lock';
 
 
 export const Content = ({children}) => {
+  const { profileUser, followStatus } = useSelector(state => state.profile);
+  const { user } = useSelector(state => state.auth);
+
   return (
         <div className={cls["bottomSection"]}>
             <div className={cls['centerSection']}>
-                {children}
+                { (profileUser.accountType === 'public' || profileUser._id === user._id || followStatus === 'followed') && children}
+                { profileUser.accountType === 'private' && profileUser._id !== user._id && followStatus !== 'followed' && 
+                      <div className={cls['private-account-msg']} >
+                          <LockIcon style={{fontSize: '100%'}} /><span>Account is private. <br />Follow this user to see their content</span>
+                      </div>} 
             </div>
             <div className={cls['rightSection']}>
                 <FriendRequests />    

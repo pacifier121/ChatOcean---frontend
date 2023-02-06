@@ -9,7 +9,9 @@ const userInLocalStorage = JSON.parse(localStorage.getItem('CO_user'));
 const initialState = {
     isLoggedIn: userInLocalStorage ? true : false,
     user: userInLocalStorage,
-    logoutRef: null
+    logoutRef: null,
+    avatar: null,
+    pendingRequests: null
 }
 
 const authSlice = createSlice({
@@ -18,14 +20,29 @@ const authSlice = createSlice({
     reducers: {
         login: (state, action) => {
             state.isLoggedIn = true;
-            state.user = action.payload
+            state.user = action.payload;
         },
         logout: (state) => {
             state.isLoggedIn = false;
             state.user = undefined;
+            state.pendingRequests = null;
+            state.avatar = null;
         },
         setLogoutRef: (state, action) => {
             state.logoutRef = action.payload
+        },
+        setAvatar: (state, action) => {
+            state.avatar = action.payload
+        },
+        setPendingRequests: (state, action) => {
+            state.pendingRequests = action.payload
+        },
+        addPendingRequest: (state, action) => {
+            if (state.pendingRequests) state.pendingRequests.push(action.payload);
+            else state.pendingRequests = [action.payload];
+        },
+        removePendingRequest: (state, action) => {
+            state.pendingRequests = state.pendingRequests.filter(r => r._id !== action.payload);
         }
     }
 })
@@ -52,10 +69,14 @@ export const loginUser = (userData) => {
     return async (dispatch) => {
         const saveUser = async() => {
             try {
-                const { data } = await axios.post('/login', userData);
+                const { data: user } = await axios.post('/login', userData);
 
-                dispatch(authSlice.actions.login(data));
-                localStorage.setItem('CO_user', JSON.stringify(data));
+                dispatch(authSlice.actions.login(user));
+                
+                const { data: pendingRequests } = await axios.get('/user/followRequests/' + user._id);
+                if (pendingRequests) dispatch(authSlice.actions.setPendingRequests(pendingRequests));
+
+                localStorage.setItem('CO_user', JSON.stringify(user));
             } catch (err) {
                 dispatch(uiActions.setLoginError(err.response.data.err));
                 console.log(err);

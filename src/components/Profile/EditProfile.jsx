@@ -1,13 +1,17 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import cls from "./EditProfile.module.css";
 import { Content } from "../../pages/Profile";
 import { useRef, useState } from 'react';
 import { Divider } from '@mui/material';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { CircularProgress } from '@mui/material';
-import { logoutUser } from '../../store/auth';
+import { authActions, logoutUser } from '../../store/auth';
 import { profileActions } from '../../store/profile';
+import LockIcon from '@mui/icons-material/Lock';      
+import LockOpenIcon from '@mui/icons-material/LockOpen';
+import { validateEditForm } from '../../validations/formValidations';
+
 
 const EditProfile = () => {
     const firstNameRef = useRef();
@@ -23,12 +27,22 @@ const EditProfile = () => {
     const newPasswordRef = useRef(); 
     const [avatarSelected, setAvatarSelected] = useState(false);
     const [coverImgSelected, setCoverImgSelected] = useState(false);
+    const [accountTypeSelected, setAccountTypeSelected] = useState('');
     const { user, logoutRef } = useSelector(state => state.auth);
     const [sendingPost, setSendingPost] = useState(false);
     const [error, setError] = useState('');
+    const dispatch = useDispatch();
+    
+    useEffect(() => {
+        if (user){
+            console.log(user);
+            setAccountTypeSelected(user.accountType);
+        }
+    }, [user]);
     
     const editProfileHandler = async(e) => {
        e.preventDefault(); 
+        
        
        let updates = {};
        let types = [];
@@ -38,9 +52,15 @@ const EditProfile = () => {
        if (fromRef.current.value) updates.from = fromRef.current.value;
        if (dobRef.current.value) updates.dateOfBirth = dobRef.current.value;
        if (usernameRef.current.value) updates.username = usernameRef.current.value;
+       updates.accountType = accountTypeSelected || user.accountType;
        if (wantPasswordChange){
            if (oldPasswordRef.current.value) updates.oldPassword = oldPasswordRef.current.value;
            if (newPasswordRef.current.value) updates.newPassword = newPasswordRef.current.value;
+            const { err, _ } = validateEditForm(emailRef.current.value, usernameRef.current.value, oldPasswordRef.current.value, newPasswordRef.current.value);
+            if (err) return setError(err);
+        } else {
+            const { err, _ } = validateEditForm(emailRef.current.value, usernameRef.current.value, null, null);
+            if (err) return setError(err);
         }
         if (avatarSelected) {
             types.push('avatar');
@@ -73,7 +93,10 @@ const EditProfile = () => {
                 if (updates.username) {
                     logoutRef.click();
                 }
-                else window.open(`/profile/${user.username}/`, '_self');
+                else {
+                    if (avatarSelected) dispatch(authActions.setAvatar(response.data.avatar));
+                    window.open(`/profile/${user.username}/`, '_self');
+                }
             }
         } catch (err) {
             // console.log(err); 
@@ -81,6 +104,10 @@ const EditProfile = () => {
         } finally {
             setSendingPost(false);
         }
+    }
+    
+    const accountTypeChangeHandler = (e) => {
+        setAccountTypeSelected(e.target.value);
     }
     
     const cancelAvatarSelectionHandler = () => {
@@ -100,30 +127,30 @@ const EditProfile = () => {
               <div className={cls["edit-profile"]}>
                     <label htmlFor="firstname" className={cls['option']}>
                         <span>First Name</span>
-                        <input ref={firstNameRef} id="firstname" type="text" />
+                        <input ref={firstNameRef} id="firstname" type="text" placeholder={user.firstName} />
                     </label>
                     <label htmlFor="lastname" className={cls['option']}>
                         <span>Last Name</span>
-                        <input ref={lastNameRef} id="lastname" type="text" />
+                        <input ref={lastNameRef} id="lastname" type="text" placeholder={user.lastName}/>
                     </label>
                     <label htmlFor="email" className={cls['option']}>
                         <span>Email</span>
-                        <input ref={emailRef} id="email" type="email" />
+                        <input ref={emailRef} id="email" type="email" placeholder={user.email}/>
                     </label>
                     <label htmlFor="username" className={cls['option']}>
                         <div className={cls["option-extra-info"]}>
                             <span>Username</span>
                             <span className={cls['info']}>* Relogin required</span>
                         </div>
-                        <input ref={usernameRef} id="username" type="text" />
+                        <input ref={usernameRef} id="username" type="text" placeholder={user.username}/>
                     </label>
                     <label htmlFor="from" className={cls['option']}>
                         <span>From</span>
-                        <input ref={fromRef} id="from" type="text" />
+                        <input ref={fromRef} id="from" type="text" placeholder={user.from}/>
                     </label>
                     <label htmlFor="dob" className={cls['option']}>
                         <span>Birth Day</span>
-                        <input ref={dobRef} id="dob" type="date" />
+                        <input ref={dobRef} id="dob" type="date" placeholder={user.dateOfBirth}/>
                     </label>
                     <div className={cls["files-section"]}>
                         <div htmlFor="" className={cls['option'] + ' ' + cls['avatar-option'] + ' ' + (avatarSelected ? cls['avatar-option-active'] : '')}>
@@ -137,6 +164,19 @@ const EditProfile = () => {
                             {coverImgSelected && <div onClick={cancelCoverImgSelectionHandler} className={cls['file-cancel-btn']}>X</div>}
                         </div>
                     </div>
+                    <div className={cls["account-type"]}>
+                        <span>Account Type</span>
+                        <label htmlFor="public" className={cls['account-type-option'] + ' ' + (accountTypeSelected === 'public' && cls['account-type-option-selected'])}>
+                            <LockOpenIcon sx={{ fontSize: "100%" }} />
+                            <span>Public</span>
+                            <input onChange={accountTypeChangeHandler} checked={accountTypeSelected === 'public'} value="public" name="accountType" type="radio" id="public" style={{display: 'none'}}/>
+                        </label>
+                        <label htmlFor='private' className={cls['account-type-option'] + ' ' + (accountTypeSelected === 'private' && cls['account-type-option-selected'])}>
+                            <LockIcon sx={{ fontSize: "100%" }} />
+                            <span>Private</span>
+                            <input onChange={accountTypeChangeHandler} checked={accountTypeSelected === 'private'} value="private" name="accountType" type="radio" id="private" style={{display: 'none'}}/>
+                        </label>
+                    </div> 
                     <Divider className={cls['divider']}>
                         <div onClick={() => setWantPasswordChange((state) => !state)} className={cls['divider-btn'] + ' ' +
                                 (wantPasswordChange ? cls['divider-btn-active'] : '')}>

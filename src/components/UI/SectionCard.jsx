@@ -22,7 +22,7 @@ const SectionCard = ({ className, children, title, expandLinkText, type }) => {
     card = (<div className={classes}>
           <div className={cls["section-top"]}>
             <span className={cls["section-top-text"]}>{title}</span>
-            <a href="#" className={cls["section-top-link"]}>{expandLinkText} </a>
+            {/* <a href="#" className={cls["section-top-link"]}>{expandLinkText} </a> */}
           </div>
           <Divider />
           <div className={cls["section-container"]}>

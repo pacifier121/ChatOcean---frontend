@@ -6,7 +6,7 @@ import { useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useEffect } from "react";
-import { validateRegisterForm } from "../validations/registerValidation";
+import { validateRegisterForm } from "../validations/formValidations";
 
 const Register = () => {
   const usernameRef = useRef();
