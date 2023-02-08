@@ -7,7 +7,7 @@ export const PHOTO_ACCEPTABLE_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.gif'];
 export const VIDEO_ACCEPTABLE_EXTENSIONS = ['.mp4', '.flv', '.wmv'];
 
 export const asset = (src, type) => {
-    const PF = 'http://127.0.0.1:8000/public/';
+    const PF = 'https://chatocean.onrender.com/public/';
 
     if (!src){
         switch (type){
