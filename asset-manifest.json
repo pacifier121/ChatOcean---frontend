@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/chatocean/static/css/main.0092115e.css",
+    "main.js": "/chatocean/static/js/main.8eb7b7d7.js",
+    "index.html": "/chatocean/index.html",
+    "main.0092115e.css.map": "/chatocean/static/css/main.0092115e.css.map",
+    "main.8eb7b7d7.js.map": "/chatocean/static/js/main.8eb7b7d7.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0092115e.css",
+    "static/js/main.8eb7b7d7.js"
+  ]
+}
