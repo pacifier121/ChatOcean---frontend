@@ -1,5 +1,4 @@
-import { useState, useEffect } from 'react'
-import ReactDOM from 'react-dom'
+import { useEffect } from 'react'
 import cls from "./Post.module.css";
 import PostCarousel from "./PostCarousel";
 import { MoreHoriz } from '@mui/icons-material';
@@ -20,7 +19,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useReducer } from 'react';
 import MoreOptionsButton from '../UI/MoreOptionButton';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { deletePost, profileActions } from '../../store/profile';
+import { deletePost } from '../../store/profile';
 import Modal from '../Modal/Modal';
 import { displayModal, sendNotification } from '../../store/ui';
 import ShareButton from './ShareButton';

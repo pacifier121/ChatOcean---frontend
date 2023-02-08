@@ -5,7 +5,7 @@ import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import HomeIcon from '@mui/icons-material/Home';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import {PF} from "../../constants/constants";
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchNotifications, getNotification } from '../../store/ui';

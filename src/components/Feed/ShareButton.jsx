@@ -1,10 +1,8 @@
 import React from 'react'
-import ReactDOM from 'react-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import cls from "./ShareButton.module.css";
 import Modal from '../Modal/Modal';
 import BasicInfo from '../UI/BasicInfo';
-import { NavLink } from 'react-router-dom';
 import SectionCard from '../UI/SectionCard';
 import { displayModal, removeModal } from '../../store/ui';
 import { setOnlineFriends, setOfflineFriends } from "../../store/chat";

@@ -1,6 +1,6 @@
 import React from 'react'
 import cls from "./StoryCard.module.css";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Add } from '@mui/icons-material';
 import {PF} from "../../constants/constants";
 

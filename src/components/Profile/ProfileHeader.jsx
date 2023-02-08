@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import SendIcon from '@mui/icons-material/Send';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import Divider from '../UI/Divider';
 import cls from "./ProfileHeader.module.css";
 import { NavLink, Link, useParams } from 'react-router-dom';
-import {asset, backendURL, PF} from "../../constants/constants";
+import {asset } from "../../constants/constants";
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProfileUser, followProfileUser, unfollowProfileUser, cancelPendingRequest, profileActions, deleteUser  } from '../../store/profile';
 import EditIcon from '@mui/icons-material/Edit';

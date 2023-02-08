@@ -1,4 +1,3 @@
-import cls from "./MorePages.module.css";
 import EmailIcon from '@mui/icons-material/Email';
 import MapsHomeWorkIcon from '@mui/icons-material/MapsHomeWork';
 import LocationOnIcon from '@mui/icons-material/LocationOn';

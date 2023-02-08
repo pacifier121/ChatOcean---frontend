@@ -1,9 +1,7 @@
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
 import BasicInfo from "../UI/BasicInfo";
 import cls from "./FriendRequests.module.css";
 import SectionCard from "../UI/SectionCard";
-import {PF} from "../../constants/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../../store/auth";
 import axios from "axios";

@@ -1,6 +1,6 @@
 import React from 'react'
 import cls from "./Video.module.css";
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
 import VolumeDownIcon from '@mui/icons-material/VolumeDown';
 import VolumeOffIcon from '@mui/icons-material/VolumeOff';

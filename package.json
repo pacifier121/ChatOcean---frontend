@@ -1,5 +1,6 @@
 {
   "name": "client",
+  "homepage": "https://pacifier121.github.io/chatocean",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -27,7 +28,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -47,5 +50,8 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "https://chatocean.onrender.com"
+  "proxy": "https://chatocean.onrender.com",
+  "devDependencies": {
+    "gh-pages": "^5.0.0"
+  }
 }

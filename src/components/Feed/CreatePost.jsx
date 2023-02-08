@@ -6,7 +6,7 @@ import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
 import FormatQuoteIcon from '@mui/icons-material/FormatQuote';
 import { MoreHoriz } from '@mui/icons-material';
 import { asset, addToFilesList, validateFileSizes, PHOTO_SIZE_LIMIT, VIDEO_SIZE_LIMIT, validateFileExtensions,
-        backendURL, PHOTO_ACCEPTABLE_EXTENSIONS, VIDEO_ACCEPTABLE_EXTENSIONS } from "../../constants/constants";
+        PHOTO_ACCEPTABLE_EXTENSIONS, VIDEO_ACCEPTABLE_EXTENSIONS } from "../../constants/constants";
 import { useSelector } from 'react-redux';
 import { useState, useRef } from 'react';
 import PostCarousel from './PostCarousel';

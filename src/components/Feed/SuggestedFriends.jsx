@@ -3,7 +3,6 @@ import BasicInfo from '../UI/BasicInfo'
 import cls from "./SuggestedFriends.module.css"
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import SectionCard from '../UI/SectionCard';
-import {PF} from "../../constants/constants";
 import { useDispatch, useSelector } from 'react-redux';
 import axios from "axios";
 import { authActions } from '../../store/auth';

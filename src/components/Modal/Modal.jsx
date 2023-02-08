@@ -1,5 +1,4 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 import cls from "./Modal.module.css";
 import { removeModal } from '../../store/ui'; 
 import { useDispatch } from 'react-redux';

@@ -4,15 +4,11 @@ import SendIcon from "@mui/icons-material/Send";
 import cls from "./Chat.module.css";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import { useRef, useReducer } from "react";
-import MoreOptionsButton from "../UI/MoreOptionButton";
-import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
-import VideoCameraBackIcon from '@mui/icons-material/VideoCameraBack';
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { chatActions, recieveNewMessage, sendNewMessage } from "../../store/chat";
-import { fetchChat } from "../../store/chat"; 
 
 
 const fileReducer = (state, action) => {

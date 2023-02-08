@@ -1,5 +1,4 @@
 import React from 'react'
-import cls from "./AccountSettings.module.css";
 import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useSelector, useDispatch } from 'react-redux';

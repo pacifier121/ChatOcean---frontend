@@ -3,12 +3,9 @@ import BasicInfo from "../UI/BasicInfo";
 import SectionCard from "../UI/SectionCard";
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { chatActions, fetchChat, addOnlineFriend, removeOnlineFriend, setOnlineFriends, setOfflineFriends } from "../../store/chat";
-import { asset } from "../../constants/constants";
-import { format } from "timeago.js";
 
 const ChatSidebar = () => {
     const [sidebarMini, setSidebarMini] = useState(false);

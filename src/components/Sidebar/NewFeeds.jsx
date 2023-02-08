@@ -1,4 +1,3 @@
-import cls from "./NewFeeds.module.css";
 import TvIcon from '@mui/icons-material/Tv';
 import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
 import LanguageIcon from '@mui/icons-material/Language';
