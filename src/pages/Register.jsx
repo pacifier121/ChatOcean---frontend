@@ -45,7 +45,7 @@ const Register = () => {
   return (
       <div className={cls["outer-container"]}>
           <div className={cls["poster-container"]}>
-            <img src={PF+'poster.png'} alt="" className={cls["poster"]} />
+            <img src={PF+'poster.avif'} alt="" className={cls["poster"]} />
           </div>
           <div className={cls["register-container"] + " box-shadow"} >
             <form onSubmit={submitHandler} className={cls["register-form"]}>
