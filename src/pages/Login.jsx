@@ -58,6 +58,7 @@ const Login = () => {
                 </div>
             </div>
            <div className={cls["form-divider"]} ></div>
+            {/* To be completed */}
            <div className={cls["oauth-login-wrapper"]}>
               <span>Log In with </span>
               <button onClick={googleAuthHandler} className={cls["google"]}>

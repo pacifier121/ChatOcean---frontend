@@ -2,16 +2,16 @@ import React from 'react'
 import cls from "./StoryCard.module.css";
 import { Link, useNavigate } from 'react-router-dom';
 import { Add } from '@mui/icons-material';
-import {PF} from "../../constants/constants";
+import {PF, asset} from "../../constants/constants";
 
 const StoryCard = ({ type, className }) => {
    const cardClasses = `${cls["story-card"]} ${className} card-shadow linkStyles`;
 
    const regularCard = (
-      <Link to="/story/abcd" className={cardClasses} style={{ background: `url(${PF+'covers/back.jpg'})`, backgroundSize: 'cover'}}>
+      <Link to="/story/abcd" className={cardClasses} style={{ background: `url(${asset('', 'cover')})`, backgroundSize: 'cover'}}>
         <div className={"linkStyles"}>
           <div className={cls["story-card-user"]}>
-              <img src={PF+'logo.png'} className={cls["story-card-img"]} />
+              <img src={asset('', 'profile')} className={cls["story-card-img"]} />
               <span className={cls["story-card-text"]}>Pacifire Ocean</span>
           </div>
         </div>

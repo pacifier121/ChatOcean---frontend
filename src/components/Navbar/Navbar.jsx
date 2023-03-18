@@ -6,7 +6,7 @@ import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import HomeIcon from '@mui/icons-material/Home';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Link, useNavigate } from 'react-router-dom';
-import {PF} from "../../constants/constants";
+import {PF, asset} from "../../constants/constants";
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchNotifications, getNotification } from '../../store/ui';
 
@@ -30,7 +30,7 @@ const Navbar = () => {
   return (
     <nav className={cls["navbar"]}>
         <div className={cls["navbarLeft"]}>
-            <img src={PF+'logo.png'} alt="" className={cls["brandLogo"]} />
+            <img src={asset('', 'profile')} alt="" className={cls["brandLogo"]} />
             <Link to="/" className={cls["brandTitle"] + " linkStyles"}>ChatOcean</Link>
         </div>      
         <div className={cls["navbarCenter"]} >
@@ -48,7 +48,7 @@ const Navbar = () => {
                <ChatBubbleOutlineIcon sx={removeLinkStyles} />
             </Link> 
            <Link to={`/profile/${user.username}`}  className={cls["btn-icon"]}>
-               { user.avatar ? <img src={PF+user.avatar} className={cls["user-img"]} /> : <AccountCircleIcon sx={removeLinkStyles} />}
+               { user.avatar ? <img src={asset(user.avatar, 'profile')} className={cls["user-img"]} /> : <AccountCircleIcon sx={removeLinkStyles} />}
             </Link> 
         </div>
     </nav>

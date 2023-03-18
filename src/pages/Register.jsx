@@ -77,6 +77,7 @@ const Register = () => {
                     </div>
                   </div>
                    <div className={cls["form-divider"]} ></div>
+                  {/* To be completed */}
                    <div className={cls["oauth-register-wrapper"]}>
                       <span>Register with </span>
                       <button onClick={googleAuthHandler} className={cls["google"]}>
