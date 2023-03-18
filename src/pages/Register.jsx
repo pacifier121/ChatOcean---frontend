@@ -1,5 +1,5 @@
 import cls from "./Register.module.css";
-import {PF} from "./../constants/constants";
+import { asset, PF } from "./../constants/constants";
 import GoogleIcon from '@mui/icons-material/Google';
 import { Link, Navigate } from "react-router-dom";
 import { useRef, useState } from "react";
@@ -45,12 +45,12 @@ const Register = () => {
   return (
       <div className={cls["outer-container"]}>
           <div className={cls["poster-container"]}>
-            <img src={PF+'poster.avif'} alt="" className={cls["poster"]} />
+            <img src={asset('poster.avif', "cover")} alt="" className={cls["poster"]} />
           </div>
           <div className={cls["register-container"] + " box-shadow"} >
             <form onSubmit={submitHandler} className={cls["register-form"]}>
                 <div className={cls["brand-container"]}>
-                    <img src={PF+'logo.png'} alt="" className={cls["brandLogo"]} />
+                    <img src={asset('', 'profile')} alt="" className={cls["brandLogo"]} />
                     <span className={cls["brand-title"]}>ChatOcean</span>
                 </div>
                 <div className={cls["inner-container"]}>

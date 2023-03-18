@@ -14,7 +14,7 @@ export const asset = (src, type) => {
             case 'profile':
                 return PF+'logo.png';
             case 'cover':
-                return PF+'bg.jpg';
+                return PF+'cover.jpg';
             case 'video': 
                 return PF+'videos/nature_video_2.mp4';
             case 'photo':
